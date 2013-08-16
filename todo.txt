@@ -1,0 +1,3 @@
+structures
+    INPUT
+    PWINDOWINFO
