@@ -26,6 +26,11 @@ module WinFFI
       #  _In_  DWORD dwExitCode )
       attach_function 'FreeLibraryAndExitThread', [:hmodule, :dword], :void
 
+      #DWORD WINAPI GetDllDirectory(
+      #  _In_   DWORD nBufferLength,
+      #  _Out_  LPTSTR lpBuffer )
+      attach_function 'GetDllDirectoryA', [:dword, :pointer]
+
       #BOOL GetModuleHandleEx(
       #  __in      DWORD dwFlags,
       #  __in_opt  LPCTSTR lpModuleName,
