@@ -3,6 +3,8 @@ module WinFFI
     module Sound
       extend LibBase
 
+      typedef :pointer, :hwaveout
+
       SND_SYNC        = 0x0000  # play synchronously (default)
       SND_ASYNC       = 0x0001  # play asynchronously
       SND_NODEFAULT   = 0x0002  # silence (!default) if sound not found
@@ -21,18 +23,47 @@ module WinFFI
 
       ffi_lib 'kernel32'
 
-      attach_function :Beep, [:ulong, :ulong], :bool
+      #BOOL WINAPI Beep(
+      #  _In_  DWORD dwFreq,
+      #  _In_  DWORD dwDuration )
+      (attach_function :Beep, [:ulong, :ulong], :bool) if WindowsVersion >= :xp
 
       ffi_lib 'winmm'
 
-      attach_function :PlaySound, [:string, :long, :ulong], :bool
-      attach_function :waveOutSetVolume, [:long, :ulong], :int
-      attach_function :waveOutGetVolume, [:long, :pointer], :int
-      attach_function :waveOutGetNumDevs, [], :int
-      attach_function :waveInGetNumDevs, [], :int
-      attach_function :midiOutGetNumDevs, [], :int
-      attach_function :midiInGetNumDevs, [], :int
-      attach_function :auxGetNumDevs, [], :int
+      #BOOL PlaySound(
+      #  LPCTSTR pszSound,
+      #  HMODULE hmod,
+      #  DWORD fdwSound )
+      attach_function :PlaySound,  [:string, :hmodule, :dword], :bool
+      attach_function :PlaySoundA, [:string, :hmodule, :dword], :bool
+      attach_function :PlaySoundW, [:string, :hmodule, :dword], :bool
+
+      #MMRESULT waveOutSetVolume(
+      #  HWAVEOUT hwo,
+      #  DWORD dwVolume )
+      attach_function :waveOutSetVolume, [:hwaveout, :dword], :int
+
+      #MMRESULT waveOutGetVolume(
+      #  HWAVEOUT hwo,
+      #  LPDWORD pdwVolume )
+      attach_function :waveOutGetVolume, [:hwaveout, :pointer], :int
+
+      #UINT waveOutGetNumDevs(void)
+      attach_function :waveOutGetNumDevs, [], :uint
+
+      #UINT waveInGetNumDevs(void)
+      attach_function :waveInGetNumDevs, [], :uint
+
+      #UINT midiOutGetNumDevs(void)
+      attach_function :midiOutGetNumDevs, [], :uint
+
+      #UINT midiInGetNumDevs(void)
+      attach_function :midiInGetNumDevs, [], :uint
+
+      #UINT auxGetNumDevs(void)
+      attach_function :auxGetNumDevs, [], :uint
+
+      #UINT mixerGetNumDevs(void)
       attach_function :mixerGetNumDevs, [], :int
     end
   end

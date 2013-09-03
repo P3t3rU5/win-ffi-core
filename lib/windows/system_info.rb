@@ -90,6 +90,11 @@ module WinFFI
         :Max,     3
     ]
 
+    #BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
+    attach_function 'GetVersionExA', [:pointer], :bool
+    attach_function 'GetVersionExW', [:pointer], :bool
+
+
     class OSVERSIONINFO < FFI::Struct
       layout :dwOSVersionInfoSize, :ulong,
              :dwMajorVersion,      :ulong,
@@ -111,7 +116,57 @@ module WinFFI
              :wSuiteMask,          :ushort,
              :wProductType,        :uchar,
              :wReserved,           :uchar
+
+      def get!
+        tap do |ovi|
+          ovi[:dwOSVersionInfoSize] = size
+          SystemInfo::GetVersionExA(ovi)
+        end
+      end
+
+      def major; self[:dwMajorVersion] end
+      def minor; self[:dwMinorVersion] end
+      def build; self[:dwBuildNumber]  end
+      def sp; self[:wServicePackMajor] end
+
+      def hex; (major << 8) + minor end
+
+      def <=>(version)
+        hex <=> case version
+                  when '2000', 2000; 0x0500
+                  when 'xp', :xp; 0x0501
+                  when 'vista', :vista; 0x0600
+                  when '7', 7; 0x0601
+                  when '8', 8; 0x0602
+                  when '8.1', 8.1; 0x0603
+                  else raise ArgumentError
+                end
+      end
+
+      include Comparable
+
+      def name
+        case hex
+          when 0x0500...0x0501; 'Windows 2000'
+          when 0x0501...0x0600; 'Windows XP'
+          when 0x0600...0x0601; 'Windows Vista'
+          when 0x0601; 'Windows 7'
+          when 0x0602; 'Windows 8'
+          when 0x0603; 'Windows 8.1'
+          else 'Unknown'
+        end
+      end
+
+      def to_s; "#{major}.#{minor}.#{build} SP#{sp} (#{name})" end
     end
+  end
+
+  WindowsVersion = SystemInfo::OSVERSIONINFOEX.new.get!
+
+  puts "WinFFI #{WinFFI::VERSION}"
+  puts WinFFI::WindowsVersion
+
+  module SystemInfo
 
     #BOOL WINAPI DnsHostnameToComputerName(
     #  _In_     LPCTSTR Hostname,
@@ -119,12 +174,6 @@ module WinFFI
     #  _Inout_  LPDWORD nSize )
     attach_function 'DnsHostnameToComputerNameA', [:string, :pointer, :pointer], :bool
     attach_function 'DnsHostnameToComputerNameW', [:string, :pointer, :pointer], :bool
-
-    #UINT WINAPI EnumSystemFirmwareTables(
-    #  _In_   DWORD FirmwareTableProviderSignature,
-    #  _Out_  PVOID pFirmwareTableBuffer,
-    #  _In_   DWORD BufferSize )
-    attach_function 'EnumSystemFirmwareTables', [:dword, :pointer, :dword], :uint
 
     #DWORD WINAPI ExpandEnvironmentStrings(
     #  _In_       LPCTSTR lpSrc,
@@ -146,58 +195,14 @@ module WinFFI
     attach_function 'GetComputerNameExA', [ComputerNameFormat, :pointer, :pointer], :bool
     attach_function 'GetComputerNameExW', [ComputerNameFormat, :pointer, :pointer], :bool
 
-    #DWORD WINAPI GetFirmwareEnvironmentVariable(
-    #  _In_   LPCTSTR lpName,
-    #  _In_   LPCTSTR lpGuid,
-    #  _Out_  PVOID pBuffer,
-    #  _In_   DWORD nSize )
-    attach_function 'GetFirmwareEnvironmentVariableA', [:string, :string, :pointer, :dword], :dword
-    attach_function 'GetFirmwareEnvironmentVariableW', [:string, :string, :pointer, :dword], :dword
-
-    #BOOL WINBASEAPI GetFirmwareEnvironmentVariableEx(
-    #  LPCSTR lpName,
-    #  LPCSTR lpGuid,
-    #  PVOID pValue,
-    #  DWORD nSize,
-    #  PDWORD pdwAttributes )
-    attach_function 'GetFirmwareEnvironmentVariableA', [:string, :string, :pointer, :dword, :pointer], :bool
-    attach_function 'GetFirmwareEnvironmentVariableW', [:string, :string, :pointer, :dword, :pointer], :bool
-
-    #BOOL WINAPI GetFirmwareType( _Inout_  PFIRMWARE_TYPE FirmwareType )
-    attach_function 'GetFirmwareType', [:pointer], :bool
-
-    #TODO
-    #void WINAPI GetNativeSystemInfo( _Out_  LPSYSTEM_INFO lpSystemInfo )
-    attach_function 'GetNativeSystemInfo', [:pointer], :void
-
-    #BOOL WINAPI GetProductInfo(
-    #  _In_   DWORD dwOSMajorVersion,
-    #  _In_   DWORD dwOSMinorVersion,
-    #  _In_   DWORD dwSpMajorVersion,
-    #  _In_   DWORD dwSpMinorVersion,
-    #  _Out_  PDWORD pdwReturnedProductType )
-    attach_function 'GetProductInfo', [:dword, :dword, :dword, :dword, :pointer], :bool
-
     #UINT WINAPI GetSystemDirectory(
     #  _Out_  LPTSTR lpBuffer,
     #  _In_   UINT uSize )
     attach_function 'GetSystemDirectoryA', [:pointer, :uint], :uint
     attach_function 'GetSystemDirectoryW', [:pointer, :uint], :uint
 
-    #UINT WINAPI GetSystemFirmwareTable(
-    #  _In_   DWORD FirmwareTableProviderSignature,
-    #  _In_   DWORD FirmwareTableID,
-    #  _Out_  PVOID pFirmwareTableBuffer,
-    #  _In_   DWORD BufferSize )
-    attach_function 'GetSystemFirmwareTable', [:dword, :dword, :pointer, :dword], :uint
-
     #void WINAPI GetSystemInfo( _Out_  LPSYSTEM_INFO lpSystemInfo )
     attach_function 'GetSystemInfo', [:pointer], :void
-
-    #BOOL WINAPI GetSystemRegistryQuota(
-    #  _Out_opt_  PDWORD pdwQuotaAllowed,
-    #  _Out_opt_  PDWORD pdwQuotaUsed )
-    attach_function 'GetSystemRegistryQuota', [:pointer, :pointer], :bool
 
     #UINT WINAPI GetSystemWindowsDirectory(
     #  _Out_  LPTSTR lpBuffer,
@@ -208,18 +213,11 @@ module WinFFI
     #DWORD WINAPI GetVersion(void)
     attach_function 'GetVersion', [], :dword
 
-    #BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
-    attach_function 'GetVersionExA', [:pointer], :bool
-    attach_function 'GetVersionExW', [:pointer], :bool
-
     #UINT WINAPI GetWindowsDirectory(
     #  _Out_  LPTSTR lpBuffer,
     #  _In_   UINT uSize )
     attach_function 'GetWindowsDirectoryA', [:pointer, :uint], :uint
     attach_function 'GetWindowsDirectoryW', [:pointer, :uint], :uint
-
-    #BOOL WINAPI IsNativeVhdBoot ( _Out_  PBOOL *NativeVhdBoot )
-    attach_function 'IsNativeVhdBoot', [:pointer], :bool
 
     #BOOL WINAPI IsProcessorFeaturePresent( _In_  DWORD ProcessorFeature )
     attach_function 'IsProcessorFeaturePresent', [:dword], :bool
@@ -242,23 +240,6 @@ module WinFFI
     attach_function 'SetComputerNameExA', [:uint, :string], :bool
     attach_function 'SetComputerNameExW', [:uint, :string], :bool
 
-    #BOOL WINAPI SetFirmwareEnvironmentVariable(
-    #  _In_  LPCTSTR lpName,
-    #  _In_  LPCTSTR lpGuid,
-    #  _In_  PVOID pBuffer,
-    #  _In_  DWORD nSize )
-    attach_function 'SetFirmwareEnvironmentVariableA', [:string, :string, :pointer, :dword], :bool
-    attach_function 'SetFirmwareEnvironmentVariableW', [:string, :string, :pointer, :dword], :bool
-
-    #BOOL WINBASEAPI SetFirmwareEnvironmentVariableEx(
-    #  _In_  LPCTSTR lpName,
-    #  _In_  LPCTSTR lpGuid,
-    #  _In_  PVOID pValue,
-    #  _In_  DWORD nSize,
-    #  _In_  DWORD dwAttributes )
-    attach_function 'SetFirmwareEnvironmentVariableExA', [:string, :string, :pointer, :dword, :dword], :bool
-    attach_function 'SetFirmwareEnvironmentVariableExW', [:string, :string, :pointer, :dword, :dword], :bool
-
     #TODO
     #BOOL WINAPI VerifyVersionInfo(
     #  _In_  LPOSVERSIONINFOEX lpVersionInfo,
@@ -273,6 +254,95 @@ module WinFFI
     #  _In_  DWORD dwTypeBitMask,
     #  _In_  BYTE dwConditionMask )
     attach_function 'VerSetConditionMask', [:ulong, :dword, :byte], :ulong
+
+    if WindowsVersion >= :xp
+
+      #UINT WINAPI GetSystemWow64Directory(
+      #  _Out_  LPTSTR lpBuffer,
+      #  _In_   UINT uSize )
+      attach_function 'GetSystemWow64DirectoryA', [:pointer, :uint], :uint
+      attach_function 'GetSystemWow64DirectoryW', [:pointer, :uint], :uint
+
+      #TODO
+      #void WINAPI GetNativeSystemInfo( _Out_  LPSYSTEM_INFO lpSystemInfo )
+      attach_function 'GetNativeSystemInfo', [:pointer], :void
+
+      if WindowsVersion.sp >= 1 || WindowsVersion >= :vista
+        #DWORD WINAPI GetFirmwareEnvironmentVariable(
+        #  _In_   LPCTSTR lpName,
+        #  _In_   LPCTSTR lpGuid,
+        #  _Out_  PVOID pBuffer,
+        #  _In_   DWORD nSize )
+        attach_function 'GetFirmwareEnvironmentVariableA', [:string, :string, :pointer, :dword], :dword
+        attach_function 'GetFirmwareEnvironmentVariableW', [:string, :string, :pointer, :dword], :dword
+
+        #BOOL WINAPI GetSystemRegistryQuota(
+        #  _Out_opt_  PDWORD pdwQuotaAllowed,
+        #  _Out_opt_  PDWORD pdwQuotaUsed )
+        attach_function 'GetSystemRegistryQuota', [:pointer, :pointer], :bool
+
+        #BOOL WINAPI SetFirmwareEnvironmentVariable(
+        #  _In_  LPCTSTR lpName,
+        #  _In_  LPCTSTR lpGuid,
+        #  _In_  PVOID pBuffer,
+        #  _In_  DWORD nSize )
+        attach_function 'SetFirmwareEnvironmentVariableA', [:string, :string, :pointer, :dword], :bool
+        attach_function 'SetFirmwareEnvironmentVariableW', [:string, :string, :pointer, :dword], :bool
+      end
+
+      #x64
+      #UINT WINAPI EnumSystemFirmwareTables(
+      #  _In_   DWORD FirmwareTableProviderSignature,
+      #  _Out_  PVOID pFirmwareTableBuffer,
+      #  _In_   DWORD BufferSize )
+      attach_function 'EnumSystemFirmwareTables', [:dword, :pointer, :dword], :uint
+
+      #UINT WINAPI GetSystemFirmwareTable(
+      #  _In_   DWORD FirmwareTableProviderSignature,
+      #  _In_   DWORD FirmwareTableID,
+      #  _Out_  PVOID pFirmwareTableBuffer,
+      #  _In_   DWORD BufferSize )
+      attach_function 'GetSystemFirmwareTable', [:dword, :dword, :pointer, :dword], :uint
+
+      if WindowsVersion >= :vista
+
+        #BOOL WINAPI GetProductInfo(
+        #  _In_   DWORD dwOSMajorVersion,
+        #  _In_   DWORD dwOSMinorVersion,
+        #  _In_   DWORD dwSpMajorVersion,
+        #  _In_   DWORD dwSpMinorVersion,
+        #  _Out_  PDWORD pdwReturnedProductType )
+        attach_function 'GetProductInfo', [:dword, :dword, :dword, :dword, :pointer], :bool
+
+        if WindowsVersion >= 8
+
+          #BOOL WINBASEAPI GetFirmwareEnvironmentVariableEx(
+          #  LPCSTR lpName,
+          #  LPCSTR lpGuid,
+          #  PVOID pValue,
+          #  DWORD nSize,
+          #  PDWORD pdwAttributes )
+          attach_function 'GetFirmwareEnvironmentVariableExA', [:string, :string, :pointer, :dword, :pointer], :bool
+          attach_function 'GetFirmwareEnvironmentVariableExW', [:string, :string, :pointer, :dword, :pointer], :bool
+
+          #BOOL WINAPI GetFirmwareType( _Inout_  PFIRMWARE_TYPE FirmwareType )
+          attach_function 'GetFirmwareType', [:pointer], :bool
+
+          #BOOL WINAPI IsNativeVhdBoot ( _Out_  PBOOL *NativeVhdBoot )
+          attach_function 'IsNativeVhdBoot', [:pointer], :bool
+
+          #BOOL WINBASEAPI SetFirmwareEnvironmentVariableEx(
+          #  _In_  LPCTSTR lpName,
+          #  _In_  LPCTSTR lpGuid,
+          #  _In_  PVOID pValue,
+          #  _In_  DWORD nSize,
+          #  _In_  DWORD dwAttributes )
+          attach_function 'SetFirmwareEnvironmentVariableExA', [:string, :string, :pointer, :dword, :dword], :bool
+          attach_function 'SetFirmwareEnvironmentVariableExW', [:string, :string, :pointer, :dword, :dword], :bool
+
+        end
+      end
+    end
 
     ffi_lib 'Ntdll'
 
@@ -319,16 +389,6 @@ module WinFFI
     #  _Inout_  PULONG nSize )
     attach_function 'TranslateNameA', [:string, ExtendedNameFormat, ExtendedNameFormat, :string, :pointer], :bool
     attach_function 'TranslateNameW', [:string, ExtendedNameFormat, ExtendedNameFormat, :string, :pointer], :bool
-
-
-    begin
-      #UINT WINAPI GetSystemWow64Directory(
-      #  _Out_  LPTSTR lpBuffer,
-      #  _In_   UINT uSize )
-      attach_function 'GetSystemWow64Directory', [:pointer, :uint], :uint
-    rescue FFI::NotFoundError
-      # XP or later
-    end
 
     # These macros are from windef.h, but I've put them here for now
     # since they can be used in conjunction with some of the functions
@@ -405,10 +465,10 @@ module WinFFI
           bool = true
         elsif minor == 2
           if (suite & VER_SUITE_BLADE == 0)          &&
-             (suite & VER_SUITE_COMPUTE_SERVER == 0) &&
-             (suite & VER_SUITE_DATACENTER == 0)     &&
-             (suite & VER_SUITE_ENTERPRISE == 0)     &&
-             (suite & VER_SUITE_STORAGE_SERVER == 0)
+              (suite & VER_SUITE_COMPUTE_SERVER == 0) &&
+              (suite & VER_SUITE_DATACENTER == 0)     &&
+              (suite & VER_SUITE_ENTERPRISE == 0)     &&
+              (suite & VER_SUITE_STORAGE_SERVER == 0)
           then
             bool = true
           end
@@ -443,10 +503,10 @@ module WinFFI
       # Make sure we exclude a 64-bit Windows XP Pro
       if major == 5 && minor == 2
         if (suite & VER_SUITE_BLADE > 0)          ||
-           (suite & VER_SUITE_COMPUTE_SERVER > 0) ||
-           (suite & VER_SUITE_DATACENTER > 0)     ||
-           (suite & VER_SUITE_ENTERPRISE > 0)     ||
-           (suite & VER_SUITE_STORAGE_SERVER > 0)
+            (suite & VER_SUITE_COMPUTE_SERVER > 0) ||
+            (suite & VER_SUITE_DATACENTER > 0)     ||
+            (suite & VER_SUITE_ENTERPRISE > 0)     ||
+            (suite & VER_SUITE_STORAGE_SERVER > 0)
         then
           bool = true
         end
@@ -479,7 +539,4 @@ module WinFFI
     end
   end
 
-  module LibBase
-
-  end
 end

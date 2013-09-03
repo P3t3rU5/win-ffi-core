@@ -19,17 +19,21 @@ module WinFFI
       attach_function 'CreateDesktopA', [:string, :string, :pointer, :dword, :int, :pointer], :hdesk
       attach_function 'CreateDesktopW', [:string, :string, :pointer, :dword, :int, :pointer], :hdesk
 
-      #HDESK WINAPI CreateDesktopEx(
-      #  _In_        LPCTSTR lpszDesktop,
-      #  _Reserved_  LPCTSTR lpszDevice,
-      #  _Reserved_  DEVMODE *pDevmode,
-      #  _In_        DWORD dwFlags,
-      #  _In_        ACCESS_MASK dwDesiredAccess,
-      #  _In_opt_    LPSECURITY_ATTRIBUTES lpsa,
-      #  _In_        ULONG ulHeapSize,
-      #  _Reserved_  PVOID pvoid)
-      attach_function 'CreateDesktopExA', [:string, :string, :pointer, :dword, :int, :pointer, :ulong, :pointer], :hdesk
-      attach_function 'CreateDesktopExW', [:string, :string, :pointer, :dword, :int, :pointer, :ulong, :pointer], :hdesk
+      if WindowsVersion >= :vista
+
+        #HDESK WINAPI CreateDesktopEx(
+        #  _In_        LPCTSTR lpszDesktop,
+        #  _Reserved_  LPCTSTR lpszDevice,
+        #  _Reserved_  DEVMODE *pDevmode,
+        #  _In_        DWORD dwFlags,
+        #  _In_        ACCESS_MASK dwDesiredAccess,
+        #  _In_opt_    LPSECURITY_ATTRIBUTES lpsa,
+        #  _In_        ULONG ulHeapSize,
+        #  _Reserved_  PVOID pvoid)
+        attach_function 'CreateDesktopExA', [:string, :string, :pointer, :dword, :int, :pointer, :ulong, :pointer], :hdesk
+        attach_function 'CreateDesktopExW', [:string, :string, :pointer, :dword, :int, :pointer, :ulong, :pointer], :hdesk
+
+      end
 
       #BOOL CALLBACK EnumDesktopProc(
       #  _In_  LPTSTR lpszDesktop,
@@ -43,11 +47,11 @@ module WinFFI
       attach_function 'EnumDesktopsA', [:hwinsta, :pointer, :lparam], :bool
       attach_function 'EnumDesktopsW', [:hwinsta, :pointer, :lparam], :bool
 
-    #BOOL WINAPI EnumDesktopWindows(
-    #  _In_opt_  HDESK hDesktop,
-    #  _In_      WNDENUMPROC lpfn,
-    #  _In_      LPARAM lParam )
-    attach_function 'EnumDesktopWindows', [:hdesk, :pointer, :lparam], :bool
+      #BOOL WINAPI EnumDesktopWindows(
+      #  _In_opt_  HDESK hDesktop,
+      #  _In_      WNDENUMPROC lpfn,
+      #  _In_      LPARAM lParam )
+      attach_function 'EnumDesktopWindows', [:hdesk, :pointer, :lparam], :bool
 
       #HDESK WINAPI GetThreadDesktop( _In_  DWORD dwThreadId )
       attach_function 'GetThreadDesktop', [:dword], :hdesk

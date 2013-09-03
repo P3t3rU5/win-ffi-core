@@ -85,11 +85,15 @@ module WinFFI
       #  _Out_  PICONINFO piconinfo )
       attach_function 'GetIconInfo', [:hicon, ICONINFO.ptr], :bool
 
-      #BOOL WINAPI GetIconInfoEx(
-      #  _In_     HICON hIcon,
-      #  _Inout_  PICONINFOEX piconinfoex )
-      attach_function 'GetIconInfoExA', [:hicon, ICONINFOEX.ptr], :bool
-      attach_function 'GetIconInfoExW', [:hicon, ICONINFOEX.ptr], :bool
+      if WindowsVersion >= :vista
+
+        #BOOL WINAPI GetIconInfoEx(
+        #  _In_     HICON hIcon,
+        #  _Inout_  PICONINFOEX piconinfoex )
+        attach_function 'GetIconInfoExA', [:hicon, ICONINFOEX.ptr], :bool
+        attach_function 'GetIconInfoExW', [:hicon, ICONINFOEX.ptr], :bool
+
+      end
 
       #HICON LoadIcon(
       #  __in_opt  HINSTANCE hInstance,

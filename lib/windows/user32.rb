@@ -1,6 +1,7 @@
 module WinFFI
   module User32
     extend LibBase
+
     ffi_lib 'user32'
 
     %w'
@@ -19,11 +20,9 @@ module WinFFI
     IDI_APPLICATION           = 32512
     IDI_WINLOGO               = 32517
 
-    begin
+    if WindowsVersion >= :xp
       #VOID WINAPI DisableProcessWindowsGhosting(void)
       attach_function 'DisableProcessWindowsGhosting', [], :void
-    rescue FFI::NotFoundError
-      #Windows Xp or later
     end
 
     #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
@@ -117,27 +116,37 @@ end
   cursor
   dde
   desktop
-  display
-  gesture
   hook
   icon
-  input
   keyboard
   keyboard_accelerators
   mouse
   multiple_document_interface
-  pointer
-  accessibility
   raw_input
   rect
-  touch
   window
   window_station
+  controls/button
+  controls/combo_box
+  controls/list_box
+  controls/scrollbar
 '.each { |f| require_relative "user32/#{f}" }
 
-%w'
-  button
-  combo_box
-  list_box
-  scrollbar
-'.each { |f| require_relative "user32/controls/#{f}" }
+if WinFFI::WindowsVersion >= :xp
+  require_relative 'user32/raw_input'
+  if WinFFI::WindowsVersion >= :vista
+    require_relative 'user32/display'
+    if WinFFI::WindowsVersion >= 7
+      %w'gesture touch'.each { |f| require_relative "user32/#{f}" }
+      if WinFFI::WindowsVersion >= 8
+        %w'
+          pointer
+          input
+          accessibility
+        '.each { |f| require_relative "user32/#{f}" }
+      end
+    end
+  end
+end
+
+

@@ -82,14 +82,6 @@ module WinFFI
       #BOOL WINAPI BringWindowToTop(_In_  HWND hWnd )
       attach_function 'BringWindowToTop', [:hwnd], :bool
 
-      #BOOL WINAPI CalculatePopupWindowPosition(
-      #  _In_      const POINT *anchorPoint,
-      #  _In_      const SIZE *windowSize,
-      #  _In_      UINT flags,
-      #  _In_opt_  RECT *excludeRect,
-      #  _Out_     RECT *popupWindowPosition )
-      attach_function 'CalculatePopupWindowPosition', [:pointer, :pointer, TrackPopupMenuFlags, RECT.ptr, RECT.ptr], :bool
-
       #WORD WINAPI CascadeWindows(
       #  _In_opt_  HWND hwndParent,
       #  _In_      UINT wHow,
@@ -97,18 +89,6 @@ module WinFFI
       #  _In_      UINT cKids,
       #  _In_opt_  const HWND *lpKids )
       attach_function 'CascadeWindows', [:hwnd, :uint, RECT.ptr, :uint, :pointer], :word
-
-      #BOOL WINAPI ChangeWindowMessageFilter(
-      #  _In_  UINT message,
-      #  _In_  DWORD dwFlag )
-      attach_function 'ChangeWindowMessageFilter', [:uint, MessageFilter], :bool
-
-      #BOOL WINAPI ChangeWindowMessageFilterEx(
-      #  _In_         HWND hWnd,
-      #  _In_         UINT message,
-      #  _In_         DWORD action,
-      #  _Inout_opt_  PCHANGEFILTERSTRUCT pChangeFilterStruct )
-      attach_function 'ChangeWindowMessageFilterEx', [:hwnd, :uint, :dword, :pointer], :bool
 
       #HWND WINAPI ChildWindowFromPoint(
       #  _In_  HWND hWndParent,
@@ -219,10 +199,10 @@ module WinFFI
       #  _In_  LPARAM lParam )
       attach_function 'EnumThreadWindows', [:dword, :pointer, :lparam], :bool
 
-      #TODO
       #BOOL CALLBACK EnumThreadWndProc(
       #  _In_  HWND hwnd,
       #  _In_  LPARAM lParam )
+      callback 'EnumThreadWndProc', [:hwnd, :lparam], :bool
 
       #TODO
       #BOOL WINAPI EnumWindows(
@@ -296,23 +276,14 @@ module WinFFI
       #BOOL WINAPI GetProcessDefaultLayout( _Out_  DWORD *pdwDefaultLayout )
       attach_function 'GetProcessDefaultLayout', [:pointer], :bool
 
-      begin
-        #HRESULT WINAPI GetProcessDPIAwareness(
-        #  _In_   HANDLE hprocess,
-        #  _Out_  PROCESS_DPI_AWARENESS *value )
-        attach_function 'GetProcessDPIAwareness', [:handle, :pointer], :hresult
-      rescue FFI::NotFoundError
-        # Windows 8.1or later
-      end
-
       #HWND GetShellWindow(void)
       attach_function 'GetShellWindow', [], :hwnd
 
       #DWORD WINAPI GetSysColor( _In_  int nIndex )
       attach_function 'GetSysColor', [ColorTypes], :dword
 
-    #int WINAPI GetSystemMetrics( _In_  int nIndex )
-    attach_function 'GetSystemMetrics', [:int], :int
+      #int WINAPI GetSystemMetrics( _In_  int nIndex )
+      attach_function 'GetSystemMetrics', [:int], :int
 
       #BOOL WINAPI GetTitleBarInfo(
       #  _In_     HWND hwnd,
@@ -327,21 +298,11 @@ module WinFFI
       #  _In_  UINT uCmd )
       attach_function 'GetWindow', [:hwnd, GetWindowFlags], :hwnd
 
-      #BOOL WINAPI GetWindowDisplayAffinity(
-      #  _In_   HWND hWnd,
-      #  _Out_  DWORD *dwAffinity )
-      attach_function 'GetWindowDisplayAffinity', [:hwnd, :pointer], :bool
-
       #TODO
       #BOOL GetWindowInfo(
       #  __in     HWND        hwnd,
       #  __inout  PWINDOWINFO pwi)
       attach_function 'GetWindowInfo', [:hwnd, :pointer], :bool
-
-      #BOOL WINAPI GetWindowMinimizeRect (
-      #  HWND hwndToQuery,
-      #  RECT* pRect )
-      attach_function 'GetWindowMinimizeRect', [:hwnd, RECT.ptr], :bool
 
       #UINT WINAPI GetWindowModuleFileName(
       #  _In_   HWND hwnd,
@@ -388,17 +349,11 @@ module WinFFI
       #  _In_  HWND hWnd )
       attach_function 'IsChild', [:hwnd, :hwnd], :bool
 
-      #BOOL WINAPI IsGUIThread( _In_  BOOL bConvert )
-      attach_function 'IsGUIThread', [:bool], :bool
-
       #BOOL WINAPI IsHungAppWindow( _In_  HWND hWnd )
       attach_function 'IsHungAppWindow', [:hwnd], :bool
 
       #BOOL WINAPI IsIconic( _In_  HWND hWnd )
       attach_function 'IsIconic', [:hwnd], :bool
-
-      #BOOL WINAPI IsProcessDPIAware(void)
-      attach_function 'IsProcessDPIAware', [], :bool
 
       #BOOL WINAPI IsWindow( _In_opt_  HWND hWnd )
       attach_function 'IsWindow', [:hwnd], :bool
@@ -415,11 +370,6 @@ module WinFFI
       #BOOL WINAPI LockSetForegroundWindow( _In_  UINT uLockCode )
       attach_function 'LockSetForegroundWindow', [:uint], :bool
 
-      #BOOL WINAPI LogicalToPhysicalPoint(
-      #  _In_     HWND hWnd,
-      #  _Inout_  LPPOINT lpPoint )
-      attach_function 'LogicalToPhysicalPoint', [:hwnd, POINT.ptr], :bool
-
       #BOOL WINAPI MoveWindow(
       #  __in  HWND hWnd,
       #  __in  int  X,
@@ -431,11 +381,6 @@ module WinFFI
 
       #BOOL WINAPI OpenIcon( _In_  HWND hWnd )
       attach_function 'OpenIcon', [:hwnd], :bool
-
-      #BOOL WINAPI PhysicalToLogicalPoint(
-      #  _In_     HWND hWnd,
-      #  _Inout_  LPPOINT lpPoint )
-      attach_function 'PhysicalToLogicalPoint', [:hwnd, POINT.ptr], :bool
 
       #HWND WINAPI RealChildWindowFromPoint(
       #  _In_  HWND hwndParent,
@@ -471,27 +416,11 @@ module WinFFI
       #BOOL WINAPI SetProcessDefaultLayout( _In_  DWORD dwDefaultLayout )
       attach_function 'SetProcessDefaultLayout', [:dword], :bool
 
-      #BOOL WINAPI SetProcessDPIAware(void)
-      attach_function 'SetProcessDPIAware', [], :bool
-
-      begin
-        #HRESULT WINAPI SetProcessDPIAwareness(
-        #  _In_  PROCESS_DPI_AWARENESS value )
-        #attach_function 'SetProcessDPIAwareness', [ProcessDpiAwareness], :hresult
-      rescue FFI::NotFoundError
-        # Windows 8.1 or later
-      end
-
       #BOOL WINAPI SetSysColors(
       #  _In_  int cElements,
       #  _In_  const INT *lpaElements,
       #  _In_  const COLORREF *lpaRgbValues )
       attach_function 'SetSysColors', [:int, :pointer, :pointer], :bool
-
-      #BOOL WINAPI SetWindowDisplayAffinity(
-      #  _In_  HWND hWnd,
-      #  _In_  DWORD dwAffinity )
-      attach_function 'SetWindowDisplayAffinity', [:hwnd, :dword], :bool
 
       #BOOL SetWindowPlacement(
       #  __in     HWND             hWnd,
@@ -529,9 +458,6 @@ module WinFFI
       #  _In_  int nCmdShow )
       attach_function 'ShowWindowAsync', [:hwnd, :int], :bool
 
-      #BOOL WINAPI SoundSentry(void)
-      attach_function 'SoundSentry', [], :bool
-
       # [This function is not intended for general use. It may be altered or unavailable in subsequent versions of Windows.]
       #VOID WINAPI SwitchToThisWindow(
       #  _In_  HWND hWnd,
@@ -558,40 +484,114 @@ module WinFFI
       #  _In_      DWORD dwFlags )
       attach_function 'UpdateLayeredWindow', [:hwnd, :hdc, POINT.ptr, SIZE.ptr, :hdc, POINT.ptr, :colorref, :pointer, LayeredWindowAttributesFlags], :bool
 
-      #BOOL WINAPI UpdateLayeredWindowIndirect(
-      #  _In_  HWND hwnd,
-      #  _In_  const UPDATELAYEREDWINDOWINFO *pULWInfo )
-      attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UPDATELAYEREDWINDOWINFO.ptr], :bool
-
-      #HWND WINAPI WindowFromPhysicalPoint( _In_  POINT Point )
-      attach_function 'WindowFromPhysicalPoint', [POINT], :hwnd
-
       #HWND WINAPI WindowFromPoint( _In_  POINT Point )
       attach_function 'WindowFromPoint', [POINT], :hwnd
 
-      #TODO CALLBACK
       #int CALLBACK WinMain(
       #  _In_  HINSTANCE hInstance,
       #  _In_  HINSTANCE hPrevInstance,
       #  _In_  LPSTR lpCmdLine,
       #  _In_  int nCmdShow )
+      callback 'WinMain', [:hinstance, :hinstance, :string, :int], :int
 
-      begin
+      if WindowsVersion >= :xp
+
         #BOOL WINAPI GetLayeredWindowAttributes(
         #  _In_       HWND hwnd,
         #  _Out_opt_  COLORREF *pcrKey,
         #  _Out_opt_  BYTE *pbAlpha,
         #  _Out_opt_  DWORD *pdwFlags )
         attach_function 'GetLayeredWindowAttributes', [:hwnd, :pointer, :pointer, :pointer], :bool
-      rescue FFI::NotFoundError
-        #Windows XP or later
-      end
 
+        #BOOL WINAPI IsGUIThread( _In_  BOOL bConvert )
+        attach_function 'IsGUIThread', [:bool], :bool
+
+        if WindowsVersion >= :vista
+
+          #BOOL WINAPI ChangeWindowMessageFilter(
+          #  _In_  UINT message,
+          #  _In_  DWORD dwFlag )
+          attach_function 'ChangeWindowMessageFilter', [:uint, MessageFilter], :bool
+
+          #BOOL WINAPI GetWindowMinimizeRect (
+          #  HWND hwndToQuery,
+          #  RECT* pRect )
+          attach_function 'GetWindowMinimizeRect', [:hwnd, RECT.ptr], :bool
+
+          #BOOL WINAPI IsProcessDPIAware(void)
+          attach_function 'IsProcessDPIAware', [], :bool
+
+          #BOOL WINAPI LogicalToPhysicalPoint(
+          #  _In_     HWND hWnd,
+          #  _Inout_  LPPOINT lpPoint )
+          attach_function 'LogicalToPhysicalPoint', [:hwnd, POINT.ptr], :bool
+
+          #BOOL WINAPI PhysicalToLogicalPoint(
+          #  _In_     HWND hWnd,
+          #  _Inout_  LPPOINT lpPoint )
+          attach_function 'PhysicalToLogicalPoint', [:hwnd, POINT.ptr], :bool
+
+          #BOOL WINAPI SetProcessDPIAware(void)
+          attach_function 'SetProcessDPIAware', [], :bool
+
+          #BOOL WINAPI SoundSentry(void)
+          attach_function 'SoundSentry', [], :bool
+
+          #BOOL WINAPI UpdateLayeredWindowIndirect(
+          #  _In_  HWND hwnd,
+          #  _In_  const UPDATELAYEREDWINDOWINFO *pULWInfo )
+          attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UPDATELAYEREDWINDOWINFO.ptr], :bool
+
+          #HWND WINAPI WindowFromPhysicalPoint( _In_  POINT Point )
+          attach_function 'WindowFromPhysicalPoint', [POINT], :hwnd
+
+          if WindowsVersion >= 7
+
+            #BOOL WINAPI CalculatePopupWindowPosition(
+            #  _In_      const POINT *anchorPoint,
+            #  _In_      const SIZE *windowSize,
+            #  _In_      UINT flags,
+            #  _In_opt_  RECT *excludeRect,
+            #  _Out_     RECT *popupWindowPosition )
+            attach_function 'CalculatePopupWindowPosition', [:pointer, :pointer, TrackPopupMenuFlags, RECT.ptr, RECT.ptr], :bool
+
+            #BOOL WINAPI ChangeWindowMessageFilterEx(
+            #  _In_         HWND hWnd,
+            #  _In_         UINT message,
+            #  _In_         DWORD action,
+            #  _Inout_opt_  PCHANGEFILTERSTRUCT pChangeFilterStruct )
+            attach_function 'ChangeWindowMessageFilterEx', [:hwnd, :uint, :dword, :pointer], :bool
+
+            #BOOL WINAPI GetWindowDisplayAffinity(
+            #  _In_   HWND hWnd,
+            #  _Out_  DWORD *dwAffinity )
+            attach_function 'GetWindowDisplayAffinity', [:hwnd, :pointer], :bool
+
+            #BOOL WINAPI SetWindowDisplayAffinity(
+            #  _In_  HWND hWnd,
+            #  _In_  DWORD dwAffinity )
+            attach_function 'SetWindowDisplayAffinity', [:hwnd, :dword], :bool
+
+            if WindowsVersion >= 8.1
+
+              #HRESULT WINAPI GetProcessDPIAwareness(
+              #  _In_   HANDLE hprocess,
+              #  _Out_  PROCESS_DPI_AWARENESS *value )
+              attach_function 'GetProcessDPIAwareness', [:handle, :pointer], :hresult
+
+              #HRESULT WINAPI SetProcessDPIAwareness(
+              #  _In_  PROCESS_DPI_AWARENESS value )
+              attach_function 'SetProcessDPIAwareness', [:pointer], :hresult
+            end
+          end
+        end
+      end
     end
   end
 end
 
 %w'
+  window_proc
   classes
   configuration
   dialog
@@ -599,5 +599,4 @@ end
   message
   properties
   timer
-  window_proc
 '.each { |f| require_relative "window/#{f}" }

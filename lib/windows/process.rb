@@ -4,8 +4,6 @@ module WinFFI
   module Process
     extend LibBase
 
-    ffi_lib 'kernel32'
-
     # Process access rights
 
     PROCESS_ALL_ACCESS                = 0x1F0FFF
@@ -102,13 +100,71 @@ module WinFFI
     JOB_OBJECT_ALL_ACCESS              = 0x1F001F
 
     # Functions
-    #attach_function :CreateProcessAsUser, 'LSPLLILPPPP', 'B', 'advapi32')
-    #attach_function :CreateProcessWithLogonW, 'SSSLSPLLSPP', 'B', 'advapi32')
-    #attach_function :WTSEnumerateProcesses, 'LLLPP', 'B', 'wtsapi32')
+    ffi_lib 'advapi32'
 
-    # psapi, maybe
-    #attach_function :EnumProcesses, [:pointer, :ulong, :pointer], :bool
-    #attach_function :WaitForInputIdle, [:ulong, :ulong], :ulong
+    #BOOL WINAPI CreateProcessAsUser(
+    #  _In_opt_     HANDLE hToken,
+    #  _In_opt_     LPCTSTR lpApplicationName,
+    #  _Inout_opt_  LPTSTR lpCommandLine,
+    #  _In_opt_     LPSECURITY_ATTRIBUTES lpProcessAttributes,
+    #  _In_opt_     LPSECURITY_ATTRIBUTES lpThreadAttributes,
+    #  _In_         BOOL bInheritHandles,
+    #  _In_         DWORD dwCreationFlags,
+    #  _In_opt_     LPVOID lpEnvironment,
+    #  _In_opt_     LPCTSTR lpCurrentDirectory,
+    #  _In_         LPSTARTUPINFO lpStartupInfo,
+    #  _Out_        LPPROCESS_INFORMATION lpProcessInformation )
+    attach_function 'CreateProcessAsUserA', [:handle, :string, :string, :pointer, :pointer, :bool, :dword, :pointer, :string, :pointer, :pointer], :bool
+    attach_function 'CreateProcessAsUserW', [:handle, :string, :string, :pointer, :pointer, :bool, :dword, :pointer, :string, :pointer, :pointer], :bool
+
+    #TODO
+    #BOOL WINAPI CreateProcessWithLogonW(
+    #    _In_         LPCWSTR lpUsername,
+    #    _In_opt_     LPCWSTR lpDomain,
+    #    _In_         LPCWSTR lpPassword,
+    #    _In_         DWORD dwLogonFlags,
+    #    _In_opt_     LPCWSTR lpApplicationName,
+    #    _Inout_opt_  LPWSTR lpCommandLine,
+    #    _In_         DWORD dwCreationFlags,
+    #    _In_opt_     LPVOID lpEnvironment,
+    #    _In_opt_     LPCWSTR lpCurrentDirectory,
+    #    _In_         LPSTARTUPINFOW lpStartupInfo,
+    #    _Out_        LPPROCESS_INFORMATION lpProcessInfo )
+    attach_function 'CreateProcessWithLogonW', [:string, :string, :string, :dword, :string, :pointer, :dword, :pointer, :string, :pointer, :pointer], :bool
+
+    ffi_lib 'wtsapi32'
+
+    #BOOL WTSEnumerateProcesses(
+    #  _In_   HANDLE hServer,
+    #  _In_   DWORD Reserved,
+    #  _In_   DWORD Version,
+    #  _Out_  PWTS_PROCESS_INFO *ppProcessInfo,
+    #  _Out_  DWORD *pCount )
+    attach_function 'WTSEnumerateProcessesA', [:handle, :dword, :dword, :pointer, :pointer], :bool
+    attach_function 'WTSEnumerateProcessesW', [:handle, :dword, :dword, :pointer, :pointer], :bool
+
+    begin
+      ffi_lib 'Psapi'
+
+      # psapi, maybe
+      #BOOL WINAPI EnumProcesses(
+      #  _Out_  DWORD *pProcessIds,
+      #  _In_   DWORD cb,
+      #  _Out_  DWORD *pBytesReturned )
+      attach_function 'EnumProcesses', [:pointer, :dword, :pointer], :bool
+
+    rescue FFI::FunctionNotFound
+      ffi_lib 'kernel 32'
+
+      # psapi, maybe
+      #BOOL WINAPI EnumProcesses(
+      #  _Out_  DWORD *pProcessIds,
+      #  _In_   DWORD cb,
+      #  _Out_  DWORD *pBytesReturned )
+      attach_function 'EnumProcesses', [:pointer, :dword, :pointer], :bool
+    end
+
+    ffi_lib 'kernel32'
 
     #BOOL WINAPI AssignProcessToJobObject(
     #  _In_  HANDLE hJob,
@@ -153,7 +209,9 @@ module WinFFI
     attach_function 'GetCurrentProcessId', [], :ulong
 
     #LPTCH WINAPI GetEnvironmentStrings(void)
-    attach_function 'GetEnvironmentStrings', [], :pointer
+    attach_function 'GetEnvironmentStrings',  [], :pointer
+    attach_function 'GetEnvironmentStringsA', [], :pointer
+    attach_function 'GetEnvironmentStringsW', [], :pointer
 
     #DWORD WINAPI GetEnvironmentVariable(
     #  _In_opt_   LPCTSTR lpName,
@@ -212,6 +270,12 @@ module WinFFI
     attach_function 'GetStartupInfoA', [:pointer], :void
     attach_function 'GetStartupInfoW', [:pointer], :void
 
+    #BOOL WINAPI IsProcessInJob(
+    #  _In_      HANDLE ProcessHandle,
+    #  _In_opt_  HANDLE JobHandle,
+    #  _Out_     PBOOL Result )
+    attach_function 'IsProcessInJob', [:handle, :handle, :pointer], :bool
+
     #HANDLE WINAPI OpenJobObject(
     #  _In_  DWORD dwDesiredAccess,
     #  _In_  BOOL bInheritHandles,
@@ -262,57 +326,48 @@ module WinFFI
     #  _In_  BOOL DisablePriorityBoost )
     attach_function 'SetProcessPriorityBoost', [:handle, :bool], :bool
 
-    #Windows Store Apps
-    #BOOL WINAPI SetProcessRestrictionExemption( BOOL fEnableExemption )
-    #attach_function 'SetProcessRestrictionExemption', [:bool], :bool
-
     #BOOL WINAPI SetProcessShutdownParameters(
     #  _In_  DWORD dwLevel,
     #  _In_  DWORD dwFlags )
     attach_function 'SetProcessShutdownParameters', [:dword, :dword], :bool
 
-    begin
+    #BOOL WINAPI SetProcessWorkingSetSize(
+    #  _In_  HANDLE hProcess,
+    #  _In_  SIZE_T dwMinimumWorkingSetSize,
+    #  _In_  SIZE_T dwMaximumWorkingSetSize )
+    attach_function 'SetProcessWorkingSetSize', [:handle, :size_t, :size_t], :bool
 
-      #DWORD WINAPI GetProcessId( _In_  HANDLE Process )
-      attach_function 'GetProcessId', [:handle], :ulong
+    #BOOL WINAPI TerminateJobObject(
+    #  _In_  HANDLE hJob,
+    #  _In_  UINT uExitCode )
+    attach_function 'TerminateJobObject', [:handle, :uint], :bool
+
+    #BOOL WINAPI TerminateProcess(
+    #  _In_  HANDLE hProcess,
+    #  _In_  UINT uExitCode )
+    attach_function 'TerminateProcess', [:ulong, :uint], :bool
+
+    if WindowsVersion.sp >= 1 || WindowsVersion >= :vista
 
       #BOOL WINAPI GetProcessHandleCount(
       #  _In_     HANDLE hProcess,
       #  _Inout_  PDWORD pdwHandleCount )
       attach_function 'GetProcessHandleCount', [:handle, :pointer], :bool
 
-      #BOOL WINAPI IsProcessInJob(
-      #  _In_      HANDLE ProcessHandle,
-      #  _In_opt_  HANDLE JobHandle,
-      #  _Out_     PBOOL Result )
-      attach_function 'IsProcessInJob', [:handle, :handle, :pointer], :bool
+      #DWORD WINAPI GetProcessId( _In_  HANDLE Process )
+      attach_function 'GetProcessId', [:handle], :ulong
 
-      #BOOL WINAPI IsWow64Process(
-      #  _In_   HANDLE hProcess,
-      #  _Out_  PBOOL Wow64Process )
-      attach_function 'IsWow64Process', [:ulong, :pointer], :bool
+      if WindowsVersion.sp >= 2 || WindowsVersion >= :vista
 
-      #BOOL WINAPI SetProcessWorkingSetSize(
-      #  _In_  HANDLE hProcess,
-      #  _In_  SIZE_T dwMinimumWorkingSetSize,
-      #  _In_  SIZE_T dwMaximumWorkingSetSize )
-      attach_function 'SetProcessWorkingSetSize', [:handle, :size_t, :size_t], :bool
+        #BOOL WINAPI IsWow64Process(
+        #  _In_   HANDLE hProcess,
+        #  _Out_  PBOOL Wow64Process )
+        attach_function 'IsWow64Process', [:ulong, :pointer], :bool
 
-      #BOOL WINAPI TerminateJobObject(
-      #  _In_  HANDLE hJob,
-      #  _In_  UINT uExitCode )
-      attach_function 'TerminateJobObject', [:handle, :uint], :bool
-
-      #BOOL WINAPI TerminateProcess(
-      #  _In_  HANDLE hProcess,
-      #  _In_  UINT uExitCode )
-      attach_function 'TerminateProcess', [:ulong, :uint], :bool
-
-    rescue FFI::NotFoundError
-      # Windows XP or later
+      end
     end
 
-    begin
+    if WindowsVersion >= :vista
 
       #BOOL WINAPI GetProcessWorkingSetSizeEx(
       #  _In_   HANDLE hProcess,
@@ -320,9 +375,6 @@ module WinFFI
       #  _Out_  PSIZE_T lpMaximumWorkingSetSize,
       #  _Out_  PDWORD Flags )
       attach_function 'GetProcessWorkingSetSizeEx', [:handle, :pointer, :pointer, :pointer], :ulong
-
-    rescue FFI::NotFoundError
-      # Windows Vista or later
     end
 
     # Helper method to determine if you're on a 64 bit version of Windows
@@ -348,14 +400,21 @@ module WinFFI
 
     ffi_lib 'user32'
 
-
     #DWORD WINAPI GetGuiResources(
     #  _In_  HANDLE hProcess,
     #  _In_  DWORD uiFlags )
     attach_function 'GetGuiResources', [:handle, :dword], :dword
 
-    #BOOL WINAPI IsImmersiveProcess( _In_  HANDLE hProcess )
-    attach_function 'IsImmersiveProcess', [:handle], :bool
+    if WindowsVersion >= 8
+
+      #BOOL WINAPI IsImmersiveProcess( _In_  HANDLE hProcess )
+      attach_function 'IsImmersiveProcess', [:handle], :bool
+
+      #Windows Store Apps
+      #BOOL WINAPI SetProcessRestrictionExemption( BOOL fEnableExemption )
+      attach_function 'SetProcessRestrictionExemption', [:bool], :bool
+
+    end
 
     #BOOL WINAPI UserHandleGrantAccess(
     #  _In_  HANDLE hUserHandle,

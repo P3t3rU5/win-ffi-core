@@ -98,7 +98,7 @@ module WinFFI
       #HWND WINAPI SetClipboardViewer( _In_  HWND hWndNewViewer )
       attach_function 'SetClipboardViewer', [:hwnd], :hwnd
 
-      begin
+      if WindowsVersion >= :vista
         #BOOL WINAPI AddClipboardFormatListener( _In_  HWND hwnd )
         attach_function 'AddClipboardFormatListener', [:hwnd], :bool
 
@@ -110,9 +110,6 @@ module WinFFI
 
         #BOOL WINAPI RemoveClipboardFormatListener( _In_  HWND hwnd )
         attach_function 'RemoveClipboardFormatListener', [:hwnd], :bool
-
-      rescue FFI::NotFoundError
-        # Windows Vista or later
       end
 
     end

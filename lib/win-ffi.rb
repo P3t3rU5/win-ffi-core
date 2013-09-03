@@ -26,6 +26,7 @@ module WinFFI
         value = value.dup unless value.is_a?(Fixnum) || value.is_a?(Symbol)
         c.instance_variable_set(v, value)
       end
+      puts "Loading #{c.name}"
     end
   end
 end
@@ -46,13 +47,19 @@ end
   gdi32
   kernel32
   user32
-  authorization
+  comdlg32
   device
-  error
+  handle
   power
   process
   resource
   shell
   string
-  thread
 '.each { |f| require_relative "windows/#{f}" }
+
+%w'
+  authorization
+  device
+  error
+  thread
+'.each { |f| require_relative "windows/#{f}" } if WinFFI::WindowsVersion >= :xp

@@ -14,6 +14,7 @@ module WinFFI
       DRIVE_CDROM       = 5
       DRIVE_RAMDISK     = 6
 
+      #xp
       #BOOL WINAPI DefineDosDevice(
       #_In_      DWORD dwFlags,
       #_In_      LPCTSTR lpDeviceName,
@@ -97,6 +98,14 @@ module WinFFI
       attach_function 'GetVolumePathNameA', [:string, :pointer, :dword], :bool
       attach_function 'GetVolumePathNameW', [:string, :pointer, :dword], :bool
 
+      #BOOL WINAPI GetVolumePathNamesForVolumeName(
+      #  _In_   LPCTSTR lpszVolumeName,
+      #  _Out_  LPTSTR lpszVolumePathNames,
+      #  _In_   DWORD cchBufferLength,
+      #  _Out_  PDWORD lpcchReturnLength )
+      attach_function 'GetVolumePathNamesForVolumeNameA', [:string, :pointer, :dword, :pointer], :bool
+      attach_function 'GetVolumePathNamesForVolumeNameW', [:string, :pointer, :dword, :pointer], :bool
+
       #DWORD WINAPI QueryDosDevice(
       #  _In_opt_  LPCTSTR lpDeviceName,
       #  _Out_     LPTSTR lpTargetPath,
@@ -116,18 +125,8 @@ module WinFFI
       attach_function 'SetVolumeMountPointA', [:string, :string], :bool
       attach_function 'SetVolumeMountPointW', [:string, :string], :bool
 
-      begin
-        #BOOL WINAPI GetVolumePathNamesForVolumeName(
-        #  _In_   LPCTSTR lpszVolumeName,
-        #  _Out_  LPTSTR lpszVolumePathNames,
-        #  _In_   DWORD cchBufferLength,
-        #  _Out_  PDWORD lpcchReturnLength )
-        attach_function 'GetVolumePathNamesForVolumeName', [:string, :pointer, :dword, :pointer], :bool
-      rescue FFI::NotFoundError
-        # Windows XP or later
-      end
+      if WindowsVersion >= :vista
 
-      begin
         #BOOL WINAPI GetVolumeInformationByHandleW(
         #  _In_       HANDLE hFile,
         #  _Out_opt_  LPWSTR lpVolumeNameBuffer,
@@ -138,8 +137,7 @@ module WinFFI
         #  _Out_opt_  LPWSTR lpFileSystemNameBuffer,
         #  _In_       DWORD nFileSystemNameSize )
         attach_function 'GetVolumeInformationByHandleW', [:handle, :pointer, :dword, :pointer, :pointer, :pointer, :pointer, :dword], :bool
-      rescue FFI::NotFoundError
-        # Windows Vista or later
+
       end
 
       # Returns the volume type for +vol+ or the volume of the current process

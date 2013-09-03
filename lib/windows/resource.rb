@@ -20,21 +20,20 @@ module WinFFI
     attach_function 'EndUpdateResourceA', [:handle, :bool], :bool
     attach_function 'EndUpdateResourceW', [:handle, :bool], :bool
 
-    #TODO
     #BOOL CALLBACK EnumResLangProc(
     #  _In_opt_  HMODULE hModule,
     #  _In_      LPCTSTR lpszType,
     #  _In_      LPCTSTR lpszName,
     #  _In_      WORD wIDLanguage,
     #  _In_      LONG_PTR lParam )
+    callback 'EnumResLangProc', [:hmodule, :string, :string, :word, :long], :bool
 
-    #TODO
     #BOOL CALLBACK EnumResNameProc(
     #  _In_opt_  HMODULE hModule,
     #  _In_      LPCTSTR lpszType,
     #  _In_      LPTSTR lpszName,
     #  _In_      LONG_PTR lParam )
-    #attach_function 'EnumResNameProc', [:hmodule, :pointer, :pointer, :long]
+    callback 'EnumResNameProc', [:hmodule, :pointer, :pointer, :long], :bool
 
     #BOOL WINAPI EnumResourceLanguages(
     #  _In_  HMODULE hModule,
@@ -45,18 +44,6 @@ module WinFFI
     attach_function 'EnumResourceLanguagesA', [:hmodule, :pointer, :pointer, :pointer, :lparam], :bool
     attach_function 'EnumResourceLanguagesW', [:hmodule, :pointer, :pointer, :pointer, :lparam], :bool
 
-    #TODO
-    #BOOL WINAPI EnumResourceLanguagesEx(
-    #  _In_  HMODULE hModule,
-    #  _In_  LPCTSTR lpType,
-    #  _In_  LPCTSTR lpName,
-    #  _In_  ENUMRESLANGPROC lpEnumFunc,
-    #  _In_  LONG_PTR lParam,
-    #  _In_  DWORD dwFlags,
-    #  _In_  LANGID LangId )
-    #attach_function 'EnumResourceLanguagesExA', [:hmodule, :pointer, :pointer, :pointer, :long, :dword, :], :bool
-    #attach_function 'EnumResourceLanguagesExW', [:hmodule, :pointer, :pointer, :pointer, :long, :dword, :], :bool
-
     #BOOL WINAPI EnumResourceNames(
     #  _In_opt_  HMODULE hModule,
     #  _In_      LPCTSTR lpszType,
@@ -65,16 +52,6 @@ module WinFFI
     attach_function 'EnumResourceNamesA', [:hmodule, :pointer, :pointer, :lparam], :bool
     attach_function 'EnumResourceNamesW', [:hmodule, :pointer, :pointer, :lparam], :bool
 
-    #BOOL WINAPI EnumResourceNamesEx(
-    #  _In_opt_  HMODULE hModule,
-    #  _In_      LPCTSTR lpszType,
-    #  _In_      ENUMRESNAMEPROC lpEnumFunc,
-    #  _In_      LONG_PTR lParam,
-    #  _In_      DWORD dwFlags,
-    #  _In_      LANGID LangId )
-    attach_function 'EnumResourceNamesExA', [:hmodule, :pointer, :pointer, :lparam, :dword, :langid], :bool
-    attach_function 'EnumResourceNamesExW', [:hmodule, :pointer, :pointer, :lparam, :dword, :langid], :bool
-
     #BOOL WINAPI EnumResourceTypes(
     #  _In_opt_  HMODULE hModule,
     #  _In_      ENUMRESTYPEPROC lpEnumFunc,
@@ -82,20 +59,11 @@ module WinFFI
     attach_function 'EnumResourceTypesA', [:hmodule, :pointer, :long], :bool
     attach_function 'EnumResourceTypesW', [:hmodule, :pointer, :long], :bool
 
-    #BOOL WINAPI EnumResourceTypesEx(
-    #  _In_opt_  HMODULE hModule,
-    #  _In_      ENUMRESTYPEPROC lpEnumFunc,
-    #  _In_      LONG_PTR lParam,
-    #  _In_      DWORD dwFlags,
-    #  _In_      LANGID LangId )
-    attach_function 'EnumResourceTypesExA', [:hmodule, :pointer, :long, :dword, :langid], :bool
-    attach_function 'EnumResourceTypesExW', [:hmodule, :pointer, :long, :dword, :langid], :bool
-
-    #TODO
     #BOOL CALLBACK EnumResTypeProc(
     #  _In_opt_  HMODULE hModule,
     #  _In_      LPTSTR lpszType,
     #  _In_      LONG_PTR lParam )
+    callback 'EnumResTypeProc', [:hmodule, :string, :long], :bool
 
     #HRSRC WINAPI FindResource(
     #  _In_opt_  HMODULE hModule,
@@ -137,6 +105,40 @@ module WinFFI
     #  _In_      DWORD cbData )
     attach_function 'UpdateResourceA', [:handle, :pointer, :pointer, :word, :pointer, :dword], :bool
     attach_function 'UpdateResourceW', [:handle, :pointer, :pointer, :word, :pointer, :dword], :bool
+
+    if WindowsVersion >= :vista
+
+      #BOOL WINAPI EnumResourceLanguagesEx(
+      #  _In_  HMODULE hModule,
+      #  _In_  LPCTSTR lpType,
+      #  _In_  LPCTSTR lpName,
+      #  _In_  ENUMRESLANGPROC lpEnumFunc,
+      #  _In_  LONG_PTR lParam,
+      #  _In_  DWORD dwFlags,
+      #  _In_  LANGID LangId )
+      attach_function 'EnumResourceLanguagesExA', [:hmodule, :pointer, :pointer, :pointer, :long, :dword, :langid], :bool
+      attach_function 'EnumResourceLanguagesExW', [:hmodule, :pointer, :pointer, :pointer, :long, :dword, :langid], :bool
+
+      #BOOL WINAPI EnumResourceNamesEx(
+      #  _In_opt_  HMODULE hModule,
+      #  _In_      LPCTSTR lpszType,
+      #  _In_      ENUMRESNAMEPROC lpEnumFunc,
+      #  _In_      LONG_PTR lParam,
+      #  _In_      DWORD dwFlags,
+      #  _In_      LANGID LangId )
+      attach_function 'EnumResourceNamesExA', [:hmodule, :pointer, :pointer, :lparam, :dword, :langid], :bool
+      attach_function 'EnumResourceNamesExW', [:hmodule, :pointer, :pointer, :lparam, :dword, :langid], :bool
+
+      #BOOL WINAPI EnumResourceTypesEx(
+      #  _In_opt_  HMODULE hModule,
+      #  _In_      ENUMRESTYPEPROC lpEnumFunc,
+      #  _In_      LONG_PTR lParam,
+      #  _In_      DWORD dwFlags,
+      #  _In_      LANGID LangId )
+      attach_function 'EnumResourceTypesExA', [:hmodule, :pointer, :long, :dword, :langid], :bool
+      attach_function 'EnumResourceTypesExW', [:hmodule, :pointer, :long, :dword, :langid], :bool
+
+    end
 
     ffi_lib 'user32'
 

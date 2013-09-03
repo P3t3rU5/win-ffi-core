@@ -6,7 +6,6 @@ module WinFFI
 
         ffi_lib 'user32'
 
-
         #LRESULT DefWindowProc(
         #  __in  HWND   hWnd,
         #  __in  UINT   Msg,
@@ -24,13 +23,12 @@ module WinFFI
         attach_function 'CallWindowProcA', [:pointer, :hwnd, :uint, :wparam, :lparam], :lresult
         attach_function 'CallWindowProcW', [:pointer, :hwnd, :uint, :wparam, :lparam], :lresult
 
-        #TODO
         #LRESULT CALLBACK WindowProc(
         #  _In_  HWND hwnd,
         #  _In_  UINT uMsg,
         #  _In_  WPARAM wParam,
         #  _In_  LPARAM lParam )
-
+        WindowProc = callback :WindowProc, [:hwnd, :uint, :wparam, :lparam], :lresult
       end
     end
   end

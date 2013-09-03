@@ -2,8 +2,6 @@ module WinFFI
   module Thread
     extend LibBase
 
-    ffi_lib 'kernel32'
-
     SYNCHRONIZE                 = 0x00100000
     THREAD_ALL_ACCESS           = 0x1F03FF
     THREAD_DIRECT_IMPERSONATION = 0x0200
@@ -23,6 +21,63 @@ module WinFFI
     THREAD_PRIORITY_LOWEST        = -2
     THREAD_PRIORITY_NORMAL        = 0
     THREAD_PRIORITY_TIME_CRITICAL = 15
+
+    if WindowsVersion >= 7
+
+      ffi_lib 'Avrt'
+
+      #BOOL WINAPI AvRevertMmThreadCharacteristics( _In_  HANDLE AvrtHandle )
+      attach_function 'AvRevertMmThreadCharacteristics', [:handle], :bool
+
+      #BOOL WINAPI AvRtCreateThreadOrderingGroup(
+      #  _Out_     PHANDLE Context,
+      #  _In_      PLARGE_INTEGER Period,
+      #  _Inout_   GUID *ThreadOrderingGuid,
+      #  _In_opt_  PLARGE_INTEGER Timeout )
+      attach_function 'AvRtCreateThreadOrderingGroup', [:pointer, :pointer, :pointer, :pointer], :bool
+
+      #BOOL WINAPI AvRtCreateThreadOrderingGroupEx(
+      #  _Out_     PHANDLE Context,
+      #  _In_      PLARGE_INTEGER Period,
+      #  _Inout_   GUID *ThreadOrderingGuid,
+      #  _In_opt_  PLARGE_INTEGER Timeout,
+      #  _In_      LPCTSTR TaskName )
+      attach_function 'AvRtCreateThreadOrderingGroupExA', [:pointer, :pointer, :pointer, :pointer, :string], :bool
+      attach_function 'AvRtCreateThreadOrderingGroupExW', [:pointer, :pointer, :pointer, :pointer, :string], :bool
+
+      #BOOL WINAPI AvRtDeleteThreadOrderingGroup( _In_  HANDLE Context )
+      attach_function 'AvRtDeleteThreadOrderingGroup', [:handle], :bool
+
+      #BOOL WINAPI AvRtJoinThreadOrderingGroup(
+      #  _Out_  PHANDLE Context,
+      #  _In_   GUID *ThreadOrderingGuid,
+      #  _In_   BOOL Before )
+      attach_function 'AvRtJoinThreadOrderingGroup', [:pointer, :pointer, :bool], :bool
+
+      #BOOL WINAPI AvRtWaitOnThreadOrderingGroup( _In_  HANDLE Context )
+      attach_function 'AvRtWaitOnThreadOrderingGroup', [:handle], :bool
+
+      #HANDLE WINAPI AvSetMmMaxThreadCharacteristics(
+      #  _In_     LPCTSTR FirstTask,
+      #  _In_     LPCTSTR SecondTask,
+      #  _Inout_  LPDWORD TaskIndex )
+      attach_function 'AvSetMmMaxThreadCharacteristicsA', [:string, :string, :pointer], :handle
+      attach_function 'AvSetMmMaxThreadCharacteristicsW', [:string, :string, :pointer], :handle
+
+      #HANDLE WINAPI AvSetMmThreadCharacteristics(
+      #  _In_     LPCTSTR TaskName,
+      #  _Inout_  LPDWORD TaskIndex )
+      attach_function 'AvSetMmThreadCharacteristicsA', [:string, :pointer], :handle
+      attach_function 'AvSetMmThreadCharacteristicsW', [:string, :pointer], :handle
+
+      #BOOL WINAPI AvSetMmThreadPriority(
+      #  _In_  HANDLE AvrtHandle,
+      #  _In_  AVRT_PRIORITY Priority )
+      attach_function 'AvSetMmThreadPriority', [:handle, :int], :bool
+
+    end
+
+    ffi_lib 'kernel32'
 
     #HANDLE WINAPI CreateRemoteThread(
     #  _In_   HANDLE hProcess,
@@ -82,21 +137,60 @@ module WinFFI
     #DWORD WINAPI ResumeThread( _In_  HANDLE hThread )
     attach_function 'ResumeThread', [:handle], :dword
 
-    attach_function 'SetThreadAffinityMask', [:ulong, :pointer], :ulong
-    attach_function 'SetThreadIdealProcessor', [:ulong, :ulong], :ulong
-    attach_function 'SetThreadPriority', [:ulong, :int], :bool
-    attach_function 'SetThreadPriorityBoost', [:ulong, :bool], :bool
-    attach_function 'Sleep', [:ulong], :void
-    attach_function 'SleepEx', [:ulong, :bool], :ulong
-    attach_function 'SuspendThread', [:ulong], :ulong
-    attach_function 'SwitchToThread', [], :bool
-    attach_function 'TerminateThread', [:ulong, :ulong], :bool
-    attach_function 'TlsAlloc', [], :ulong
-    attach_function 'TlsFree', [:ulong], :bool
-    attach_function 'TlsGetValue', [:ulong], :ulong
-    attach_function 'TlsSetValue', [:ulong, :ulong], :bool
+    #DWORD_PTR WINAPI SetThreadAffinityMask(
+    #  _In_  HANDLE hThread,
+    #  _In_  DWORD_PTR dwThreadAffinityMask )
+    attach_function 'SetThreadAffinityMask', [:handle, :pointer], :ulong
 
-    begin
+    #DWORD WINAPI SetThreadIdealProcessor(
+    #  _In_  HANDLE hThread,
+    #  _In_  DWORD dwIdealProcessor )
+    attach_function 'SetThreadIdealProcessor', [:handle, :dword], :dword
+
+    #BOOL WINAPI SetThreadPriority(
+    #  _In_  HANDLE hThread,
+    #  _In_  int nPriority )
+    attach_function 'SetThreadPriority', [:handle, :int], :bool
+
+    #BOOL WINAPI SetThreadPriorityBoost(
+    #  _In_  HANDLE hThread,
+    #  _In_  BOOL DisablePriorityBoost )
+    attach_function 'SetThreadPriorityBoost', [:handle, :bool], :bool
+
+    #VOID WINAPI Sleep( _In_  DWORD dwMilliseconds )
+    attach_function 'Sleep', [:dword], :void
+
+    #DWORD WINAPI SleepEx(
+    #  _In_  DWORD dwMilliseconds,
+    #  _In_  BOOL bAlertable )
+    attach_function 'SleepEx', [:dword, :bool], :dword
+
+    #DWORD WINAPI SuspendThread( _In_  HANDLE hThread )
+    attach_function 'SuspendThread', [:handle], :dword
+
+    #BOOL WINAPI SwitchToThread(void)
+    attach_function 'SwitchToThread', [], :bool
+
+    #BOOL WINAPI TerminateThread(
+    #  _Inout_  HANDLE hThread,
+    #  _In_     DWORD dwExitCode )
+    attach_function 'TerminateThread', [:handle, :dword], :bool
+
+    #DWORD WINAPI TlsAlloc(void)
+    attach_function 'TlsAlloc', [], :dword
+
+    #BOOL WINAPI TlsFree( _In_  DWORD dwTlsIndex )
+    attach_function 'TlsFree', [:dword], :bool
+
+    #LPVOID WINAPI TlsGetValue( _In_  DWORD dwTlsIndex )
+    attach_function 'TlsGetValue', [:dword], :pointer
+
+    #BOOL WINAPI TlsSetValue(
+    #  _In_      DWORD dwTlsIndex,
+    #  _In_opt_  LPVOID lpTlsValue )
+    attach_function 'TlsSetValue', [:dword, :pointer], :bool
+
+    if WindowsVersion >= 7
 
       #HANDLE CreateRemoteThreadEx(
       #  _In_       HANDLE hProcess,
@@ -108,24 +202,25 @@ module WinFFI
       #  _In_opt_   LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList,
       #  _Out_opt_  LPDWORD lpThreadId )
       attach_function 'CreateRemoteThreadEx', [:handle, :pointer, :size_t, :pointer, :pointer, :dword, :pointer, :pointer], :bool
-
-    rescue FFI::NotFoundError
-      # Windows 7 or later
     end
 
-    ffi_lib 'user32'
+    if WindowsVersion >= :xp
 
-    begin
+      ffi_lib 'user32'
 
-    #BOOL WINAPI AttachThreadInput(
-    #  _In_  DWORD idAttach,
-    #  _In_  DWORD idAttachTo,
-    #  _In_  BOOL fAttach )
-    attach_function 'AttachThreadInput', [:dword, :dword, :bool], :bool
+      #BOOL WINAPI AttachThreadInput(
+      #  _In_  DWORD idAttach,
+      #  _In_  DWORD idAttachTo,
+      #  _In_  BOOL fAttach )
+      attach_function 'AttachThreadInput', [:dword, :dword, :bool], :bool
 
-      attach_function 'GetThreadIOPendingFlag', [:ulong, :pointer], :bool
-    rescue FFI::NotFoundError
-      # Windows XP or later
+      if WindowsVersion.sp >= 1
+        #BOOL WINAPI GetThreadIOPendingFlag(
+        #  _In_     HANDLE hThread,
+        #  _Inout_  PBOOL lpIOIsPending )
+        attach_function 'GetThreadIOPendingFlag', [:ulong, :pointer], :bool
+      end
+
     end
   end
 end

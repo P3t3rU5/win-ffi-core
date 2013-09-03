@@ -5,15 +5,6 @@ module WinFFI
         extend LibBase
         ffi_lib 'user32'
 
-        #LRESULT CALLBACK WindowProc(
-        #  _In_  HWND hwnd,
-        #  _In_  UINT uMsg,
-        #  _In_  WPARAM wParam,
-        #  _In_  LPARAM lParam
-        #)
-        #too many msg types => use uint. define constants as needed.
-        callback :WindowProc, [:hwnd, :uint, :wparam, :lparam], :lresult
-
         #User32::ClassLong
         # Class Field Offsets
         ClassLong = enum :class_long, [
@@ -60,7 +51,7 @@ module WinFFI
         ]
         class WNDCLASS < FFI::Struct
           layout :style,         :uint,
-                 :lpfnWndProc,   :WindowProc,
+                 :lpfnWndProc,   WindowProc::WindowProc,
                  :cbClsExtra,    :int,
                  :cbWndExtra,    :int,
                  :hInstance,     :hinstance,
@@ -76,7 +67,7 @@ module WinFFI
         class WNDCLASSEX < FFI::Struct
           layout :cbSize,        :uint,
                  :style,         :uint,
-                 :lpfnWndProc,   :WindowProc,
+                 :lpfnWndProc,   WindowProc::WindowProc,
                  :cbClsExtra,    :int,
                  :cbWndExtra,    :int,
                  :hInstance,     :hinstance,

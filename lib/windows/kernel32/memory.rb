@@ -2,6 +2,7 @@ module WinFFI
   module Kernel32
     module Memory
       extend LibBase
+
       ffi_lib 'kernel32'
 
       typedef :pointer, :hlocal
@@ -73,8 +74,238 @@ module WinFFI
           :LOCKCOUNT,      0x00FF
       ]
 
+      #TODO
+
       #BOOL WINAPI AddSecureMemoryCacheCallback( _In_  PSECURE_MEMORY_CACHE_CALLBACK pfnCallBack )
       attach_function 'AddSecureMemoryCacheCallback', [:pointer], :bool
+
+      #BOOL WINAPI AllocateUserPhysicalPages(
+      #  _In_     HANDLE hProcess,
+      #  _Inout_  PULONG_PTR NumberOfPages,
+      #  _Out_    PULONG_PTR UserPfnArray )
+      attach_function 'AllocateUserPhysicalPages', [:handle, :pointer, :pointer], :bool
+
+      #BOOL WINAPI AllocateUserPhysicalPagesNuma(
+      #  _In_     HANDLE hProcess,
+      #  _Inout_  PULONG_PTR NumberOfPages,
+      #  _Out_    PULONG_PTR PageArray,
+      #  _In_     DWORD nndPreferred )
+      attach_function 'AllocateUserPhysicalPagesNuma', [:handle, :pointer, :pointer, :dword], :bool
+
+      #void CopyMemory(
+      #  _In_  PVOID Destination,
+      #  _In_  const VOID *Source,
+      #  _In_  SIZE_T Length )
+      #attach_function 'RtlCopyMemory', [:pointer, :pointer, :size_t], :void
+
+      #HANDLE WINAPI CreateFileMapping(
+      #  _In_      HANDLE hFile,
+      #  _In_opt_  LPSECURITY_ATTRIBUTES lpAttributes,
+      #  _In_      DWORD flProtect,
+      #  _In_      DWORD dwMaximumSizeHigh,
+      #  _In_      DWORD dwMaximumSizeLow,
+      #  _In_opt_  LPCTSTR lpName )
+      attach_function 'CreateFileMappingA', [:handle, :pointer, :dword, :dword, :dword, :string], :handle
+      attach_function 'CreateFileMappingW', [:handle, :pointer, :dword, :dword, :dword, :string], :handle
+
+      #HANDLE WINAPI CreateFileMappingFromApp(
+      #  _In_      HANDLE hFile,
+      #  _In_opt_  PSECURITY_ATTRIBUTES SecurityAttributes,
+      #  _In_      ULONG PageProtection,
+      #  _In_      ULONG64 MaximumSize,
+      #  _In_opt_  PCWSTR Name )
+      attach_function 'CreateFileMappingFromApp', [:handle, :pointer, :ulong, :ulong, :string], :handle
+
+      #HANDLE WINAPI CreateFileMappingNuma(
+      #  _In_      HANDLE hFile,
+      #  _In_opt_  LPSECURITY_ATTRIBUTES lpFileMappingAttributes,
+      #  _In_      DWORD flProtect,
+      #  _In_      DWORD dwMaximumSizeHigh,
+      #  _In_      DWORD dwMaximumSizeLow,
+      #  _In_opt_  LPCTSTR lpName,
+      #  _In_      DWORD nndPreferred )
+      attach_function 'CreateFileMappingNumaA', [:handle, :pointer, :dword, :dword, :dword, :string, :dword], :handle
+      attach_function 'CreateFileMappingNumaW', [:handle, :pointer, :dword, :dword, :dword, :string, :dword], :handle
+
+      #HANDLE WINAPI CreateMemoryResourceNotification( _In_  MEMORY_RESOURCE_NOTIFICATION_TYPE NotificationType )
+      attach_function 'CreateMemoryResourceNotification', [:int], :handle
+
+      #void FillMemory(
+      #  [out]  PVOID Destination,
+      #  [in]   SIZE_T Length,
+      #  [in]   BYTE Fill )
+      attach_function 'RtlFillMemory', [:pointer, :size_t, :byte], :void
+
+      #BOOL WINAPI FlushViewOfFile(
+      #  _In_  LPCVOID lpBaseAddress,
+      #  _In_  SIZE_T dwNumberOfBytesToFlush )
+      attach_function 'FlushViewOfFile', [:pointer, :size_t], :bool
+
+      #BOOL WINAPI FreeUserPhysicalPages(
+      #  _In_     HANDLE hProcess,
+      #  _Inout_  PULONG_PTR NumberOfPages,
+      #  _In_     PULONG_PTR UserPfnArray )
+      attach_function 'FreeUserPhysicalPages', [:handle, :pointer, :pointer], :bool
+
+      #SIZE_T WINAPI GetLargePageMinimum(void)
+      attach_function 'GetLargePageMinimum', [], :size_t
+
+      #BOOL WINAPI GetMemoryErrorHandlingCapabilities( _Out_  PULONG Capabilities )
+      attach_function 'GetMemoryErrorHandlingCapabilities', [:pointer], :bool
+
+      #BOOL WINAPI GetPhysicallyInstalledSystemMemory( _Out_  PULONGLONG TotalMemoryInKilobytes )
+      attach_function 'GetPhysicallyInstalledSystemMemory', [:pointer], :bool
+
+      #BOOL WINAPI GetProcessDEPPolicy(
+      #  _In_   HANDLE hProcess,
+      #  _Out_  LPDWORD lpFlags,
+      #  _Out_  PBOOL lpPermanent )
+      attach_function 'GetProcessDEPPolicy', [:handle, :pointer, :pointer], :bool
+
+      #DEP_SYSTEM_POLICY_TYPE WINAPI GetSystemDEPPolicy(void)
+      attach_function 'GetSystemDEPPolicy', [], :uint
+
+      #BOOL WINAPI GetSystemFileCacheSize(
+      #  _Out_  PSIZE_T lpMinimumFileCacheSize,
+      #  _Out_  PSIZE_T lpMaximumFileCacheSize,
+      #  _Out_  PDWORD lpFlags )
+      attach_function 'GetSystemFileCacheSize', [:pointer, :pointer, :pointer], :bool
+
+      #UINT WINAPI GetWriteWatch(
+      #  _In_     DWORD dwFlags,
+      #  _In_     PVOID lpBaseAddress,
+      #  _In_     SIZE_T dwRegionSize,
+      #  _Out_    PVOID *lpAddresses,
+      #  _Inout_  PULONG_PTR lpdwCount,
+      #  _Out_    PULONG lpdwGranularity )
+      attach_function 'GetWriteWatch', [:dword, :pointer, :size_t, :pointer, :pointer, :pointer], :uint
+
+      #BOOL WINAPI IsBadCodePtr( _In_  FARPROC lpfn )
+      attach_function 'IsBadCodePtr', [:pointer], :bool
+
+      #BOOL WINAPI IsBadReadPtr(
+      #  _In_  const VOID *lp,
+      #  _In_  UINT_PTR ucb )
+      attach_function 'IsBadReadPtr', [:pointer, :uint], :bool
+
+      #BOOL WINAPI IsBadStringPtr(
+      #  _In_  LPCTSTR lpsz,
+      #  _In_  UINT_PTR ucchMax )
+      attach_function 'IsBadStringPtrA', [:string, :uint], :bool
+      attach_function 'IsBadStringPtrW', [:string, :uint], :bool
+
+      #BOOL WINAPI IsBadWritePtr(
+      #  _In_  LPVOID lp,
+      #  _In_  UINT_PTR ucb )
+      attach_function 'IsBadWritePtr', [:pointer, :uint], :bool
+
+      #LPVOID WINAPI MapViewOfFile(
+      #  _In_  HANDLE hFileMappingObject,
+      #  _In_  DWORD dwDesiredAccess,
+      #  _In_  DWORD dwFileOffsetHigh,
+      #  _In_  DWORD dwFileOffsetLow,
+      #  _In_  SIZE_T dwNumberOfBytesToMap )
+      attach_function 'MapViewOfFile', [:handle, :dword, :dword, :dword, :size_t], :pointer
+
+      #LPVOID WINAPI MapViewOfFileEx(
+      #  _In_      HANDLE hFileMappingObject,
+      #  _In_      DWORD dwDesiredAccess,
+      #  _In_      DWORD dwFileOffsetHigh,
+      #  _In_      DWORD dwFileOffsetLow,
+      #  _In_      SIZE_T dwNumberOfBytesToMap,
+      #  _In_opt_  LPVOID lpBaseAddress )
+      attach_function 'MapViewOfFileEx', [:handle, :dword, :dword, :dword, :size_t, :pointer], :pointer
+
+      #LPVOID WINAPI MapViewOfFileExNuma(
+      #  _In_      HANDLE hFileMappingObject,
+      #  _In_      DWORD dwDesiredAccess,
+      #  _In_      DWORD dwFileOffsetHigh,
+      #  _In_      DWORD dwFileOffsetLow,
+      #  _In_      SIZE_T dwNumberOfBytesToMap,
+      #  _In_opt_  LPVOID lpBaseAddress,
+      #  _In_      DWORD nndPreferred )
+      attach_function 'MapViewOfFileExNuma', [:handle, :dword, :dword, :dword, :size_t, :pointer, :dword], :pointer
+
+      #PVOID WINAPI MapViewOfFileFromApp(
+      #  _In_  HANDLE hFileMappingObject,
+      #  _In_  ULONG DesiredAccess,
+      #  _In_  ULONG64 FileOffset,
+      #  _In_  SIZE_T NumberOfBytesToMap )
+      attach_function 'MapViewOfFileFromApp', [:handle, :ulong, :ulong, :size_t], :pointer
+
+      #BOOL WINAPI MapUserPhysicalPages(
+      #  _In_  PVOID lpAddress,
+      #  _In_  ULONG_PTR NumberOfPages,
+      #  _In_  PULONG_PTR UserPfnArray )
+      attach_function 'MapUserPhysicalPages', [:pointer, :ulong, :pointer], :bool
+
+      #BOOL WINAPI MapUserPhysicalPagesScatter(
+      #  _In_  PVOID *VirtualAddresses,
+      #  _In_  ULONG_PTR NumberOfPages,
+      #  _In_  PULONG_PTR PageArray )
+      attach_function 'MapUserPhysicalPagesScatter', [:pointer, :ulong, :pointer], :bool
+
+      #void MoveMemory(
+      #  _In_  PVOID Destination,
+      #  _In_  const VOID *Source,
+      #  _In_  SIZE_T Length )
+      attach_function 'RtlMoveMemory', [:pointer, :pointer, :size_t], :void
+
+      #HANDLE WINAPI OpenFileMapping(
+      #  _In_  DWORD dwDesiredAccess,
+      #  _In_  BOOL bInheritHandle,
+      #  _In_  LPCTSTR lpName )
+      attach_function 'OpenFileMappingA', [:dword, :bool, :string], :handle
+      attach_function 'OpenFileMappingW', [:dword, :bool, :string], :handle
+
+      #BOOL WINAPI PrefetchVirtualMemory(
+      #  _In_  HANDLE hProcess,
+      #  _In_  ULONG_PTR NumberOfEntries,
+      #  _In_  PWIN32_MEMORY_RANGE_ENTRY VirtualAddresses,
+      #  _In_  ULONG Flags )
+      attach_function 'PrefetchVirtualMemory', [:handle, :ulong, :pointer, :ulong], :bool
+
+      #BOOL WINAPI QueryMemoryResourceNotification(
+      #  _In_   HANDLE ResourceNotificationHandle,
+      #  _Out_  PBOOL ResourceState )
+      attach_function 'QueryMemoryResourceNotification', [:handle, :pointer], :bool
+
+      #PVOID WINAPI RegisterBadMemoryNotification( _In_  PBAD_MEMORY_CALLBACK_ROUTINE Callback )
+      attach_function 'RegisterBadMemoryNotification', [:pointer], :pointer
+
+      #BOOL WINAPI RemoveSecureMemoryCacheCallback( _In_  PSECURE_MEMORY_CACHE_CALLBACK pfnCallBack )
+      attach_function 'RemoveSecureMemoryCacheCallback', [:pointer], :bool
+
+      #UINT WINAPI ResetWriteWatch(
+      #  _In_  LPVOID lpBaseAddress,
+      #  _In_  SIZE_T dwRegionSize )
+      attach_function 'ResetWriteWatch', [:pointer, :size_t], :uint
+
+      #BOOLEAN CALLBACK SecureMemoryCacheCallback(
+      #  _In_  PVOID Addr,
+      #  _In_  SIZE_T Range )
+      callback 'SecureMemoryCacheCallback', [:pointer, :size_t], :bool
+
+      #PVOID SecureZeroMemory(
+      #  _In_  PVOID ptr,
+      #  _In_  SIZE_T cnt )
+      #attach_function 'SecureZeroMemory', [:pointer, :size_t], :pointer
+
+      #BOOL WINAPI SetProcessDEPPolicy( _In_  DWORD dwFlags )
+      attach_function 'SetProcessDEPPolicy', [:dword], :bool
+
+      #BOOL WINAPI SetSystemFileCacheSize(
+      #  _In_  SIZE_T MinimumFileCacheSize,
+      #  _In_  SIZE_T MaximumFileCacheSize,
+      #  _In_  DWORD Flags )
+      attach_function 'SetSystemFileCacheSize', [:size_t, :size_t, :dword], :bool
+
+      #BOOL WINAPI UnmapViewOfFile( _In_  LPCVOID lpBaseAddress )
+      attach_function 'UnmapViewOfFile', [:pointer], :bool
+
+      #BOOL WINAPI UnregisterBadMemoryNotification( _In_  PVOID RegistrationHandle )
+      attach_function 'UnregisterBadMemoryNotification', [:pointer], :bool
+
 
       #Global
       #HGLOBAL WINAPI GlobalAlloc(
@@ -151,12 +382,27 @@ module WinFFI
       #BOOL WINAPI HeapLock( _In_  HANDLE hHeap )
       attach_function 'HeapLock', [:handle], :bool
 
+      #BOOL WINAPI HeapQueryInformation(
+      #  _In_opt_   HANDLE HeapHandle,
+      #  _In_       HEAP_INFORMATION_CLASS HeapInformationClass,
+      #  _Out_      PVOID HeapInformation,
+      #  _In_       SIZE_T HeapInformationLength,
+      #  _Out_opt_  PSIZE_T ReturnLength )
+      attach_function 'HeapQueryInformation', [:handle, :int, :pointer, :size_t, :pointer], :bool
+
       #LPVOID WINAPI HeapReAlloc(
       #  _In_  HANDLE hHeap,
       #  _In_  DWORD dwFlags,
       #  _In_  LPVOID lpMem,
       #  _In_  SIZE_T dwBytes )
       attach_function 'HeapReAlloc', [:handle, HeapFlags, :pointer, :size_t], :pointer
+
+      #BOOL WINAPI HeapSetInformation(
+      #  _In_opt_  HANDLE HeapHandle,
+      #  _In_      HEAP_INFORMATION_CLASS HeapInformationClass,
+      #  _In_      PVOID HeapInformation,
+      #  _In_      SIZE_T HeapInformationLength )
+      attach_function 'HeapSetInformation', [:handle, :int, :pointer, :size_t], :bool
 
       #SIZE_T WINAPI HeapSize(
       #  _In_  HANDLE hHeap,
@@ -226,6 +472,15 @@ module WinFFI
       #  _In_      DWORD flProtect )
       attach_function 'VirtualAllocEx', [:handle, :pointer, :size_t, MemoryFlags, MemoryProtectionConstants], :pointer
 
+      #LPVOID WINAPI VirtualAllocExNuma(
+      #  _In_      HANDLE hProcess,
+      #  _In_opt_  LPVOID lpAddress,
+      #  _In_      SIZE_T dwSize,
+      #  _In_      DWORD flAllocationType,
+      #  _In_      DWORD flProtect,
+      #  _In_      DWORD nndPreferred )
+      attach_function 'VirtualAllocExNuma', [:handle, :pointer, :size_t, :dword, :dword, :dword], :pointer
+
       #BOOL WINAPI VirtualFree(
       #  _In_  LPVOID lpAddress,
       #  _In_  SIZE_T dwSize,
@@ -277,30 +532,14 @@ module WinFFI
       #  _In_  SIZE_T dwSize )
       attach_function 'VirtualUnlock', [:pointer, :size_t], :bool
 
+      #void ZeroMemory(
+      #  [in]  PVOID Destination,
+      #  [in]  SIZE_T Length )
       attach_function 'RtlZeroMemory', [:pointer, :size_t], :void
 
       # The LocalDiscard macro from winbase.h
       def LocalDiscard(mem_loc)
         LocalReAlloc(mem_loc, 0, :MOVEABLE)
-      end
-
-      begin
-        #BOOL WINAPI HeapQueryInformation(
-        #  _In_opt_   HANDLE HeapHandle,
-        #  _In_       HEAP_INFORMATION_CLASS HeapInformationClass,
-        #  _Out_      PVOID HeapInformation,
-        #  _In_       SIZE_T HeapInformationLength,
-        #  _Out_opt_  PSIZE_T ReturnLength )
-        attach_function 'HeapQueryInformation', [:handle, :int, :pointer, :size_t, :pointer], :bool
-
-        #BOOL WINAPI HeapSetInformation(
-        #  _In_opt_  HANDLE HeapHandle,
-        #  _In_      HEAP_INFORMATION_CLASS HeapInformationClass,
-        #  _In_      PVOID HeapInformation,
-        #  _In_      SIZE_T HeapInformationLength )
-        attach_function 'HeapSetInformation', [:handle, :int, :pointer, :size_t], :bool
-      rescue FFI::NotFoundError
-        # Windows XP or later
       end
     end
   end

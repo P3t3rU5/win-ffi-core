@@ -425,7 +425,8 @@ module WinFFI
         #BOOL WINAPI WaitMessage(void)
         attach_function 'WaitMessage', [], :bool
 
-        begin
+        if WindowsVersion >= :xp
+
           #long WINAPI BroadcastSystemMessageEx(
           #  _In_         DWORD dwFlags,
           #  _Inout_opt_  LPDWORD lpdwRecipients,
@@ -437,8 +438,7 @@ module WinFFI
                           [BroadcastSystemFlags, BroadcastSystemMessageFlags, :uint, :wparam, :lparam, BSINFO.ptr], :long
           attach_function 'BroadcastSystemMessageExW',
                           [BroadcastSystemFlags, BroadcastSystemMessageFlags, :uint, :wparam, :lparam, BSINFO.ptr], :long
-        rescue FFI::NotFoundError
-          # Windows XP or later
+
         end
       end
     end

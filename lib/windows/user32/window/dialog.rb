@@ -100,7 +100,6 @@ module WinFFI
       IDTRYAGAIN = 10 # The Try Again button was selected.
       IDCONTINUE = 11 # The Continue button was selected.
 
-
       class DLGTEMPLATE < FFI::Struct
         layout :style,           :dword,
                :dwExtendedStyle, :dword,

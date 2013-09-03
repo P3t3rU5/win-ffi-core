@@ -24,18 +24,18 @@ module WinFFI
         attach_function 'GetPropA', [:hwnd, :string], :handle
         attach_function 'GetPropW', [:hwnd, :string], :handle
 
-        #TODO
         #BOOL CALLBACK PropEnumProc(
         #  _In_  HWND hwnd,
         #  _In_  LPCTSTR lpszString,
         #  _In_  HANDLE hData )
+        callback 'PropEnumProc', [:hwnd, :string, :handle], :bool
 
-        #TODO
         #BOOL CALLBACK PropEnumProcEx(
         #  _In_  HWND hwnd,
         #  _In_  LPTSTR lpszString,
         #  _In_  HANDLE hData,
         #  _In_  ULONG_PTR dwData )
+        callback 'PropEnumProcEx', [:hwnd, :string, :handle, :ulong], :bool
 
         #HANDLE WINAPI RemoveProp(
         #  _In_  HWND hWnd,

@@ -413,6 +413,7 @@ module WinFFI
 
     ffi_lib 'kernel32'
 
+    #xp
     #DWORD WINAPI GetLastError(void)
     attach_function 'GetLastError', [], :dword
 
@@ -431,6 +432,7 @@ module WinFFI
     #  _In_      DWORD nSize,
     #  _In_opt_  va_list *Arguments )
     attach_function 'FormatMessageA', [FormatMessageFlags, :pointer, :dword, :dword, :pointer, :dword, :pointer], :dword
+    attach_function 'FormatMessageW', [FormatMessageFlags, :pointer, :dword, :dword, :pointer, :dword, :pointer], :dword
 
     ffi_lib 'user32'
 

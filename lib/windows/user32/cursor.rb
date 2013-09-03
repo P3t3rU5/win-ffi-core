@@ -44,9 +44,6 @@ module WinFFI
       #BOOL WINAPI GetCursorPos( _Out_  LPPOINT lpPoint )
       attach_function 'GetCursorPos', [POINT.ptr], :bool
 
-      #BOOL WINAPI GetPhysicalCursorPos( _Out_  LPPOINT lpPoint )
-      attach_function 'GetPhysicalCursorPos', [POINT.ptr], :bool
-
       #HCURSOR LoadCursor(
       #  __in_opt  HINSTANCE hInstance,
       #  __in      LPCTSTR   lpCursorName)
@@ -65,11 +62,6 @@ module WinFFI
       #  _In_  int Y )
       attach_function 'SetCursorPos', [:int, :int], :bool
 
-      #BOOL WINAPI SetPhysicalCursorPos(
-      #  _In_  int X,
-      #  _In_  int Y )
-      attach_function 'SetPhysicalCursorPos', [:int, :int], :bool
-
       #BOOL WINAPI SetSystemCursor(
       #  _In_  HCURSOR hcur,
       #  _In_  DWORD id )
@@ -78,6 +70,17 @@ module WinFFI
       #int WINAPI ShowCursor( _In_  BOOL bShow )
       attach_function 'ShowCursor', [:bool], :int
 
+      if WindowsVersion >= :vista
+
+        #BOOL WINAPI GetPhysicalCursorPos( _Out_  LPPOINT lpPoint )
+        attach_function 'GetPhysicalCursorPos', [POINT.ptr], :bool
+
+        #BOOL WINAPI SetPhysicalCursorPos(
+        #  _In_  int X,
+        #  _In_  int Y )
+        attach_function 'SetPhysicalCursorPos', [:int, :int], :bool
+
+      end
     end
   end
 end

@@ -102,4 +102,5 @@ end
   painting_drawing
   print
   text
-  transform'.each { |f| require_relative "gdi32/#{f}" }
+  transform
+'.each { |f| require_relative "gdi32/#{f}" }
