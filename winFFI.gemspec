@@ -1,7 +1,7 @@
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
-require 'winffi'
+require 'win-ffi'
 
 Gem::Specification.new do |s|
   s.name          = 'win-ffi'
@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   ==========================================================================
   #{WinFFI::VERSION} Changes:
-    - Corrected Color#== to include alpha
+    - First Version
 
   ==========================================================================
 

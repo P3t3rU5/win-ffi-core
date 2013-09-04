@@ -592,7 +592,7 @@ end
 
 %w'
   window_proc
-  classes
+  class
   configuration
   dialog
   menu

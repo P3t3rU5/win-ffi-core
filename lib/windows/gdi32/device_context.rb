@@ -1,6 +1,6 @@
 module WinFFI
   module Gdi32
-    module Bitmap
+    module DeviceContext
       extend LibBase
       ffi_lib 'gdi32'
 

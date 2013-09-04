@@ -1,7 +1,7 @@
 module WinFFI
   module User32
     module Window
-      module Classes
+      module WindowClass
         extend LibBase
         ffi_lib 'user32'
 
@@ -90,7 +90,7 @@ module WinFFI
           end
 
           def atom
-            @atom = User32::RegisterClassExW(self) unless @atom
+            @atom = WindowClass::RegisterClassExW(self) unless @atom
             raise "RegisterClassEx Error" if @atom == 0
             @atom
           end
