@@ -12,6 +12,7 @@ module WinFFI
         set_windows_pos
         show_window
         track_popup_menu
+        system_metrics
         window_class_style
         window_pos
         window_style
@@ -586,6 +587,17 @@ module WinFFI
           end
         end
       end
+
+      def self.screen_width
+        GetSystemMetrics(SystemMetricsFlags[:CXSCREEN])
+      end
+
+      def self.screen_height
+        GetSystemMetrics(SystemMetricsFlags[:CYSCREEN])
+      end
+
+
+
     end
   end
 end

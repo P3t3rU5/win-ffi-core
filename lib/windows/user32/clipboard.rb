@@ -111,7 +111,6 @@ module WinFFI
         #BOOL WINAPI RemoveClipboardFormatListener( _In_  HWND hwnd )
         attach_function 'RemoveClipboardFormatListener', [:hwnd], :bool
       end
-
     end
   end
 end

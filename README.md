@@ -1,12 +1,12 @@
 # WinFFI
 
+WinFFI is a gem to use the windows API using the ffi gem inspired by windows-pr gem.
+This gem is work in progress
 To install:
 
 ```
 gem install win-ffi
 ```
-
-<a href='http://www.pledgie.com/campaigns/xxxxx'><img alt='Click here to lend your support to: pigment (ruby gem) and make a donation at www.pledgie.com !' src='http://www.pledgie.com/campaigns/18945.png?skin_name=chrome' border='0' /></a>
 
 # License
 
