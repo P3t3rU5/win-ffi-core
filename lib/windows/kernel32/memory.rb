@@ -108,14 +108,6 @@ module WinFFI
       attach_function 'CreateFileMappingA', [:handle, :pointer, :dword, :dword, :dword, :string], :handle
       attach_function 'CreateFileMappingW', [:handle, :pointer, :dword, :dword, :dword, :string], :handle
 
-      #HANDLE WINAPI CreateFileMappingFromApp(
-      #  _In_      HANDLE hFile,
-      #  _In_opt_  PSECURITY_ATTRIBUTES SecurityAttributes,
-      #  _In_      ULONG PageProtection,
-      #  _In_      ULONG64 MaximumSize,
-      #  _In_opt_  PCWSTR Name )
-      attach_function 'CreateFileMappingFromApp', [:handle, :pointer, :ulong, :ulong, :string], :handle
-
       #HANDLE WINAPI CreateFileMappingNuma(
       #  _In_      HANDLE hFile,
       #  _In_opt_  LPSECURITY_ATTRIBUTES lpFileMappingAttributes,
@@ -149,9 +141,6 @@ module WinFFI
 
       #SIZE_T WINAPI GetLargePageMinimum(void)
       attach_function 'GetLargePageMinimum', [], :size_t
-
-      #BOOL WINAPI GetMemoryErrorHandlingCapabilities( _Out_  PULONG Capabilities )
-      attach_function 'GetMemoryErrorHandlingCapabilities', [:pointer], :bool
 
       #BOOL WINAPI GetPhysicallyInstalledSystemMemory( _Out_  PULONGLONG TotalMemoryInKilobytes )
       attach_function 'GetPhysicallyInstalledSystemMemory', [:pointer], :bool
@@ -226,13 +215,6 @@ module WinFFI
       #  _In_      DWORD nndPreferred )
       attach_function 'MapViewOfFileExNuma', [:handle, :dword, :dword, :dword, :size_t, :pointer, :dword], :pointer
 
-      #PVOID WINAPI MapViewOfFileFromApp(
-      #  _In_  HANDLE hFileMappingObject,
-      #  _In_  ULONG DesiredAccess,
-      #  _In_  ULONG64 FileOffset,
-      #  _In_  SIZE_T NumberOfBytesToMap )
-      attach_function 'MapViewOfFileFromApp', [:handle, :ulong, :ulong, :size_t], :pointer
-
       #BOOL WINAPI MapUserPhysicalPages(
       #  _In_  PVOID lpAddress,
       #  _In_  ULONG_PTR NumberOfPages,
@@ -258,20 +240,11 @@ module WinFFI
       attach_function 'OpenFileMappingA', [:dword, :bool, :string], :handle
       attach_function 'OpenFileMappingW', [:dword, :bool, :string], :handle
 
-      #BOOL WINAPI PrefetchVirtualMemory(
-      #  _In_  HANDLE hProcess,
-      #  _In_  ULONG_PTR NumberOfEntries,
-      #  _In_  PWIN32_MEMORY_RANGE_ENTRY VirtualAddresses,
-      #  _In_  ULONG Flags )
-      attach_function 'PrefetchVirtualMemory', [:handle, :ulong, :pointer, :ulong], :bool
-
       #BOOL WINAPI QueryMemoryResourceNotification(
       #  _In_   HANDLE ResourceNotificationHandle,
       #  _Out_  PBOOL ResourceState )
       attach_function 'QueryMemoryResourceNotification', [:handle, :pointer], :bool
 
-      #PVOID WINAPI RegisterBadMemoryNotification( _In_  PBAD_MEMORY_CALLBACK_ROUTINE Callback )
-      attach_function 'RegisterBadMemoryNotification', [:pointer], :pointer
 
       #BOOL WINAPI RemoveSecureMemoryCacheCallback( _In_  PSECURE_MEMORY_CACHE_CALLBACK pfnCallBack )
       attach_function 'RemoveSecureMemoryCacheCallback', [:pointer], :bool
@@ -302,10 +275,6 @@ module WinFFI
 
       #BOOL WINAPI UnmapViewOfFile( _In_  LPCVOID lpBaseAddress )
       attach_function 'UnmapViewOfFile', [:pointer], :bool
-
-      #BOOL WINAPI UnregisterBadMemoryNotification( _In_  PVOID RegistrationHandle )
-      attach_function 'UnregisterBadMemoryNotification', [:pointer], :bool
-
 
       #Global
       #HGLOBAL WINAPI GlobalAlloc(
@@ -536,6 +505,41 @@ module WinFFI
       #  [in]  PVOID Destination,
       #  [in]  SIZE_T Length )
       attach_function 'RtlZeroMemory', [:pointer, :size_t], :void
+
+      if WinFFI::WindowsVersion >= 8
+
+        #HANDLE WINAPI CreateFileMappingFromApp(
+        #  _In_      HANDLE hFile,
+        #  _In_opt_  PSECURITY_ATTRIBUTES SecurityAttributes,
+        #  _In_      ULONG PageProtection,
+        #  _In_      ULONG64 MaximumSize,
+        #  _In_opt_  PCWSTR Name )
+        attach_function 'CreateFileMappingFromApp', [:handle, :pointer, :ulong, :ulong, :string], :handle
+
+        #BOOL WINAPI GetMemoryErrorHandlingCapabilities( _Out_  PULONG Capabilities )
+        attach_function 'GetMemoryErrorHandlingCapabilities', [:pointer], :bool
+
+        #PVOID WINAPI MapViewOfFileFromApp(
+        #  _In_  HANDLE hFileMappingObject,
+        #  _In_  ULONG DesiredAccess,
+        #  _In_  ULONG64 FileOffset,
+        #  _In_  SIZE_T NumberOfBytesToMap )
+        attach_function 'MapViewOfFileFromApp', [:handle, :ulong, :ulong, :size_t], :pointer
+
+        #BOOL WINAPI PrefetchVirtualMemory(
+        #  _In_  HANDLE hProcess,
+        #  _In_  ULONG_PTR NumberOfEntries,
+        #  _In_  PWIN32_MEMORY_RANGE_ENTRY VirtualAddresses,
+        #  _In_  ULONG Flags )
+        attach_function 'PrefetchVirtualMemory', [:handle, :ulong, :pointer, :ulong], :bool
+
+        #PVOID WINAPI RegisterBadMemoryNotification( _In_  PBAD_MEMORY_CALLBACK_ROUTINE Callback )
+        attach_function 'RegisterBadMemoryNotification', [:pointer], :pointer
+
+        #BOOL WINAPI UnregisterBadMemoryNotification( _In_  PVOID RegistrationHandle )
+        attach_function 'UnregisterBadMemoryNotification', [:pointer], :bool
+
+      end
 
       # The LocalDiscard macro from winbase.h
       def LocalDiscard(mem_loc)

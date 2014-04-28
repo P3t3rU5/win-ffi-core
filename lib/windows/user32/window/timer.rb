@@ -10,13 +10,17 @@ module WinFFI
         #  _In_      UINT_PTR uIDEvent )
         attach_function 'KillTimer', [:hwnd, :uint], :bool
 
-        #UINT_PTR WINAPI SetCoalescableTimer(
-        #  _In_opt_  HWND hwnd,
-        #  _In_      UINT_PTR nIDEvent,
-        #  _In_      UINT uElapse,
-        #  _In_opt_  TIMERPROC lpTimerFunc,
-        #  _In_      ULONG uToleranceDelay )
-        attach_function 'SetCoalescableTimer', [:hwnd, :ulong, :uint, :pointer, :ulong], :ulong
+        if WindowsVersion >= 8
+
+          #UINT_PTR WINAPI SetCoalescableTimer(
+          #  _In_opt_  HWND hwnd,
+          #  _In_      UINT_PTR nIDEvent,
+          #  _In_      UINT uElapse,
+          #  _In_opt_  TIMERPROC lpTimerFunc,
+          #  _In_      ULONG uToleranceDelay )
+          attach_function 'SetCoalescableTimer', [:hwnd, :ulong, :uint, :pointer, :ulong], :ulong
+
+        end
 
         #UINT_PTR WINAPI SetTimer(
         #  _In_opt_  HWND hWnd,

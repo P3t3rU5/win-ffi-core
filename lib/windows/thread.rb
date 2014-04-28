@@ -215,10 +215,14 @@ module WinFFI
       attach_function 'AttachThreadInput', [:dword, :dword, :bool], :bool
 
       if WindowsVersion.sp >= 1
+
+        ffi_lib 'kernel32'
+
         #BOOL WINAPI GetThreadIOPendingFlag(
         #  _In_     HANDLE hThread,
         #  _Inout_  PBOOL lpIOIsPending )
         attach_function 'GetThreadIOPendingFlag', [:ulong, :pointer], :bool
+
       end
 
     end

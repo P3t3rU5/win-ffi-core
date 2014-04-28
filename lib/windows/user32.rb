@@ -21,12 +21,17 @@ module WinFFI
     IDI_WINLOGO               = 32517
 
     if WindowsVersion >= :xp
+
       #VOID WINAPI DisableProcessWindowsGhosting(void)
       attach_function 'DisableProcessWindowsGhosting', [], :void
-    end
 
-    #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
-    attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
+      if WindowsVersion >= 8
+
+        #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
+        attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
+
+      end
+    end
 
     #BOOL WINAPI GetUserObjectInformation(
     #  _In_       HANDLE hObj,
