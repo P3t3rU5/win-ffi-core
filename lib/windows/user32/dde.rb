@@ -5,7 +5,6 @@ module WinFFI
 
       ffi_lib 'user32'
 
-
       #BOOL WINAPI DdeAbandonTransaction(
       #  _In_  DWORD idInst,
       #  _In_  HCONV hConv,

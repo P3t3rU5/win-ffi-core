@@ -1,6 +1,6 @@
 module WinFFI
   module Gdi32
-    module MetaFile
+    module Metafile
       extend LibBase
       ffi_lib 'gdi32'
 

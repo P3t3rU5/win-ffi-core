@@ -1,5 +1,4 @@
 module WinFFI
-  extend LibBase
   class PAINTSTRUCT < FFI::Struct
     layout :hdc,         :hdc,
            :fErase,      :bool,

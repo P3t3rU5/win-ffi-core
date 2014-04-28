@@ -1,7 +1,25 @@
 module WinFFI
 	module Gdi32
 		extend LibBase
-		ffi_lib 'gdi32'
+		extend Requirium
+
+    ffi_lib 'gdi32'
+
+    %i'LogBrush PaletteEntry'.each { |f| autorequire_relative f, "gdi32/structs/#{f.to_s.snakecase}" }
+
+    %i'
+      Bitmap
+      Brush
+      DeviceContext
+      FilledShape
+      Metafile
+      MultipleDisplayMonitors
+      Opengl
+      PaintingDrawing
+      Print
+      Text
+      Transform
+    '.each { |f| autorequire_relative f, "gdi32/#{f.to_s.snakecase}" }
 
 		LOGPIXELSX = 88
 		LOGPIXELSY = 90
@@ -89,18 +107,3 @@ module WinFFI
 
 	end
 end
-
-%w'log_brush palette_entry'.each { |f| require_relative "gdi32/structs/#{f}" }
-%w'
-  bitmap
-  brush
-  device_context
-  filled_shape
-  metafile
-  multiple_display_monitors
-  opengl
-  painting_drawing
-  print
-  text
-  transform
-'.each { |f| require_relative "gdi32/#{f}" }

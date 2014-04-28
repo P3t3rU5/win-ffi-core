@@ -3,6 +3,7 @@ module WinFFI
     extend LibBase
 
     ffi_lib 'user32'
+
     DeviceNotifyFlags = enum :device_notify_flags, [
         :WINDOW_HANDLE, 0x00000000, # The hRecipient parameter is a window handle.
 
