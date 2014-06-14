@@ -1,7 +1,6 @@
 require 'ffi'
 
 module WinFFI
-  VERSION = '0.0.2'
   module LibBase
 
     extend FFI::Library
@@ -30,36 +29,3 @@ module WinFFI
     end
   end
 end
-
-%w'
-  point
-  size
-  rect
-  paint_struct
-'.each { |f| require_relative "windows/structs/#{f}" }
-%w'
-  color_types
-  lr
-'.each { |f| require_relative "windows/enums/#{f}" }
-
-%w'
-  system_info
-  gdi32
-  kernel32
-  user32
-  comdlg32
-  device
-  handle
-  power
-  process
-  resource
-  shell
-  string
-'.each { |f| require_relative "windows/#{f}" }
-
-%w'
-  authorization
-  device
-  error
-  thread
-'.each { |f| require_relative "windows/#{f}" } if WinFFI::WindowsVersion >= :xp
