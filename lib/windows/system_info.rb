@@ -133,13 +133,13 @@ module WinFFI
 
       def <=>(version)
         hex <=> case version
-                  when '2000', 2000; 0x0500
-                  when 'xp', :xp; 0x0501
-                  when 'vista', :vista; 0x0600
-                  when '7', 7; 0x0601
-                  when '8', 8; 0x0602
-                  when '8.1', 8.1; 0x0603
-                  else raise ArgumentError
+                  when '2000', 2000    then 0x0500
+                  when 'xp', :xp       then 0x0501
+                  when 'vista', :vista then 0x0600
+                  when '7', 7;         then 0x0601
+                  when '8', 8;         then 0x0602
+                  when '8.1', 8.1;     then 0x0603
+                  else raise ArgumentError, 'Unknown Version'
                 end
       end
 

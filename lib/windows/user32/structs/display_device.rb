@@ -1,6 +1,6 @@
 module WinFFI
   module User32
-    class DISPLAY_DEVICE < FFI::Struct
+    class DisplayDevice < FFI::Struct
       layout :cb,           :dword,
              :DeviceName,   [:char, 32],
              :DeviceString, [:char, 128],

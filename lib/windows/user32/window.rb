@@ -2,22 +2,45 @@ module WinFFI
   module User32
     module Window
       extend LibBase
+      extend Requirium
       ffi_lib 'user32'
 
       typedef :pointer, :hdwp
 
-      %w'
-        animate_window
-        get_window
-        set_windows_pos
-        show_window
-        track_popup_menu
-        system_metrics
-        window_class_style
-        window_pos
-        window_style
-        window_style_ex
-      '.each { |f| require_relative "window/enums/#{f}" }
+      %i'
+        AnimateWindowFlags
+        GetWindowFlags
+        SetWindowsPosFlags
+        ShowWindowFlags
+        SystemMetricsFlags
+        WindowClassStyle
+        WindowStyle
+        WindowStyleEx
+      '.each { |f| autorequire_relative f, "window/enums/#{f.to_s.snakecase}" }
+
+      %i'
+        Configuration
+        Dialog
+        Menu
+        Message
+        Properties
+        Timer
+        WindowClass
+        WindowProc
+      '.each { |f| autorequire_relative f, "window/#{f.to_s.snakecase}" }
+
+      %i'
+        AltTabInfo
+        CreateStruct
+        FlashwInfo
+        GuiThreadInfo
+        TitleBarInfo
+        UpdateLayeredWindowInfo
+        WindowPlacement
+        WindowPos
+      '.each { |f| autorequire_relative f, "window/structs/#{f.to_s.snakecase}" }
+
+      autorequire_relative :TrackPopupMenuFlags, 'window/enums/track_popup_menu_flags' if WindowsVersion >= 7
 
       GetAncestorFlags = enum :get_ancestor_flags, [
           :PARENT,    1,
@@ -42,34 +65,21 @@ module WinFFI
           :Process_Per_Monitor_DPI_Aware, 2, # Per monitor DPI aware
       ]
 
-      %w'
-        create_struct
-        window_placement
-        window_pos
-        info
-      '.each { |f| require_relative "window/structs/#{f}" }
-
       #BOOL WINAPI AdjustWindowRect(
       # _Inout_  LPRECT lpRect,
       # _In_     DWORD dwStyle, // except WS_OVERLAPPED
       # _In_     BOOL bMenu )
-      attach_function 'AdjustWindowRect', [RECT.ptr, WindowStyle, :bool], :bool
+      attach_function 'AdjustWindowRect', [WinFFI::RECT.ptr, WindowStyle, :bool], :bool
 
       #BOOL WINAPI AdjustWindowRectEx(
       # _Inout_  LPRECT lpRect,
       # _In_     DWORD dwStyle, // except WS_OVERLAPPED
       # _In_     BOOL bMenu,
       # _In_     DWORD dwExStyle )
-      attach_function 'AdjustWindowRectEx', [RECT.ptr, WindowStyle, :bool, WindowStyleEx], :bool
+      attach_function 'AdjustWindowRectEx', [WinFFI::RECT.ptr, WindowStyle, :bool, WindowStyleEx], :bool
 
       # BOOL WINAPI AllowSetForegroundWindow( _In_  DWORD dwProcessId )
       attach_function 'AllowSetForegroundWindow', [:dword], :bool
-
-      #BOOL WINAPI AnimateWindow(
-      # _In_  HWND hwnd,
-      # _In_  DWORD dwTime,
-      # _In_  DWORD dwFlags )
-      attach_function 'AnimateWindow', [:hwnd, :dword, AnimateWindowFlags], :bool
 
       #BOOL WINAPI AnyPopup( void )
       attach_function 'AnyPopup', [ ], :bool
@@ -89,7 +99,7 @@ module WinFFI
       #  _In_opt_  const RECT *lpRect,
       #  _In_      UINT cKids,
       #  _In_opt_  const HWND *lpKids )
-      attach_function 'CascadeWindows', [:hwnd, :uint, RECT.ptr, :uint, :pointer], :word
+      attach_function 'CascadeWindows', [:hwnd, :uint, WinFFI::RECT.ptr, :uint, :pointer], :word
 
       #HWND WINAPI ChildWindowFromPoint(
       #  _In_  HWND hWndParent,
@@ -231,7 +241,7 @@ module WinFFI
       attach_function 'FlashWindow', [:hwnd, :bool], :bool
 
       #BOOL WINAPI FlashWindowEx( _In_  PFLASHWINFO pfwi )
-      attach_function 'FlashWindowEx', [FLASHWINFO.ptr], :bool
+      attach_function 'FlashWindowEx', [FlashwInfo.ptr], :bool
 
       #BOOL WINAPI GetAltTabInfo(
       #  _In_opt_   HWND hwnd,
@@ -239,8 +249,8 @@ module WinFFI
       #  _Inout_    PALTTABINFO pati,
       #  _Out_opt_  LPTSTR pszItemText,
       #  _In_       UINT cchItemText )
-      attach_function 'GetAltTabInfoA', [:hwnd, :int, ALTTABINFO.ptr, :string, :uint], :bool
-      attach_function 'GetAltTabInfoW', [:hwnd, :int, ALTTABINFO.ptr, :string, :uint], :bool
+      attach_function 'GetAltTabInfoA', [:hwnd, :int, AltTabInfo.ptr, :string, :uint], :bool
+      attach_function 'GetAltTabInfoW', [:hwnd, :int, AltTabInfo.ptr, :string, :uint], :bool
 
       #HWND WINAPI GetAncestor(
       #  _In_  HWND hwnd,
@@ -250,7 +260,7 @@ module WinFFI
       #BOOL GetClientRect(
       #  __in   HWND   hWnd,
       #  __out  LPRECT lpRect)
-      attach_function 'GetClientRect', [:hwnd, RECT.ptr], :bool
+      attach_function 'GetClientRect', [:hwnd, WinFFI::RECT.ptr], :bool
 
       #HWND GetDesktopWindow(void)
       attach_function 'GetDesktopWindow', [], :hwnd
@@ -261,15 +271,10 @@ module WinFFI
       #BOOL WINAPI GetGUIThreadInfo(
       #  _In_     DWORD idThread,
       #  _Inout_  LPGUITHREADINFO lpgui )
-      attach_function 'GetGUIThreadInfo', [:dword, GUITHREADINFO.ptr], :bool
+      attach_function 'GetGUIThreadInfo', [:dword, GuiThreadInfo.ptr], :bool
 
       #HWND WINAPI GetLastActivePopup( _In_  HWND hWnd )
       attach_function 'GetLastActivePopup', [:hwnd], :hwnd
-
-      #HWND WINAPI GetNextWindow(
-      #  _In_  HWND hWnd,
-      #  _In_  UINT wCmd )
-      #attach_function 'GetNextWindow', [:hwnd, GetWindowFlags], :hwnd
 
       #HWND WINAPI GetParent( _In_  HWND hWnd )
       attach_function 'GetParent', [:hwnd], :hwnd
@@ -289,15 +294,10 @@ module WinFFI
       #BOOL WINAPI GetTitleBarInfo(
       #  _In_     HWND hwnd,
       #  _Inout_  PTITLEBARINFO pti )
-      attach_function 'GetTitleBarInfo', [:hwnd, TITLEBARINFO.ptr], :bool
+      attach_function 'GetTitleBarInfo', [:hwnd, TitleBarInfo.ptr], :bool
 
       #HWND WINAPI GetTopWindow(   _In_opt_  HWND hWnd )
       attach_function 'GetTopWindow', [:hwnd], :hwnd
-
-      #HWND WINAPI GetWindow(
-      #  _In_  HWND hWnd,
-      #  _In_  UINT uCmd )
-      attach_function 'GetWindow', [:hwnd, GetWindowFlags], :hwnd
 
       #TODO
       #BOOL GetWindowInfo(
@@ -316,12 +316,12 @@ module WinFFI
       #BOOL GetWindowPlacement(
       #  __in     HWND             hWnd,
       #  __inout  WINDOWPLACEMENT *lpwndpl)
-      attach_function 'GetWindowPlacement', [:hwnd, WINDOWPLACEMENT.ptr], :bool
+      attach_function 'GetWindowPlacement', [:hwnd, WindowPlacement.ptr], :bool
 
       #BOOL GetWindowRect(
       #  __in   HWND   hWnd,
       #  __out  LPRECT lpRect)
-      attach_function 'GetWindowRect', [:hwnd, RECT.ptr], :void
+      attach_function 'GetWindowRect', [:hwnd, WinFFI::RECT.ptr], :void
 
       #int WINAPI GetWindowText(
       #  _In_   HWND hWnd,
@@ -426,17 +426,7 @@ module WinFFI
       #BOOL SetWindowPlacement(
       #  __in     HWND             hWnd,
       #  __inout  WINDOWPLACEMENT *lpwndpl)
-      attach_function 'SetWindowPlacement', [:hwnd, WINDOWPLACEMENT.ptr], :bool
-
-      #BOOL WINAPI SetWindowPos(
-      #  _In_      HWND hWnd,
-      #  _In_opt_  HWND hWndInsertAfter,
-      #  _In_      int X,
-      #  _In_      int Y,
-      #  _In_      int cx,
-      #  _In_      int cy,
-      #  _In_      UINT uFlags )
-      attach_function 'SetWindowPos', [:hwnd, :hwnd, :int, :int, :int, :int, SetWindowsPosFlags], :bool
+      attach_function 'SetWindowPlacement', [:hwnd, WindowPlacement.ptr], :bool
 
       #BOOL WINAPI SetWindowText(
       #  __in      HWND    hWnd,
@@ -471,7 +461,7 @@ module WinFFI
       #  _In_opt_  const RECT *lpRect,
       #  _In_      UINT cKids,
       #  _In_opt_  const HWND *lpKids )
-      attach_function 'TileWindows', [:hwnd, :uint, RECT.ptr, :uint, :pointer], :word
+      attach_function 'TileWindows', [:hwnd, :uint, WinFFI::RECT.ptr, :uint, :pointer], :word
 
       #BOOL WINAPI UpdateLayeredWindow(
       #  _In_      HWND hwnd,
@@ -517,7 +507,7 @@ module WinFFI
           #BOOL WINAPI GetWindowMinimizeRect (
           #  HWND hwndToQuery,
           #  RECT* pRect )
-          attach_function 'GetWindowMinimizeRect', [:hwnd, RECT.ptr], :bool
+          attach_function 'GetWindowMinimizeRect', [:hwnd, WinFFI::RECT.ptr], :bool
 
           #BOOL WINAPI IsProcessDPIAware(void)
           attach_function 'IsProcessDPIAware', [], :bool
@@ -541,20 +531,12 @@ module WinFFI
           #BOOL WINAPI UpdateLayeredWindowIndirect(
           #  _In_  HWND hwnd,
           #  _In_  const UPDATELAYEREDWINDOWINFO *pULWInfo )
-          attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UPDATELAYEREDWINDOWINFO.ptr], :bool
+          attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UpdateLayeredWindowInfo.ptr], :bool
 
           #HWND WINAPI WindowFromPhysicalPoint( _In_  POINT Point )
           attach_function 'WindowFromPhysicalPoint', [POINT], :hwnd
 
           if WindowsVersion >= 7
-
-            #BOOL WINAPI CalculatePopupWindowPosition(
-            #  _In_      const POINT *anchorPoint,
-            #  _In_      const SIZE *windowSize,
-            #  _In_      UINT flags,
-            #  _In_opt_  RECT *excludeRect,
-            #  _Out_     RECT *popupWindowPosition )
-            attach_function 'CalculatePopupWindowPosition', [:pointer, :pointer, TrackPopupMenuFlags, RECT.ptr, RECT.ptr], :bool
 
             #BOOL WINAPI ChangeWindowMessageFilterEx(
             #  _In_         HWND hWnd,
@@ -595,20 +577,7 @@ module WinFFI
       def self.screen_height
         GetSystemMetrics(SystemMetricsFlags[:CYSCREEN])
       end
-
-
-
     end
   end
 end
 
-%w'
-  window_proc
-  class
-  configuration
-  dialog
-  menu
-  message
-  properties
-  timer
-'.each { |f| require_relative "window/#{f}" }

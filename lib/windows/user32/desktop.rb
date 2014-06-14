@@ -5,7 +5,6 @@ module WinFFI
 
       ffi_lib 'user32'
 
-
       #BOOL WINAPI CloseDesktop( _In_  HDESK hDesktop )
       attach_function 'CloseDesktop', [:hdesk], :bool
 

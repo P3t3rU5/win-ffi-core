@@ -1,5 +1,4 @@
 module WinFFI
-  extend LibBase
 
   LR = enum :lr, [
           :DEFAULTCOLOR, 0x00000000, # The default flag; it does nothing. All it means is "not :MONOCHROME".
