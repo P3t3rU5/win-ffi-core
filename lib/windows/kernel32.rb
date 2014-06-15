@@ -1,7 +1,6 @@
 module WinFFI
   module Kernel32
     extend LibBase
-    extend Requirium
 
     %i'
       Memory
@@ -9,8 +8,8 @@ module WinFFI
       Time
     '.each { |f| autorequire_relative f, "kernel32/#{f.to_s.snakecase}" }
 
-        %i'
-      Dll
+    %i'
+      DLL
       Filesystem
       Memory
       Volume

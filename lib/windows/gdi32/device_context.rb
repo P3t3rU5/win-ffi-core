@@ -2,6 +2,7 @@ module WinFFI
   module Gdi32
     module DeviceContext
       extend LibBase
+
       ffi_lib 'gdi32'
 
       DRIVERVERSION = 0

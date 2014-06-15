@@ -3,6 +3,7 @@ module WinFFI
     module Window
       module WindowClass
         extend LibBase
+
         ffi_lib 'user32'
 
         #User32::ClassLong
@@ -49,9 +50,10 @@ module WinFFI
             :USERDATA,  -21, #Sets the user data associated with the window. This data is intended for use by the
                              # application that created the window. Its value is initially zero.
         ]
+
         class WNDCLASS < FFI::Struct
           layout :style,         :uint,
-                 :lpfnWndProc,   WindowProc::WindowProc,
+                 :lpfnWndProc,   Window::WindowProc::WindowProc,
                  :cbClsExtra,    :int,
                  :cbWndExtra,    :int,
                  :hInstance,     :hinstance,
@@ -67,7 +69,7 @@ module WinFFI
         class WNDCLASSEX < FFI::Struct
           layout :cbSize,        :uint,
                  :style,         :uint,
-                 :lpfnWndProc,   WindowProc::WindowProc,
+                 :lpfnWndProc,   Window::WindowProc::WindowProc,
                  :cbClsExtra,    :int,
                  :cbWndExtra,    :int,
                  :hInstance,     :hinstance,

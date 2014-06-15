@@ -1,7 +1,6 @@
 module WinFFI
 	module Gdi32
 		extend LibBase
-		extend Requirium
 
     ffi_lib 'gdi32'
 

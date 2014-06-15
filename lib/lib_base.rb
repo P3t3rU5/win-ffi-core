@@ -20,6 +20,7 @@ module WinFFI
 
     def self.extended(c)
       c.extend FFI::Library
+      c.extend Requirium
       instance_variables.each do |v|
         value = instance_variable_get(v)
         value = value.dup unless value.is_a?(Fixnum) || value.is_a?(Symbol)

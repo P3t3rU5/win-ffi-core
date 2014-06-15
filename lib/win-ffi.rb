@@ -1,8 +1,7 @@
 require 'requirium'
 
 module WinFFI
-  VERSION = '0.0.2'
-  extend Requirium
+  VERSION = '0.0.3'
 
   require_relative 'lib_base'
   extend LibBase

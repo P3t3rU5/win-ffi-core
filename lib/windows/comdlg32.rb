@@ -1,7 +1,6 @@
 module WinFFI
   module Comdlg32
     extend LibBase
-    extend Requirium
 
     ffi_lib 'Comdlg32'
 

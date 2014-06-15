@@ -2,7 +2,7 @@ module WinFFI
   module User32
     module Window
       extend LibBase
-      extend Requirium
+
       ffi_lib 'user32'
 
       typedef :pointer, :hdwp
