@@ -10,7 +10,7 @@ module WinFFI
       %i'
         AnimateWindowFlags
         GetWindowFlags
-        SetWindowsPosFlags
+        SetWindowPosFlags
         ShowWindowFlags
         SystemMetricsFlags
         WindowClassStyle
@@ -286,7 +286,7 @@ module WinFFI
       attach_function 'GetShellWindow', [], :hwnd
 
       #DWORD WINAPI GetSysColor( _In_  int nIndex )
-      attach_function 'GetSysColor', [ColorTypes], :dword
+      attach_function 'GetSysColor', [WinFFI::ColorTypes], :dword
 
       #int WINAPI GetSystemMetrics( _In_  int nIndex )
       attach_function 'GetSystemMetrics', [:int], :int
@@ -386,7 +386,7 @@ module WinFFI
       #HWND WINAPI RealChildWindowFromPoint(
       #  _In_  HWND hwndParent,
       #  _In_  POINT ptParentClientCoords )
-      attach_function 'RealChildWindowFromPoint', [:hwnd, POINT], :hwnd
+      attach_function 'RealChildWindowFromPoint', [:hwnd, WinFFI::POINT], :hwnd
 
       #UINT WINAPI RealGetWindowClass(
       #  _In_   HWND hwnd,
@@ -434,6 +434,8 @@ module WinFFI
       attach_function 'SetWindowTextA', [:hwnd, :string], :bool
       attach_function 'SetWindowTextW', [:hwnd, :string], :bool
 
+      puts 'here'
+
       #BOOL WINAPI ShowOwnedPopups(
       #  _In_  HWND hWnd,
       #  _In_  BOOL fShow )
@@ -442,7 +444,7 @@ module WinFFI
       #BOOL ShowWindow(
       #  __in  HWND hWnd,
       #  __in  int  nCmdShow)
-      attach_function 'ShowWindow', [:hwnd, :int], :bool
+      attach_function 'ShowWindow', [:hwnd, ShowWindowFlags], :bool
 
       #BOOL WINAPI ShowWindowAsync(
       #  _In_  HWND hWnd,
@@ -473,10 +475,10 @@ module WinFFI
       #  _In_      COLORREF crKey,
       #  _In_opt_  BLENDFUNCTION *pblend,
       #  _In_      DWORD dwFlags )
-      attach_function 'UpdateLayeredWindow', [:hwnd, :hdc, POINT.ptr, SIZE.ptr, :hdc, POINT.ptr, :colorref, :pointer, LayeredWindowAttributesFlags], :bool
+      attach_function 'UpdateLayeredWindow', [:hwnd, :hdc, WinFFI::POINT.ptr, WinFFI::SIZE.ptr, :hdc, WinFFI::POINT.ptr, :colorref, :pointer, LayeredWindowAttributesFlags], :bool
 
       #HWND WINAPI WindowFromPoint( _In_  POINT Point )
-      attach_function 'WindowFromPoint', [POINT], :hwnd
+      attach_function 'WindowFromPoint', [WinFFI::POINT], :hwnd
 
       #int CALLBACK WinMain(
       #  _In_  HINSTANCE hInstance,
@@ -515,12 +517,12 @@ module WinFFI
           #BOOL WINAPI LogicalToPhysicalPoint(
           #  _In_     HWND hWnd,
           #  _Inout_  LPPOINT lpPoint )
-          attach_function 'LogicalToPhysicalPoint', [:hwnd, POINT.ptr], :bool
+          attach_function 'LogicalToPhysicalPoint', [:hwnd, WinFFI::POINT.ptr], :bool
 
           #BOOL WINAPI PhysicalToLogicalPoint(
           #  _In_     HWND hWnd,
           #  _Inout_  LPPOINT lpPoint )
-          attach_function 'PhysicalToLogicalPoint', [:hwnd, POINT.ptr], :bool
+          attach_function 'PhysicalToLogicalPoint', [:hwnd, WinFFI::POINT.ptr], :bool
 
           #BOOL WINAPI SetProcessDPIAware(void)
           attach_function 'SetProcessDPIAware', [], :bool
@@ -534,7 +536,7 @@ module WinFFI
           attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UpdateLayeredWindowInfo.ptr], :bool
 
           #HWND WINAPI WindowFromPhysicalPoint( _In_  POINT Point )
-          attach_function 'WindowFromPhysicalPoint', [POINT], :hwnd
+          attach_function 'WindowFromPhysicalPoint', [WinFFI::POINT], :hwnd
 
           if WindowsVersion >= 7
 
