@@ -53,7 +53,7 @@ module WinFFI
 
         class WNDCLASS < FFI::Struct
           layout :style,         :uint,
-                 :lpfnWndProc,   Window::WindowProc::WindowProc,
+                 :lpfnWndProc,   User32::Window::WindowProc::WindowProc,
                  :cbClsExtra,    :int,
                  :cbWndExtra,    :int,
                  :hInstance,     :hinstance,
@@ -69,7 +69,7 @@ module WinFFI
         class WNDCLASSEX < FFI::Struct
           layout :cbSize,        :uint,
                  :style,         :uint,
-                 :lpfnWndProc,   Window::WindowProc::WindowProc,
+                 :lpfnWndProc,   User32::Window::WindowProc::WindowProc,
                  :cbClsExtra,    :int,
                  :cbWndExtra,    :int,
                  :hInstance,     :hinstance,

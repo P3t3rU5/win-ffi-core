@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
 
 gem 'ffi'
-gem 'requirium'
+gem 'facets'
+# gem 'requirium'

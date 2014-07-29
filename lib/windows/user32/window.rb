@@ -7,41 +7,6 @@ module WinFFI
 
       typedef :pointer, :hdwp
 
-      %i'
-        AnimateWindowFlags
-        GetWindowFlags
-        SetWindowPosFlags
-        ShowWindowFlags
-        SystemMetricsFlags
-        WindowClassStyle
-        WindowStyle
-        WindowStyleEx
-      '.each { |f| autorequire_relative f, "window/enums/#{f.to_s.snakecase}" }
-
-      %i'
-        Configuration
-        Dialog
-        Menu
-        Message
-        Properties
-        Timer
-        WindowClass
-        WindowProc
-      '.each { |f| autorequire_relative f, "window/#{f.to_s.snakecase}" }
-
-      %i'
-        AltTabInfo
-        CreateStruct
-        FlashwInfo
-        GuiThreadInfo
-        TitleBarInfo
-        UpdateLayeredWindowInfo
-        WindowPlacement
-        WindowPos
-      '.each { |f| autorequire_relative f, "window/structs/#{f.to_s.snakecase}" }
-
-      autorequire_relative :TrackPopupMenuFlags, 'window/enums/track_popup_menu_flags' if WindowsVersion >= 7
-
       GetAncestorFlags = enum :get_ancestor_flags, [
           :PARENT,    1,
           :ROOT,      2,
@@ -64,6 +29,40 @@ module WinFFI
           :Process_System_DPI_Aware,      1, # System DPI aware
           :Process_Per_Monitor_DPI_Aware, 2, # Per monitor DPI aware
       ]
+
+      %i'
+        AnimateWindowFlags
+        GetWindowFlags
+        SetWindowPosFlags
+        ShowWindowFlags
+        SystemMetricsFlags
+        WindowClassStyle
+        WindowStyle
+        WindowStyleEx
+        TrackPopupMenuFlags
+      '.each { |f| require_relative "window/enums/#{f.to_s.snakecase}" }
+
+      %i'
+        AltTabInfo
+        CreateStruct
+        FlashwInfo
+        GuiThreadInfo
+        TitleBarInfo
+        UpdateLayeredWindowInfo
+        WindowPlacement
+        WindowPos
+      '.each { |f| require_relative  "window/structs/#{f.to_s.snakecase}" }
+
+      %i'
+        Configuration
+        Dialog
+        Menu
+        Message
+        Properties
+        Timer
+        WindowProc
+        WindowClass
+      '.each { |f| require_relative "window/#{f.to_s.snakecase}" }
 
       #BOOL WINAPI AdjustWindowRect(
       # _Inout_  LPRECT lpRect,
@@ -539,6 +538,14 @@ module WinFFI
           attach_function 'WindowFromPhysicalPoint', [WinFFI::POINT], :hwnd
 
           if WindowsVersion >= 7
+
+            #BOOL WINAPI CalculatePopupWindowPosition(
+            #  _In_      const POINT *anchorPoint,
+            #  _In_      const SIZE *windowSize,
+            #  _In_      UINT flags,
+            #  _In_opt_  RECT *excludeRect,
+            #  _Out_     RECT *popupWindowPosition )
+            attach_function 'CalculatePopupWindowPosition', [:pointer, :pointer, TrackPopupMenuFlags, RECT.ptr, RECT.ptr], :bool
 
             #BOOL WINAPI ChangeWindowMessageFilterEx(
             #  _In_         HWND hWnd,

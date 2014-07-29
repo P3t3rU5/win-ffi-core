@@ -8,7 +8,7 @@ module WinFFI
       Color
       FindReplace
       Font
-    '.each { |f| autorequire_relative f, "comdlg32/#{f.to_s.snakecase}" }
+    '.each { |f| require_relative "comdlg32/#{f.to_s.snakecase}" }
 
     #DWORD WINAPI CommDlgExtendedError(void)
     attach_function 'CommDlgExtendedError', [], :dword

@@ -8,12 +8,12 @@ module WinFFI
       MWMO
       QueueStatusFlags
       UserObjectInformationFlags
-    '.each { |f| autorequire_relative f, "user32/enums/#{f.to_s.snakecase}" }
+    '.each { |f| require_relative "user32/enums/#{f.to_s.snakecase}" }
 
     %i'
       DisplayDevice
       MSG
-    '.each { |f| autorequire_relative f, "user32/structs/#{f.to_s.snakecase}" }
+    '.each { |f| require_relative "user32/structs/#{f.to_s.snakecase}" }
 
     %i'
       Caret
@@ -30,31 +30,31 @@ module WinFFI
       Rect
       Window
       WindowStation
-    '.each { |f| autorequire_relative f, "user32/#{f.to_s.snakecase}" }
+    '.each { |f| require_relative "user32/#{f.to_s.snakecase}" }
 
     %i'
       Button
       ComboBox
       ListBox
       Scrollbar
-    '.each { |f| autorequire_relative f, "user32/controls/#{f.to_s.snakecase}" }
+    '.each { |f| require_relative "user32/controls/#{f.to_s.snakecase}" }
 
     if WinFFI::WindowsVersion >= :xp
-      autorequire_relative :RawInput, 'user32/raw_input'
+      require_relative 'user32/raw_input'
       
       #VOID WINAPI DisableProcessWindowsGhosting(void)
       attach_function 'DisableProcessWindowsGhosting', [], :void
       
       if WinFFI::WindowsVersion >= :vista
-        autorequire_relative :Display, 'user32/display'
+        require_relative 'user32/display'
         if WinFFI::WindowsVersion >= 7
-          %i'Gesture Touch'.each { |f| autorequire_relative f, "user32/#{f.to_s.snakecase}" }
+          %i'Gesture Touch'.each { |f| require_relative "user32/#{f.to_s.snakecase}" }
           if WinFFI::WindowsVersion >= 8
             %i'
               Pointer
               Input
               Accessibility
-            '.each { |f| autorequire_relative f, "user32/#{f.to_s.snakecase}" }
+            '.each { |f| require_relative "user32/#{f.to_s.snakecase}" }
 
             #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
             attach_function 'GetCurrentInputMessageSource', [:pointer], :bool

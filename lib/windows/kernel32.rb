@@ -6,14 +6,14 @@ module WinFFI
       Memory
       Sound
       Time
-    '.each { |f| autorequire_relative f, "kernel32/#{f.to_s.snakecase}" }
+    '.each { |f| require_relative "kernel32/#{f.to_s.snakecase}" }
 
     %i'
       DLL
       Filesystem
       Memory
       Volume
-    '.each { |f| autorequire_relative f, "kernel32/#{f.to_s.snakecase}" } if WinFFI::WindowsVersion >= :xp
+    '.each { |f| require_relative  "kernel32/#{f.to_s.snakecase}" } if WinFFI::WindowsVersion >= :xp
   end
 end
 

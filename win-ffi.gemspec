@@ -14,7 +14,8 @@ Gem::Specification.new do |s|
   s.require_paths = %w'lib'
   s.files         = Dir['{lib/**/*.rb,*.md}']
   s.add_dependecy 'ffi'
-  s.add_dependecy 'requirium'
+  s.add_dependecy 'facets'
+  # s.add_dependecy 'requirium'
   s.post_install_message = <<-eos
 +----------------------------------------------------------------------------+
   Thanks for choosing WinFFI.

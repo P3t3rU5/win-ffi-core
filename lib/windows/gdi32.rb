@@ -4,7 +4,7 @@ module WinFFI
 
     ffi_lib 'gdi32'
 
-    %i'LogBrush PaletteEntry'.each { |f| autorequire_relative f, "gdi32/structs/#{f.to_s.snakecase}" }
+    %i'LogBrush PaletteEntry'.each { |f| require_relative "gdi32/structs/#{f.to_s.snakecase}" }
 
     %i'
       Bitmap
@@ -18,7 +18,7 @@ module WinFFI
       Print
       Text
       Transform
-    '.each { |f| autorequire_relative f, "gdi32/#{f.to_s.snakecase}" }
+    '.each { |f| require_relative "gdi32/#{f.to_s.snakecase}" }
 
 		LOGPIXELSX = 88
 		LOGPIXELSY = 90
