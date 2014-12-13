@@ -50,6 +50,15 @@ module WinFFI
       attach_function 'GetTimeFormatA', [:ulong, :ulong, :pointer, :string, :pointer, :int], :int
       attach_function 'GetTimeFormatW', [:ulong, :ulong, :pointer, :string, :pointer, :int], :int
 
+      # int GetTimeFormatEx(
+      #     _In_opt_   LPCWSTR lpLocaleName,
+      #     _In_       DWORD dwFlags,
+      #     _In_opt_   const SYSTEMTIME *lpTime,
+      #     _In_opt_   LPCWSTR lpFormat,
+      #     _Out_opt_  LPWSTR lpTimeStr,
+      #     _In_       int cchTime )
+      attach_function 'GetTimeFormatEx', [:string, :dword, :pointer, :string, :string, :int],  :int
+
       #DWORD WINAPI GetTimeZoneInformation( _Out_  LPTIME_ZONE_INFORMATION lpTimeZoneInformation )
       attach_function 'GetTimeZoneInformation', [:pointer], :dword
 

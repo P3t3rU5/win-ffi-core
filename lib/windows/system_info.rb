@@ -538,5 +538,4 @@ module WinFFI
       LOBYTE(LOWORD(version)) == 6 && HIBYTE(LOWORD(version)) == 3
     end
   end
-
 end
