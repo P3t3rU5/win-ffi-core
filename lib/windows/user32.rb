@@ -4,29 +4,77 @@ module WinFFI
 
     ffi_lib 'user32'
 
-    %w'
-      mwmo
-      queue_status
-      user_object_information
-    '.each { |f| require_relative "user32/enums/#{f}" }
+    %i'
+      MWMO
+      QueueStatusFlags
+      UserObjectInformationFlags
+    '.each { |f| require_relative "user32/enums/#{f.to_s.snakecase}" }
 
-    %w'
-      display_device
-      msg
-    '.each { |f| require_relative "user32/structs/#{f}" }
+    %i'
+      DisplayDevice
+      MSG
+    '.each { |f| require_relative "user32/structs/#{f.to_s.snakecase}" }
 
-    CW_USEDEFAULT             = -0x80000000
-    IDC_ARROW                 = 32512
-    IDI_APPLICATION           = 32512
-    IDI_WINLOGO               = 32517
+    %i'
+      Caret
+      Clipboard
+      Cursor
+      DDE
+      Desktop
+      Hook
+      Icon
+      Keyboard
+      KeyboardAccelerators
+      Mouse
+      MultipleDocumentInterface
+      Rect
+      Window
+      WindowStation
+    '.each { |f| require_relative "user32/#{f.to_s.snakecase}" }
 
-    if WindowsVersion >= :xp
+    %i'
+      Button
+      ComboBox
+      ListBox
+      Scrollbar
+    '.each { |f| require_relative "user32/controls/#{f.to_s.snakecase}" }
+
+    if WinFFI::WindowsVersion >= :xp
+      require_relative 'user32/raw_input'
+      
       #VOID WINAPI DisableProcessWindowsGhosting(void)
       attach_function 'DisableProcessWindowsGhosting', [], :void
+      
+      if WinFFI::WindowsVersion >= :vista
+        require_relative 'user32/display'
+        if WinFFI::WindowsVersion >= 7
+          %i'Gesture Touch'.each { |f| require_relative "user32/#{f.to_s.snakecase}" }
+          if WinFFI::WindowsVersion >= 8
+            %i'
+              Pointer
+              Input
+              Accessibility
+            '.each { |f| require_relative "user32/#{f.to_s.snakecase}" }
+
+            #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
+            attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
+
+          end
+        end
+      end
+
+      if WindowsVersion >= 8
+
+        #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
+        attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
+
+      end
     end
 
-    #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
-    attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
+    CW_USEDEFAULT   = -0x80000000
+    IDC_ARROW       = 32512
+    IDI_APPLICATION = 32512
+    IDI_WINLOGO     = 32517
 
     #BOOL WINAPI GetUserObjectInformation(
     #  _In_       HANDLE hObj,
@@ -109,44 +157,3 @@ module WinFFI
 
   end
 end
-
-%w'
-  caret
-  clipboard
-  cursor
-  dde
-  desktop
-  hook
-  icon
-  keyboard
-  keyboard_accelerators
-  mouse
-  multiple_document_interface
-  raw_input
-  rect
-  window
-  window_station
-  controls/button
-  controls/combo_box
-  controls/list_box
-  controls/scrollbar
-'.each { |f| require_relative "user32/#{f}" }
-
-if WinFFI::WindowsVersion >= :xp
-  require_relative 'user32/raw_input'
-  if WinFFI::WindowsVersion >= :vista
-    require_relative 'user32/display'
-    if WinFFI::WindowsVersion >= 7
-      %w'gesture touch'.each { |f| require_relative "user32/#{f}" }
-      if WinFFI::WindowsVersion >= 8
-        %w'
-          pointer
-          input
-          accessibility
-        '.each { |f| require_relative "user32/#{f}" }
-      end
-    end
-  end
-end
-
-

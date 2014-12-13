@@ -65,15 +65,6 @@ module WinFFI
           # window is restricted to the work area only if the input point is within the work area. For more information,
           # see the rcWork and rcMonitor members of the MONITORINFO structure.
       ]
-
-      #BOOL WINAPI CalculatePopupWindowPosition(
-      #  _In_      const POINT *anchorPoint,
-      #  _In_      const SIZE *windowSize,
-      #  _In_      UINT flags,
-      #  _In_opt_  RECT *excludeRect,
-      #  _Out_     RECT *popupWindowPosition )
-      attach_function 'CalculatePopupWindowPosition', [:pointer, :pointer, TrackPopupMenuFlags, RECT.ptr, RECT.ptr], :bool
-
     end
   end
 end

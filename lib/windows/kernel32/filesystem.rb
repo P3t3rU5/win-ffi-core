@@ -1,6 +1,6 @@
 module WinFFI
   module Kernel32
-    module FileSystem
+    module Filesystem
       extend LibBase
 
       ffi_lib 'kernel32'

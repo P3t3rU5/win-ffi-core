@@ -1,7 +1,7 @@
 module WinFFI
   module User32
     module Window
-      SetWindowsPosFlags = enum :set_windows_pos_flags, [
+      SetWindowPosFlags = enum :set_windows_pos_flags, [
           :NOSIZE, 0x0001, # Retains the current size (ignores the cx and cy parameters).
 
           :NOMOVE, 0x0002, # Retains the current position (ignores X and Y parameters).
@@ -44,6 +44,16 @@ module WinFFI
                                    # thread from blocking its execution while other threads process the request.
 
       ]
+
+      #BOOL WINAPI SetWindowPos(
+      #  _In_      HWND hWnd,
+      #  _In_opt_  HWND hWndInsertAfter,
+      #  _In_      int X,
+      #  _In_      int Y,
+      #  _In_      int cx,
+      #  _In_      int cy,
+      #  _In_      UINT uFlags )
+      attach_function 'SetWindowPos', [:hwnd, :hwnd, :int, :int, :int, :int, SetWindowPosFlags], :bool
     end
   end
 end

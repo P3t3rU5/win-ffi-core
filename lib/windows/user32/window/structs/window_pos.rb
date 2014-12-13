@@ -1,7 +1,7 @@
 module WinFFI
   module User32
     module Window
-      class WINDOWPOS < FFI::Struct
+      class WindowPos < FFI::Struct
         FLAGS_INV = SetWindowPosFlags.to_hash.reduce(Hash.new{|h,k| h[k] = []}){|h,(k,v)| h[v] << k; h}.freeze
 
         layout :hwnd,            :pointer, #HWND

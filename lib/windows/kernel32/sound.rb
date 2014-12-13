@@ -3,7 +3,7 @@ module WinFFI
     module Sound
       extend LibBase
 
-      typedef :pointer, :hwaveout
+
 
       SoundFlags = enum :sound_flags, [
         :SYNC,        0x0000, # play synchronously (default)
@@ -32,41 +32,7 @@ module WinFFI
 
       ffi_lib 'winmm'
 
-      #BOOL PlaySound(
-      #  LPCTSTR pszSound,
-      #  HMODULE hmod,
-      #  DWORD fdwSound )
-      attach_function :PlaySound,  [:string, :hmodule, SoundFlags], :bool
-      attach_function :PlaySoundA, [:string, :hmodule, SoundFlags], :bool
-      attach_function :PlaySoundW, [:string, :hmodule, SoundFlags], :bool
 
-      #MMRESULT waveOutSetVolume(
-      #  HWAVEOUT hwo,
-      #  DWORD dwVolume )
-      attach_function :waveOutSetVolume, [:hwaveout, :dword], :int
-
-      #MMRESULT waveOutGetVolume(
-      #  HWAVEOUT hwo,
-      #  LPDWORD pdwVolume )
-      attach_function :waveOutGetVolume, [:hwaveout, :pointer], :int
-
-      #UINT waveOutGetNumDevs(void)
-      attach_function :waveOutGetNumDevs, [], :uint
-
-      #UINT waveInGetNumDevs(void)
-      attach_function :waveInGetNumDevs, [], :uint
-
-      #UINT midiOutGetNumDevs(void)
-      attach_function :midiOutGetNumDevs, [], :uint
-
-      #UINT midiInGetNumDevs(void)
-      attach_function :midiInGetNumDevs, [], :uint
-
-      #UINT auxGetNumDevs(void)
-      attach_function :auxGetNumDevs, [], :uint
-
-      #UINT mixerGetNumDevs(void)
-      attach_function :mixerGetNumDevs, [], :int
     end
   end
 end

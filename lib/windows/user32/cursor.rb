@@ -1,7 +1,6 @@
 module WinFFI
   module User32
     module Cursor
-
       extend LibBase
 
       ffi_lib 'user32'
@@ -10,7 +9,7 @@ module WinFFI
         layout :cbSize,      :dword,
                :flags,       :dword,
                :hCursor,     :hcursor,
-               :ptScreenPos, POINT
+               :ptScreenPos, WinFFI::POINT
       end
 
       #BOOL WINAPI ClipCursor(  _In_opt_  const RECT *lpRect )

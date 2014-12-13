@@ -1,66 +1,44 @@
-require 'ffi'
+require 'facets/string/snakecase'
 
 module WinFFI
-  VERSION = '0.0.1'
-  module LibBase
+  VERSION = '0.0.3'
 
-    extend FFI::Library
-    ffi_convention :stdcall
+  require_relative 'lib_base'
+  extend LibBase
 
-    typedef :ushort,    :atom
-    typedef :uchar,     :byte
-    typedef :ushort,    :word
-    typedef :uint,      :dword
-    typedef :uint,      :colorref
-    typedef :uint,      :wparam
-    typedef :long,      :lparam
-    typedef :long,      :lresult
-    %i'haccel handle hbitmap hbrush hconv hcursor hdc hddedata hdesk hgdiobj hglobal hicon hinstance hkl hmenu hmetafile hmonitor hmodule hrgn hsz hwnd hwinsta'.each do |s|
-      typedef :pointer, s
-    end
+  require_relative "windows/system_info"
 
-    def self.extended(c)
-      c.extend FFI::Library
-      instance_variables.each do |v|
-        value = instance_variable_get(v)
-        value = value.dup unless value.is_a?(Fixnum) || value.is_a?(Symbol)
-        c.instance_variable_set(v, value)
-      end
-      puts "Loading #{c.name}"
-    end
-  end
+  %i'
+    POINT
+    SIZE
+    RECT
+  '.each { |f| require_relative "windows/structs/#{f.to_s.downcase}" }
+
+  require_relative "windows/structs/paint_struct"
+
+  %i'
+    ColorTypes
+    LR
+  '.each { |f| require_relative "windows/enums/#{f.to_s.snakecase}" }
+
+  %i'
+    Authorization
+    Device
+    Error
+    Thread
+  '.each { |f| require_relative "windows/#{f.to_s.snakecase}" } if WinFFI::WindowsVersion >= :xp
+
+  %i'
+    SystemInfo
+    Gdi32
+    Kernel32
+    User32
+    Comdlg32
+    Handle
+    Power
+    Process
+    Resource
+    Shell
+    String
+  '.each { |f| require_relative "windows/#{f.to_s.snakecase}" }
 end
-
-%w'
-  point
-  size
-  rect
-  paint_struct
-'.each { |f| require_relative "windows/structs/#{f}" }
-
-%w'
-  color_types
-  lr
-'.each { |f| require_relative "windows/enums/#{f}" }
-
-%w'
-  system_info
-  gdi32
-  kernel32
-  user32
-  comdlg32
-  device
-  handle
-  power
-  process
-  resource
-  shell
-  string
-'.each { |f| require_relative "windows/#{f}" }
-
-%w'
-  authorization
-  device
-  error
-  thread
-'.each { |f| require_relative "windows/#{f}" } if WinFFI::WindowsVersion >= :xp
