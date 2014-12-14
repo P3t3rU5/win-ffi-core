@@ -1,7 +1,7 @@
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
-require 'win-ffi'
+require_relative 'lib/version'
 
 Gem::Specification.new do |s|
   s.name          = 'win-ffi'
@@ -14,9 +14,9 @@ Gem::Specification.new do |s|
   s.homepage      = 'https://github.com/P3t3rU5/win-fii'
   s.require_paths = %w'lib'
   s.files         = Dir['{lib/**/*.rb,*.md}']
-  s.add_dependecy 'ffi'
-  s.add_dependecy 'facets'
-  # s.add_dependecy 'requirium'
+  s.add_dependency 'ffi', '~> 1'
+  s.add_dependency 'facets', '~> 2'
+  # s.add_dependency 'requirium'
   s.post_install_message = <<-eos
 +----------------------------------------------------------------------------+
   Thanks for choosing WinFFI.

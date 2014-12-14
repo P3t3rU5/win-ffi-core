@@ -1,8 +1,7 @@
 require 'facets/string/snakecase'
+require 'win-ffi/version'
 
 module WinFFI
-  VERSION = '0.0.3'
-
   require_relative 'lib_base'
   extend LibBase
 
