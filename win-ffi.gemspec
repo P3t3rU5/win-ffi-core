@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.require_paths = %w'lib'
   s.files         = Dir['{lib/**/*.rb,*.md}']
   s.add_dependency 'ffi', '~> 1'
-  s.add_dependency 'facets', '~> 2'
+  s.add_dependency 'facets', '~> 3'
   # s.add_dependency 'requirium'
   s.post_install_message = <<-eos
 +----------------------------------------------------------------------------+
