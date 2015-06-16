@@ -4,8 +4,8 @@ require_relative '../../../enums/user32/window/set_window_pos_flags'
 require_relative '../../../enums/user32/window/show_window_flags'
 require_relative '../../../enums/user32/window/system_metrics_flags'
 require_relative '../../../enums/user32/window/track_popup_menu_flags'
-require_relative '../../../enums/user32/window/window_style'
-require_relative '../../../enums/user32/window/window_style_ex'
+require_relative '../../../enums/user32/window/style/window_style'
+require_relative '../../../enums/user32/window/style/window_style_ex'
 require_relative '../../../enums/user32/get_ancestor_flags'
 require_relative '../../../enums/user32/message_filter'
 
@@ -88,26 +88,7 @@ module WinFFI
     #  _Out_     IInspectable **ppWindow)
     #attach_function 'CreateOwnedToolWindow', [:pointer, :string, :int, :int, :uint32, :uint32, :pointer], :void
 
-    begin
-      #HWND WINAPI CreateWindow(
-      #  _In_opt_  LPCTSTR lpClassName,
-      #  _In_opt_  LPCTSTR lpWindowName,
-      #  _In_      DWORD dwStyle,
-      #  _In_      int x,
-      #  _In_      int y,
-      #  _In_      int nWidth,
-      #  _In_      int nHeight,
-      #  _In_opt_  HWND hWndParent,
-      #  _In_opt_  HMENU hMenu,
-      #  _In_opt_  HINSTANCE hInstance,
-      #  _In_opt_  LPVOID lpParam )
-      attach_function 'CreateWindow', [:pointer, :string, :dword, :int, :int, :int, :int, :hwnd, :hmenu, :hinstance, :pointer], :hwnd
-    rescue FFI::NotFoundError
-
-      def CreateWindow(lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam)
-        CreateWindowEx(0, lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam)
-      end
-
+    class << self
       def CreateWindowA(lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam)
         CreateWindowExA(0, lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam)
       end
@@ -130,8 +111,8 @@ module WinFFI
     #  __in_opt  HMENU     hMenu,
     #  __in_opt  HINSTANCE hInstance,
     #  __in_opt  LPVOID    lpParam )
-    attach_function 'CreateWindowExA', [:dword, :pointer, :string, :dword, :int, :int, :int, :int, :hwnd, :hmenu, :hinstance, :pointer], :hwnd
-    attach_function 'CreateWindowExW', [:dword, :pointer, :string, :dword, :int, :int, :int, :int, :hwnd, :hmenu, :hinstance, :pointer], :hwnd
+    attach_function 'CreateWindowExA', [:dword, :pointer, :buffer_in , :dword, :int, :int, :int, :int, :hwnd, :hmenu, :hinstance, :pointer], :hwnd
+    attach_function 'CreateWindowExW', [:dword, :pointer, :buffer_in , :dword, :int, :int, :int, :int, :hwnd, :hmenu, :hinstance, :pointer], :hwnd
 
     #HDWP WINAPI DeferWindowPos(
     #  _In_      HDWP hWinPosInfo,
@@ -186,16 +167,16 @@ module WinFFI
     #HWND WINAPI FindWindow(
     #  _In_opt_  LPCTSTR lpClassName,
     #  _In_opt_  LPCTSTR lpWindowName )
-    attach_function 'FindWindowA', [:string, :string], :hwnd
-    attach_function 'FindWindowW', [:string, :string], :hwnd
+    attach_function 'FindWindowA', [:buffer_in, :buffer_in], :hwnd
+    attach_function 'FindWindowW', [:buffer_in, :buffer_in], :hwnd
 
     #HWND WINAPI FindWindowEx(
     #  _In_opt_  HWND hwndParent,
     #  _In_opt_  HWND hwndChildAfter,
     #  _In_opt_  LPCTSTR lpszClass,
     #  _In_opt_  LPCTSTR lpszWindow )
-    attach_function 'FindWindowExA', [:hwnd, :hwnd, :string, :string], :hwnd
-    attach_function 'FindWindowExW', [:hwnd, :hwnd, :string, :string], :hwnd
+    attach_function 'FindWindowExA', [:hwnd, :hwnd, :buffer_in, :buffer_in], :hwnd
+    attach_function 'FindWindowExW', [:hwnd, :hwnd, :buffer_in, :buffer_in], :hwnd
 
     #BOOL WINAPI FlashWindow(
     #  _In_  HWND hWnd,
@@ -299,8 +280,8 @@ module WinFFI
     #  _In_   HWND hWnd,
     #  _Out_  LPTSTR lpString,
     #  _In_   int nMaxCount )
-    attach_function 'GetWindowTextA', [:hwnd, :string, :int], :int
-    attach_function 'GetWindowTextW', [:hwnd, :string, :int], :int
+    attach_function 'GetWindowTextA', [:hwnd, :pointer, :int], :int
+    attach_function 'GetWindowTextW', [:hwnd, :pointer, :int], :int
 
     #int WINAPI GetWindowTextLength( _In_  HWND hWnd )
     attach_function 'GetWindowTextLengthA', [:hwnd], :int
@@ -415,8 +396,6 @@ module WinFFI
     #  __in_opt  LPCTSTR lpString)
     attach_function 'SetWindowTextA', [:hwnd, :string], :bool
     attach_function 'SetWindowTextW', [:hwnd, :string], :bool
-
-    puts 'here'
 
     #BOOL WINAPI ShowOwnedPopups(
     #  _In_  HWND hWnd,

@@ -1,6 +1,6 @@
 module WinFFI
   module User32
-    class CreateStruct < FFIStruct
+    class CREATESTRUCT < FFIStruct
       layout :lpCreateParams, :pointer,
              :hInstance,      :hinstance,
              :hMenu,          :hmenu,

@@ -5,8 +5,8 @@ module WinFFI
     ffi_lib 'Advapi32'
 
     #BOOL WINAPI AbortSystemShutdown( _In_opt_  LPTSTR lpMachineName )
-    attach_function 'AbortSystemShutdownA', [:string], :bool
-    attach_function 'AbortSystemShutdownW', [:string], :bool
+    attach_function 'AbortSystemShutdownA', [:buffer_in], :bool
+    attach_function 'AbortSystemShutdownW', [:buffer_in], :bool
 
     begin
       #DWORD WINAPI InitiateShutdown(
@@ -15,8 +15,8 @@ module WinFFI
       #  _In_      DWORD dwGracePeriod,
       #  _In_      DWORD dwShutdownFlags,
       #  _In_      DWORD dwReason )
-      attach_function 'InitiateShutdownA', [:string, :string, :dword, :dowrd, :dword], :dword
-      attach_function 'InitiateShutdownW', [:string, :string, :dword, :dowrd, :dword], :dword
+      attach_function 'InitiateShutdownA', [:buffer_in, :buffer_in, :dword, :dowrd, :dword], :dword
+      attach_function 'InitiateShutdownW', [:buffer_in, :buffer_in, :dword, :dowrd, :dword], :dword
     rescue FFI::NotFoundError
       # Windows Vista or later
     end
@@ -28,8 +28,8 @@ module WinFFI
       #  _In_      DWORD dwTimeout,
       #  _In_      BOOL bForceAppsClosed,
       #  _In_      BOOL bRebootAfterShutdown )
-      attach_function 'InitiateSystemShutdownA', [:string, :string, :dword, :bool, :bool], :bool
-      attach_function 'InitiateSystemShutdownA', [:string, :string, :dword, :bool, :bool], :bool
+      attach_function 'InitiateSystemShutdownA', [:buffer_in, :buffer_in, :dword, :bool, :bool], :bool
+      attach_function 'InitiateSystemShutdownA', [:buffer_in, :buffer_in, :dword, :bool, :bool], :bool
 
       #BOOL WINAPI InitiateSystemShutdownEx(
       #  _In_opt_  LPTSTR lpMachineName,
@@ -38,8 +38,8 @@ module WinFFI
       #  _In_      BOOL bForceAppsClosed,
       #  _In_      BOOL bRebootAfterShutdown,
       #  _In_      DWORD dwReason )
-      attach_function 'InitiateSystemShutdownExA', [:string, :string, :dword, :bool, :bool, :dword], :bool
-      attach_function 'InitiateSystemShutdownExW', [:string, :string, :dword, :bool, :bool, :dword], :bool
+      attach_function 'InitiateSystemShutdownExA', [:buffer_in, :buffer_in, :dword, :bool, :bool, :dword], :bool
+      attach_function 'InitiateSystemShutdownExW', [:buffer_in, :buffer_in, :dword, :bool, :bool, :dword], :bool
     rescue FFI::NotFoundError
       # Windows XP or later
     end
@@ -65,7 +65,7 @@ module WinFFI
       #BOOL WINAPI ShutdownBlockReasonCreate(
       #  _In_  HWND hWnd,
       #  _In_  LPCWSTR pwszReason )
-      attach_function 'ShutdownBlockReasonCreate', [:hwnd, :string], :bool
+      attach_function 'ShutdownBlockReasonCreate', [:hwnd, :buffer_in], :bool
 
       #BOOL WINAPI ShutdownBlockReasonDestroy( _In_  HWND hWnd )
       attach_function 'ShutdownBlockReasonDestroy', [:hwnd], :bool
@@ -74,7 +74,7 @@ module WinFFI
       #  _In_       HWND hWnd,
       #  _Out_opt_  LPWSTR pwszBuff,
       #  _Inout_    DWORD *pcchBuff )
-      attach_function 'ShutdownBlockReasonQuery', [:hwnd , :string, :pointer], :bool
+      attach_function 'ShutdownBlockReasonQuery', [:hwnd , :buffer_out, :buffer_inout], :bool
 
     rescue
       # Window Vista or later

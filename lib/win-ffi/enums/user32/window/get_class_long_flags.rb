@@ -1,8 +1,8 @@
 module WinFFI
   module User32
-    #User32::ClassLong
+    # User32::ClassLong
     # Class Field Offsets
-    ClassLong = enum :class_long,
+    GetClassLongFlags = enum :get_class_long_flags,
     [
       :MENUNAME,       -8, #Replaces the address of the menu name string. The string identifies the menu resource
       # associated with the class.

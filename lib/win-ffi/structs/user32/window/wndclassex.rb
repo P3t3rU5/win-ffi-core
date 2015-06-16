@@ -1,4 +1,4 @@
-require_relative '../../../enums/user32/window/window_class_style'
+require_relative '../../../enums/user32/window/style/window_class_style'
 
 require_relative '../../../functions/user32/window/window_class'
 

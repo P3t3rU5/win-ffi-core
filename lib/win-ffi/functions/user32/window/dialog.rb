@@ -48,8 +48,8 @@ module WinFFI
         #  _In_opt_  HWND hWndParent,
         #  _In_opt_  DLGPROC lpDialogFunc,
         #  _In_      LPARAM dwInitParam )
-        attach_function 'DialogBoxParamA', [:hinstance, :string, :hwnd, :pointer, :lparam], :int
-        attach_function 'DialogBoxParamW', [:hinstance, :string, :hwnd, :pointer, :lparam], :int
+        attach_function 'DialogBoxParamA', [:hinstance, :buffer_in, :hwnd, :pointer, :lparam], :int
+        attach_function 'DialogBoxParamW', [:hinstance, :buffer_in, :hwnd, :pointer, :lparam], :int
 
         #TODO
         #INT_PTR CALLBACK DialogProc(
@@ -123,8 +123,8 @@ module WinFFI
         #  __in_opt LPCTSTR lpText,
         #  __in_opt LPCTSTR lpCaption,
         #  __in     UINT uType)
-        attach_function 'MessageBoxA', [:hwnd, :string, :string, MessageBoxFlags], :int
-        attach_function 'MessageBoxW', [:hwnd, :string, :string, MessageBoxFlags], :int
+        attach_function 'MessageBoxA', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlags], :int
+        attach_function 'MessageBoxW', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlags], :int
 
         #int WINAPI MessageBoxEx(
         #  _In_opt_  HWND hWnd,
@@ -132,8 +132,8 @@ module WinFFI
         #  _In_opt_  LPCTSTR lpCaption,
         #  _In_      UINT uType,
         #  _In_      WORD wLanguageId )
-        attach_function 'MessageBoxExA', [:hwnd, :string, :string, MessageBoxFlags, :word], :int
-        attach_function 'MessageBoxExW', [:hwnd, :string, :string, MessageBoxFlags, :word], :int
+        attach_function 'MessageBoxExA', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlags, :word], :int
+        attach_function 'MessageBoxExW', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlags, :word], :int
 
         #int WINAPI MessageBoxIndirect( _In_  const LPMSGBOXPARAMS lpMsgBoxParams )
         attach_function 'MessageBoxIndirectA', [MSGBOXPARAMS.ptr], :int
@@ -159,7 +159,7 @@ module WinFFI
         #  _In_  HWND hDlg,
         #  _In_  int nIDDlgItem,
         #  _In_  LPCTSTR lpString )
-        attach_function 'SetDlgItemTextA', [:hwnd, :int, :string], :bool
-        attach_function 'SetDlgItemTextW', [:hwnd, :int, :string], :bool
+        attach_function 'SetDlgItemTextA', [:hwnd, :int, :buffer_in], :bool
+        attach_function 'SetDlgItemTextW', [:hwnd, :int, :buffer_in], :bool
     end
 end

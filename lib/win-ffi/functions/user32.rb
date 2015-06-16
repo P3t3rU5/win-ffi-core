@@ -7,9 +7,16 @@ module WinFFI
     require_relative '../enums/user32/user_object_information_flags'
     require_relative '../enums/user32/queue_status_flags'
     require_relative '../enums/user32/mwmo'
+    require_relative '../enums/user32/window/style/button_style'
+    require_relative '../enums/user32/window/style/edit_style'
+    require_relative '../enums/user32/window/style/static_style'
+    require_relative '../enums/user32/window/notification/edit_notification'
+    require_relative '../enums/user32/window/notification/button_notification'
+    require_relative '../enums/user32/window/notification/static_notification'
 
     require_relative '../structs/user32/window/create_struct'
     require_relative '../structs/user32/window/window_pos'
+    require_relative '../structs/user32/window/non_client_metrics'
 
     %i'
       authorization

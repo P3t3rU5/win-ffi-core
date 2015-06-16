@@ -6,7 +6,19 @@ module WinFFI
   require_relative 'win-ffi/lib_base'
   extend LibBase
 
-  require_relative "win-ffi/wrappers/system_info"
+  module Kernel32
+    extend LibBase
+
+    ffi_lib 'kernel32'
+
+    #BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
+    attach_function 'GetVersionExA', [:pointer], :bool
+    attach_function 'GetVersionExW', [:pointer], :bool
+  end
+
+  require_relative 'win-ffi/structs/os_version_info_ex'
+
+  WindowsVersion = OSVERSIONINFOEX.new.get!
 
   puts "WinFFI #{WinFFI::VERSION}"
   puts WinFFI::WindowsVersion
@@ -14,8 +26,5 @@ module WinFFI
   require_relative 'win-ffi/functions/kernel32'
   require_relative 'win-ffi/functions/gdi32'
   require_relative 'win-ffi/functions/user32'
-
-  require_relative 'win-ffi/wrappers/screen'
-  require_relative 'win-ffi/wrappers/keyboard'
-  require_relative 'win-ffi/wrappers/dll'
+  require_relative 'win-ffi/functions/comctl32'
 end

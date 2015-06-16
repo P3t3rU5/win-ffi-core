@@ -1,5 +1,6 @@
-require_relative '../../../enums/user32/window/class_long'
+require_relative '../../../enums/user32/window/get_class_long_flags'
 require_relative '../../../enums/user32/window/window_long'
+require_relative '../../../enums/user32/window/get_window_long_flags'
 
 require_relative '../../../structs/user32/window/wndclass'
 require_relative '../../../structs/user32/window/wndclassex'
@@ -23,8 +24,8 @@ module WinFFI
     #DWORD WINAPI GetClassLong(
     #  __in  HWND hWnd,
     #  __in  int nIndex)
-    attach_function 'GetClassLongA', [:hwnd, ClassLong], :dword
-    attach_function 'GetClassLongW', [:hwnd, ClassLong], :dword
+    attach_function 'GetClassLongA', [:hwnd, GetClassLongFlags], :dword
+    attach_function 'GetClassLongW', [:hwnd, GetClassLongFlags], :dword
 
     #ULONG_PTR WINAPI GetClassLongPtr(
     #  __in  HWND hWnd,
@@ -47,8 +48,8 @@ module WinFFI
     #LONG WINAPI GetWindowLong(
     #  __in  HWND hWnd,
     #  __in  int nIndex)
-    attach_function 'GetWindowLongA', [:hwnd, ClassLong], :long
-    attach_function 'GetWindowLongW', [:hwnd, ClassLong], :long
+    attach_function 'GetWindowLongA', [:hwnd, GetWindowLongFlags], :long
+    attach_function 'GetWindowLongW', [:hwnd, GetWindowLongFlags], :long
 
     #ATOM WINAPI RegisterClass( _In_  const WNDCLASS *lpWndClass )
     attach_function 'RegisterClassA', [WNDCLASS.ptr], :atom
@@ -62,8 +63,8 @@ module WinFFI
     #  __in  HWND hWnd,
     #  __in  int nIndex,
     #  __in  LONG dwNewLong)
-    attach_function 'SetClassLongA', [:hwnd, ClassLong, :long], :dword
-    attach_function 'SetClassLongW', [:hwnd, ClassLong, :long], :dword
+    attach_function 'SetClassLongA', [:hwnd, GetClassLongFlags, :long], :dword
+    attach_function 'SetClassLongW', [:hwnd, GetClassLongFlags, :long], :dword
 
     #WORD WINAPI SetClassWord(
     #  _In_  HWND hWnd,
@@ -75,8 +76,8 @@ module WinFFI
     #  __in  HWND hWnd,
     #  __in  int nIndex,
     #  __in  LONG dwNewLong)
-    attach_function 'SetWindowLongA', [:hwnd, WindowLong, :long], :long
-    attach_function 'SetWindowLongW', [:hwnd, WindowLong, :long], :long
+    attach_function 'SetWindowLongA', [:hwnd, GetWindowLongFlags, :long], :long
+    attach_function 'SetWindowLongW', [:hwnd, GetWindowLongFlags, :long], :long
 
     #BOOL UnregisterClass(
     #  __in      LPCTSTR   lpClassName,
@@ -96,9 +97,9 @@ module WinFFI
       #  __in  HWND hWnd,
       #  __in  int nIndex,
       #  __in  LONG_PTR dwNewLong)
-      attach_function 'SetWindowLongPtr',  [:hwnd, WindowLong, :pointer], :pointer
-      attach_function 'SetWindowLongPtrA', [:hwnd, WindowLong, :pointer], :pointer
-      attach_function 'SetWindowLongPtrW', [:hwnd, WindowLong, :pointer], :pointer
+      attach_function 'SetWindowLongPtr',  [:hwnd, GetWindowLongFlags, :pointer], :pointer
+      attach_function 'SetWindowLongPtrA', [:hwnd, GetWindowLongFlags, :pointer], :pointer
+      attach_function 'SetWindowLongPtrW', [:hwnd, GetWindowLongFlags, :pointer], :pointer
     rescue FFI::NotFoundError
       # In 32-bit Windows, these methods are aliases for GetWindowLong and SetWindowLong
     end

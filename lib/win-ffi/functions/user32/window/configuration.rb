@@ -1,4 +1,4 @@
-require_relative '../../../enums/user32/window/system_parameters_info_flags'
+require_relative '../../../enums/user32/window/system_parameters_info_action'
 
 module WinFFI
   module User32
@@ -7,7 +7,7 @@ module WinFFI
       #  _In_     UINT uiParam,
       #  _Inout_  PVOID pvParam,
       #  _In_     UINT fWinIni )
-      attach_function 'SystemParametersInfoA', [SystemParametersInfoFlags, :uint, :pointer, :uint], :bool
-      attach_function 'SystemParametersInfoW', [SystemParametersInfoFlags, :uint, :pointer, :uint], :bool
+      attach_function 'SystemParametersInfoA', [SystemParametersInfoAction, :uint, :pointer, :uint], :bool
+      attach_function 'SystemParametersInfoW', [SystemParametersInfoAction, :uint, :pointer, :uint], :bool
   end
 end

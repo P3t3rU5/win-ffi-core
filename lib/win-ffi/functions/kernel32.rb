@@ -11,6 +11,7 @@ module WinFFI
     '.each { |f| require_relative "../enums/kernel32/#{f}" }
 
     %i'
+      activation
       error
       handle
       process

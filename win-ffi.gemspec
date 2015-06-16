@@ -1,13 +1,13 @@
 lib = File.expand_path('../lib/', __FILE__)
 $:.unshift lib unless $:.include?(lib)
 
-require_relative 'lib/version'
+require_relative 'lib/win-ffi/version'
 
 Gem::Specification.new do |s|
   s.name          = 'win-ffi'
   s.version       = WinFFI::VERSION
-  s.summary       = 'FFI wrapper for Windows API'
-  s.description   = 'FFI wrapper for Windows API.'
+  s.summary       = 'FFI definitions for Windows API'
+  s.description   = 'FFI definitions for Windows API.'
   s.license       = 'MIT'
   s.authors       = %w'P3t3rU5 SilverPhoenix99'
   s.email         = %w'pedro.megastore@gmail.com silver.phoenix99@gmail.com'
