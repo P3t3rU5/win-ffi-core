@@ -12,11 +12,14 @@ module WinFFI
            :wProductType,        :uchar,
            :wReserved,           :uchar
 
+    def initialize
+      super
+      self[:dwOSVersionInfoSize] = size
+    end
+
     def get!
-      tap do |ovi|
-        ovi[:dwOSVersionInfoSize] = size
-        Kernel32::GetVersionExA(ovi)
-      end
+      Kernel32.GetVersionExA(self)
+      self
     end
 
     def major; self[:dwMajorVersion] end
@@ -28,12 +31,13 @@ module WinFFI
 
     def <=>(version)
       hex <=> case version
-              when '2000', 2000    then 0x0500
-              when 'xp', :xp       then 0x0501
+              when '2000',  2000   then 0x0500
+              when 'xp',    :xp    then 0x0501
               when 'vista', :vista then 0x0600
               when '7', 7;         then 0x0601
               when '8', 8;         then 0x0602
               when '8.1', 8.1;     then 0x0603
+              when '10', 10;       then 0x0604
               else raise ArgumentError, 'Unknown Version'
               end
     end
@@ -48,6 +52,7 @@ module WinFFI
       when 0x0601; 'Windows 7'
       when 0x0602; 'Windows 8'
       when 0x0603; 'Windows 8.1'
+      when 0x0604; 'Windows 10'
       else 'Unknown'
       end
     end

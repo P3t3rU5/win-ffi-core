@@ -14,9 +14,8 @@ Gem::Specification.new do |s|
   s.homepage      = 'https://github.com/P3t3rU5/win-fii'
   s.require_paths = %w'lib'
   s.files         = Dir['{lib/**/*.rb,*.md}']
-  s.add_dependency 'ffi', '~> 1'
+  s.add_dependency 'ffi', '1.9'
   s.add_dependency 'facets', '~> 3'
-  # s.add_dependency 'requirium'
   s.post_install_message = <<-eos
 +----------------------------------------------------------------------------+
   Thanks for choosing WinFFI.
