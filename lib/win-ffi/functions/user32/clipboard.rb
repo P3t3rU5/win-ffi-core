@@ -1,4 +1,6 @@
-require_relative '../../enums/user32/clipboard_formats'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/enums/user32/clipboard_formats'
 
 module WinFFI
   module User32

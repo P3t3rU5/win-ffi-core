@@ -1,3 +1,5 @@
+require 'win-ffi/enums/user32'
+
 module WinFFI
    module User32
       MessageBoxFlags = enum :message_box_flags,

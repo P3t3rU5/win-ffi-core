@@ -1,10 +1,12 @@
-require_relative '../../enums/user32/keyboard_layout_flags'
-require_relative '../../enums/user32/virtual_key_flags'
-require_relative '../../enums/user32/keyboard_modifiers'
-require_relative '../../enums/user32/map_virtual_key'
-require_relative '../../enums/key_event_flags'
+require 'win-ffi/functions/user32'
 
-require_relative '../../structs/user32/last_input_info'
+require 'win-ffi/enums/user32/keyboard_layout_flags'
+require 'win-ffi/enums/user32/virtual_key_flags'
+require 'win-ffi/enums/user32/keyboard_modifiers'
+require 'win-ffi/enums/user32/map_virtual_key'
+require 'win-ffi/enums/user32/key_event_flags'
+
+require 'win-ffi/structs/user32/last_input_info'
 
 module WinFFI
   module User32

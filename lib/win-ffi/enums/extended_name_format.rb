@@ -1,4 +1,6 @@
 module WinFFI
+  extend LibBase
+
   ExtendedNameFormat = enum :extended_name_format,
   [
     :Unknown,          0,

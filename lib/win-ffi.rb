@@ -1,9 +1,10 @@
 require 'facets/pathname'
-require_relative 'win-ffi/version'
-require_relative 'win-ffi/struct'
+require 'win-ffi/version'
+require 'win-ffi/struct'
+
 
 module WinFFI
-  require_relative 'win-ffi/lib_base'
+  require 'win-ffi/lib_base'
   extend LibBase
 
   module Kernel32
@@ -20,11 +21,22 @@ module WinFFI
 
   WindowsVersion = OSVERSIONINFOEX.new.get!
 
-  puts "WinFFI #{WinFFI::VERSION}"
-  puts WinFFI::WindowsVersion
+  require 'win-ffi/functions/netapi32/network_management'
+  require 'win-ffi/structs/netapi32/wksta_info_100'
 
-  require_relative 'win-ffi/functions/kernel32'
-  require_relative 'win-ffi/functions/gdi32'
-  require_relative 'win-ffi/functions/user32'
-  require_relative 'win-ffi/functions/comctl32'
+  FFI::MemoryPointer.new(:long) do |pinfoRawData|
+    if Netapi32.NetWkstaGetInfo(nil, 100, pinfoRawData) == 0
+      net_info = WKSTA_INFO_100.new(pinfoRawData.get_pointer(0))
+      major = net_info.wki100_ver_major
+      minor = net_info.wki100_ver_minor
+      puts major
+      puts minor
+      WindowsVersion.major = major
+      WindowsVersion.minor = minor
+      puts WindowsVersion.major
+    end
+  end
+
+  puts "WinFFI #{WinFFI::VERSION}"
+  puts WinFFI::WindowsVersion.to_s
 end

@@ -1,8 +1,10 @@
-require_relative '../../enums/user32/pointer_input_type'
+require 'win-ffi/functions/user32'
 
-require_relative '../../structs/user32/pointer_info'
-require_relative '../../structs/user32/pointer_pen_info'
-require_relative '../../structs/user32/pointer_touch_info'
+require 'win-ffi/enums/user32/pointer_input_type'
+
+require 'win-ffi/structs/user32/pointer_info'
+require 'win-ffi/structs/user32/pointer_pen_info'
+require 'win-ffi/structs/user32/pointer_touch_info'
 
 module WinFFI
   module User32

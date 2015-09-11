@@ -1,3 +1,5 @@
+require 'win-ffi/enums/user32'
+
 module WinFFI
   module User32
     PointerFlags = enum :pointer_flags,
@@ -40,7 +42,7 @@ module WinFFI
 
       :PRIMARY, 0x00002000, # Indicates that this pointer has been designated as the primary pointer.
       # A primary pointer is a single pointer that can perform actions beyond those available to non-primary pointers.
-      # For example, when a primary pointer makes contact with a window’s surface, it may provide the window an
+      # For example, when a primary pointer makes contact with a windowâ€™s surface, it may provide the window an
       # opportunity to activate by sending it a WM_POINTERACTIVATE message. The primary pointer is identified from all
       # current user interactions on the system (mouse, touch, pen, and so on). As such, the primary pointer might not
       # be associated with your app. The first contact in a multi-touch interaction is set as the primary pointer.

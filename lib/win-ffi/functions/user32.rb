@@ -4,104 +4,37 @@ module WinFFI
 
     ffi_lib 'user32'
 
-    require_relative '../enums/user32/user_object_information_flags'
-    require_relative '../enums/user32/queue_status_flags'
-    require_relative '../enums/user32/mwmo'
-    require_relative '../enums/user32/window/style/button_style'
-    require_relative '../enums/user32/window/style/edit_style'
-    require_relative '../enums/user32/window/style/static_style'
-    require_relative '../enums/user32/window/notification/edit_notification'
-    require_relative '../enums/user32/window/notification/button_notification'
-    require_relative '../enums/user32/window/notification/static_notification'
-
-    require_relative '../structs/user32/window/create_struct'
-    require_relative '../structs/user32/window/window_pos'
-    require_relative '../structs/user32/window/non_client_metrics'
-
-    %i'
-      authorization
-      bitmap
-      brush
-      caret
-      clipboard
-      cursor
-      dde
-      desktop
-      device
-      device_context
-      error
-      filled_shape
-      hook
-      icon
-      keyboard
-      keyboard_accelerators
-      mouse
-      multiple_display_monitors
-      multiple_document_interface
-      painting_drawing
-      power
-      print
-      process
-      rect
-      resource
-      shell
-      string
-      text
-      touch
-      transform
-      window_station
-    '.each { |f| require_relative "user32/#{f}" }
-
-    %i'
-      button
-      combobox
-      listbox
-      scrollbar
-    '.each { |f| require_relative "user32/controls/#{f}" }
-
-    %i'
-      configuration
-      dialog
-      menu
-      message
-      properties
-      timer
-      window
-      window_class
-      window_proc
-    '.each { |f| require_relative "user32/window/#{f}" }
-
-    if WinFFI::WindowsVersion >= :xp
-      require_relative 'user32/raw_input'
-      
-      #VOID WINAPI DisableProcessWindowsGhosting(void)
-      attach_function 'DisableProcessWindowsGhosting', [], :void
-      
-      if WinFFI::WindowsVersion >= :vista
-        require_relative 'user32/display'
-        if WinFFI::WindowsVersion >= 7
-          %i'gesture touch'.each { |f| require_relative "user32/#{f}" }
-          if WinFFI::WindowsVersion >= 8
-            %i'
-              accessibility
-              input
-              pointer
-            '.each { |f| require_relative "user32/#{f}" }
-
-            #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
-            attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
-
-          end
-        end
-      end
-
-      if WindowsVersion >= 8
-
-        #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
-        attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
-
-      end
-    end
+    # if WinFFI::WindowsVersion >= :xp
+    #   require_relative 'user32/raw_input'
+    #
+    #   #VOID WINAPI DisableProcessWindowsGhosting(void)
+    #   attach_function 'DisableProcessWindowsGhosting', [], :void
+    #
+    #   if WinFFI::WindowsVersion >= :vista
+    #     require_relative 'user32/display'
+    #     if WinFFI::WindowsVersion >= 7
+    #       %i'gesture touch'.each { |f| require_relative "user32/#{f}" }
+    #       if WinFFI::WindowsVersion >= 8
+    #         %i'
+    #           accessibility
+    #           input
+    #           pointer
+    #         '.each { |f| require_relative "user32/#{f}" }
+    #
+    #         #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
+    #         attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
+    #
+    #       end
+    #     end
+    #   end
+    #
+    #   if WindowsVersion >= 8
+    #
+    #     #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
+    #     attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
+    #
+    #   end
+    # end
 
     CW_USEDEFAULT   = -0x80000000
 
@@ -139,6 +72,7 @@ module WinFFI
       :SHIELD,      32518
     ]
 
+    require 'win-ffi/enums/user32/user_object_information_flags'
 
     #BOOL WINAPI GetUserObjectInformation(
     #  _In_       HANDLE hObj,
@@ -155,6 +89,8 @@ module WinFFI
     #BOOL WINAPI IsWow64Message(void)
     attach_function 'IsWow64Message', [], :bool
 
+    require 'win-ffi/enums/user32/queue_status_flags'
+
     #DWORD WINAPI MsgWaitForMultipleObjects(
     #  _In_  DWORD nCount,
     #  _In_  const HANDLE *pHandles,
@@ -162,6 +98,8 @@ module WinFFI
     #  _In_  DWORD dwMilliseconds,
     #  _In_  DWORD dwWakeMask )
     attach_function 'MsgWaitForMultipleObjects', [:dword, :pointer, :bool, :dword, QueueStatusFlags], :dword
+
+    require 'win-ffi/enums/user32/mwmo'
 
     #DWORD WINAPI MsgWaitForMultipleObjectsEx(
     #  _In_  DWORD nCount,

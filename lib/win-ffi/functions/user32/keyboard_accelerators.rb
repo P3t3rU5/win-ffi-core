@@ -1,3 +1,7 @@
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/structs/user32/msg'
+
 module WinFFI
   module User32
     #int WINAPI CopyAcceleratorTable(

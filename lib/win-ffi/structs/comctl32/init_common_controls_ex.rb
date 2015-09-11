@@ -1,4 +1,4 @@
-require_relative '../../enums/comctl32/init_common_controls'
+require 'win-ffi/enums/comctl32/init_common_controls'
 
 module WinFFI
   module Comctl32

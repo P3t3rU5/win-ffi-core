@@ -1,6 +1,5 @@
-require_relative '../../../enums/user32/window/style/window_class_style'
-
-require_relative '../../../functions/user32/window/window_class'
+require 'win-ffi/enums/user32/window/style/window_class_style'
+require 'win-ffi/functions/user32/window/window_proc'
 
 module WinFFI
   module User32
@@ -31,9 +30,11 @@ module WinFFI
 
       def atom
         @atom = User32::RegisterClassExW(self) unless @atom
-        raise "RegisterClassEx Error" if @atom == 0
+        raise 'RegisterClassEx Error' if @atom == 0
         @atom
       end
     end
   end
 end
+
+require 'win-ffi/functions/user32/window/window_class'

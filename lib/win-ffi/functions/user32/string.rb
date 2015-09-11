@@ -1,3 +1,5 @@
+require 'win-ffi/functions/user32'
+
 module WinFFI
   module User32
     #LPTSTR WINAPI CharLower(  _Inout_  LPTSTR lpsz )

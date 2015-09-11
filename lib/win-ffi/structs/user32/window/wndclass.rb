@@ -1,4 +1,4 @@
-require_relative '../../../functions/user32/window/window_proc'
+require 'win-ffi/functions/user32/window/window_proc'
 
 module WinFFI
   module User32

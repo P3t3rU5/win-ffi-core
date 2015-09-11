@@ -1,4 +1,6 @@
-require_relative '../../structs/gdi32/pixel_format_descriptor'
+require 'win-ffi/functions/gdi32'
+
+require 'win-ffi/structs/gdi32/pixel_format_descriptor'
 
 module WinFFI
   module Gdi32

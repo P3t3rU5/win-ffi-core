@@ -1,3 +1,5 @@
+require 'win-ffi/enums/kernel32'
+
 module WinFFI
   module Kernel32
     SEC_FILE     = 0x800000

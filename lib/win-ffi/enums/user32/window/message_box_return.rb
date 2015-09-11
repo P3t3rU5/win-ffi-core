@@ -1,3 +1,5 @@
+require 'win-ffi/enums/user32'
+
 module WinFFI
   module User32
     MessageBoxReturn = enum :message_box_return,

@@ -1,5 +1,7 @@
-require_relative '../../../structs/user32/controls/scrollbar_info'
-require_relative '../../../structs/user32/controls/scroll_info'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/structs/user32/controls/scrollbar_info'
+require 'win-ffi/structs/user32/controls/scroll_info'
 
 module WinFFI
   module User32

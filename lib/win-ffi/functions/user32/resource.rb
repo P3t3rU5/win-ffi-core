@@ -1,6 +1,9 @@
-require_relative '../../enums/user32/image'
-require_relative '../../enums/user32/ocr'
-require_relative '../../enums/user32/oic'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/enums/user32/image'
+require 'win-ffi/enums/user32/ocr'
+require 'win-ffi/enums/user32/oic'
+require 'win-ffi/enums/lr'
 
 module WinFFI
   module User32

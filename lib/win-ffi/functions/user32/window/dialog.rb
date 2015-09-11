@@ -1,9 +1,11 @@
-require_relative '../../../enums/user32/window/message_box_flags'
-require_relative '../../../enums/user32/window/message_box_return'
+require 'win-ffi/functions/user32'
 
-require_relative '../../../structs/user32/window/dlg_template'
-require_relative '../../../structs/user32/msg'
-require_relative '../../../structs/user32/window/msgbox_params'
+require 'win-ffi/enums/user32/window/message_box_flags'
+require 'win-ffi/enums/user32/window/message_box_return'
+
+require 'win-ffi/structs/user32/window/dlg_template'
+require 'win-ffi/structs/user32/msg'
+require 'win-ffi/structs/user32/window/msgbox_params'
 
 module WinFFI
     module User32

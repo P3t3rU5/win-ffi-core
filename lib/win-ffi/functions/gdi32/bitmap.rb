@@ -1,7 +1,9 @@
-require_relative '../../structs/gdi32/rgb_quad'
-require_relative '../../structs/gdi32/bitmap'
-require_relative '../../structs/gdi32/bitmap_info'
-require_relative '../../structs/gdi32/blend_function'
+require 'win-ffi/functions/gdi32'
+
+require 'win-ffi/structs/gdi32/rgb_quad'
+require 'win-ffi/structs/gdi32/bitmap'
+require 'win-ffi/structs/gdi32/bitmap_info'
+require 'win-ffi/structs/gdi32/blend_function'
 
 module WinFFI
   module Gdi32

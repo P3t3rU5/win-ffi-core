@@ -29,6 +29,8 @@ module WinFFI
     attach_function 'ExtractIconExW', [:string, :int, :pointer, :pointer, :uint], :uint
 
     begin
+      require 'win-ffi/enums/lr'
+
       #[This function is not intended for general use. It may be altered or unavailable in subsequent versions of Windows.]
       #UINT WINAPI PrivateExtractIcons(
       #  _In_       LPCTSTR lpszFile,

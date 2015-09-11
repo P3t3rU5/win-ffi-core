@@ -1,3 +1,5 @@
+require 'win-ffi/enums/kernel32'
+
 module WinFFI
   module Kernel32
     INVALID_HANDLE_VALUE           = 0xFFFFFFFF

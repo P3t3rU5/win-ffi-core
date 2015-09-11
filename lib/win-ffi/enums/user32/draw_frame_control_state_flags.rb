@@ -1,3 +1,5 @@
+require 'win-ffi/enums/user32'
+
 module WinFFI
   module User32
     DrawFrameControlStateFlags = enum :draw_frame_control_state_flags,

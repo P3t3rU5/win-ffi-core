@@ -1,3 +1,5 @@
+require 'win-ffi/functions/kernel32'
+
 module WinFFI
   module Kernel32
     #BOOL WINAPI CloseHandle( _In_  HANDLE hObject )

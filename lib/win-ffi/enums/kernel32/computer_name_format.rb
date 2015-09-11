@@ -1,4 +1,8 @@
+require 'win-ffi/enums/kernel32'
+
 module WinFFI
+  extend LibBase
+
   # Enum COMPUTER_NAME_FORMAT
   ComputerNameFormat = enum :computer_name_format,
   [

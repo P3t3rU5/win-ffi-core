@@ -1,4 +1,6 @@
-require_relative '../../structs/user32/raw_input_device_list'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/structs/user32/raw_input_device_list'
 
 module WinFFI
   module User32

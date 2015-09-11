@@ -1,12 +1,14 @@
-require_relative '../../../enums/user32/window/menu_flags'
-require_relative '../../../enums/user32/append_menu_flags'
-require_relative '../../../enums/user32/window/track_popup_menu_flags'
+require 'win-ffi/functions/user32'
 
-require_relative '../../../structs/user32/window/menubar_info'
-require_relative '../../../structs/user32/window/menu_info'
-require_relative '../../../structs/user32/window/menu_item_info'
-require_relative '../../../structs/user32/window/menu_item_template'
-require_relative '../../../structs/user32/window/tpm_params'
+require 'win-ffi/enums/user32/window/menu_flags'
+require 'win-ffi/enums/user32/append_menu_flags'
+require 'win-ffi/enums/user32/window/track_popup_menu_flags'
+
+require 'win-ffi/structs/user32/window/menubar_info'
+require 'win-ffi/structs/user32/window/menu_info'
+require 'win-ffi/structs/user32/window/menu_item_info'
+require 'win-ffi/structs/user32/window/menu_item_template'
+require 'win-ffi/structs/user32/window/tpm_params'
 
 module WinFFI
   module User32

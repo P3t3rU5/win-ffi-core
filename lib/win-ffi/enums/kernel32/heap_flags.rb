@@ -1,3 +1,5 @@
+require 'win-ffi/enums/kernel32'
+
 module WinFFI
   module Kernel32
     HeapFlags = enum :heap_flags,

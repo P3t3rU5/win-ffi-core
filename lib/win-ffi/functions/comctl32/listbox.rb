@@ -1,3 +1,5 @@
+require 'win-ffi/functions/comctl32'
+
 module WinFFI
   module Comctl32
     #void DrawInsert(

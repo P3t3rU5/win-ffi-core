@@ -1,4 +1,5 @@
 module WinFFI
+  extend LibBase
 
   ColorTypes = enum :color_types, [
       :SCROLLBAR, 0, # Scroll bar gray area.

@@ -1,13 +1,16 @@
-require_relative '../../../enums/user32/window/broadcast_system_flags'
-require_relative '../../../enums/user32/window/broadcast_system_message_flags'
-require_relative '../../../enums/user32/window/peek_message_flags'
-require_relative '../../../enums/user32/window/smto'
-require_relative '../../../enums/user32/window/window_messages'
-require_relative '../../../enums/user32/queue_status_flags'
-require_relative '../../../enums/user32/window/window_messages'
-require_relative '../../../enums/user32/icon'
+require 'win-ffi/functions/user32'
 
-require_relative '../../../structs/user32/window/bs_info'
+require 'win-ffi/enums/user32/window/broadcast_system_flags'
+require 'win-ffi/enums/user32/window/broadcast_system_message_flags'
+require 'win-ffi/enums/user32/window/peek_message_flags'
+require 'win-ffi/enums/user32/window/smto'
+require 'win-ffi/enums/user32/window/window_messages'
+require 'win-ffi/enums/user32/window/window_messages'
+require 'win-ffi/enums/user32/queue_status_flags'
+require 'win-ffi/enums/user32/icon'
+
+require 'win-ffi/structs/user32/window/bs_info'
+require 'win-ffi/structs/user32/msg'
 
 module WinFFI
     module User32

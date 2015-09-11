@@ -1,3 +1,7 @@
+require 'win-ffi/functions/gdi32'
+
+require 'win-ffi/structs/point'
+
 module WinFFI
   module Gdi32
       #BOOL CancelDC( _In_  HDC hdc )

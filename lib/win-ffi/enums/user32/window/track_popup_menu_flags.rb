@@ -1,3 +1,5 @@
+require 'win-ffi/enums/user32'
+
 module WinFFI
   module User32
     TrackPopupMenuFlags = enum :track_popup_menu_flags,

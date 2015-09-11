@@ -1,4 +1,5 @@
-require_relative '../../structs/comctl32/init_common_controls_ex'
+require 'win-ffi/functions/comctl32'
+require 'win-ffi/structs/comctl32/init_common_controls_ex'
 
 module WinFFI
   module Comctl32

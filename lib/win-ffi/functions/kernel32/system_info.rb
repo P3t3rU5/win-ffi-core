@@ -1,4 +1,6 @@
-require_relative '../../enums/computer_name_format'
+require 'win-ffi/functions/kernel32'
+
+require 'win-ffi/enums/computer_name_format'
 
 module WinFFI
   module Kernel32

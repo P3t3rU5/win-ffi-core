@@ -1,3 +1,5 @@
+require 'win-ffi/structs/gdi32/blend_function'
+
 module WinFFI
   module Msimg32
     extend LibBase

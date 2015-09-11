@@ -1,5 +1,7 @@
 module WinFFI
   module Gdi32
+    extend LibBase
+
     LOGPIXELSX = 88
     LOGPIXELSY = 90
 

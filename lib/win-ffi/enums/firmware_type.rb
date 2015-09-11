@@ -1,4 +1,7 @@
 module WinFFI
+
+  extend LibBase
+
   FirmwareType = enum :firmware_type,
   [
     :Unknown, 0,

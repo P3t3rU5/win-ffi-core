@@ -1,4 +1,6 @@
-require_relative '../../enums/user32/feedback_type'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/enums/user32/feedback_type'
 
 module WinFFI
   module User32

@@ -1,3 +1,5 @@
+require 'win-ffi/enums/user32'
+
 module WinFFI
   module User32
     LayeredWindowAttributesFlags = enum :layered_window_attributes_flags,

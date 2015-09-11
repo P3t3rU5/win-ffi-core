@@ -1,4 +1,4 @@
-require_relative '../../structs/comdlg32/choose_font'
+require 'win-ffi/structs/comdlg32/choose_font'
 
 module WinFFI
   module Comdlg32

@@ -1,3 +1,5 @@
+require 'win-ffi/enums/comctl32'
+
 module WinFFI
   module Comctl32
     InitCommonControls = enum :init_common_controls,

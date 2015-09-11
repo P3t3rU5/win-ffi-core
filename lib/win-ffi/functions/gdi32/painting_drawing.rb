@@ -1,3 +1,5 @@
+require 'win-ffi/functions/gdi32'
+
 module WinFFI
   module Gdi32
     #BOOL GdiFlush(void)

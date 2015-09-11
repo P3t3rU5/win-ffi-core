@@ -1,3 +1,5 @@
+require 'win-ffi/functions/kernel32'
+
 module WinFFI
   # The Process module includes process related functions and constants,
   # including some tool help functions that relate to processes.

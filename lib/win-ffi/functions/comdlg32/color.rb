@@ -1,4 +1,4 @@
-require_relative '../../structs/comdlg32/choose_color'
+require 'win-ffi/structs/comdlg32/choose_color'
 
 module WinFFI
   module Comdlg32

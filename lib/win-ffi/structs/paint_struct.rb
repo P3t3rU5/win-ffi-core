@@ -1,3 +1,5 @@
+require 'win-ffi/structs/rect'
+
 module WinFFI
   class PAINTSTRUCT < FFIStruct
     layout :hdc,         :hdc,

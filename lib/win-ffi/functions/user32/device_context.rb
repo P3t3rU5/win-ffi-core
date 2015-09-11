@@ -1,4 +1,6 @@
-require_relative '../../structs/user32/display_device'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/structs/user32/display_device'
 
 module WinFFI
   module User32

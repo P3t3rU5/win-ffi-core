@@ -1,4 +1,4 @@
-require_relative '../../gdi32/log_font'
+require 'win-ffi/structs/gdi32/log_font'
 
 module WinFFI
   module User32

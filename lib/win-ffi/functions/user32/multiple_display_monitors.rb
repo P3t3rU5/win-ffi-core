@@ -1,3 +1,8 @@
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/structs/rect'
+require 'win-ffi/structs/point'
+
 module WinFFI
   module User32
     #BOOL EnumDisplayMonitors(
@@ -23,7 +28,7 @@ module WinFFI
     #HMONITOR MonitorFromPoint(
     #  _In_  POINT pt,
     #  _In_  DWORD dwFlags )
-    attach_function 'MonitorFromPoint', [POINT, :dword], :hmonitor
+    attach_function 'MonitorFromPoint', [POINT.ptr, :dword], :hmonitor
 
     #HMONITOR MonitorFromRect(
     #  _In_  LPCRECT lprc,

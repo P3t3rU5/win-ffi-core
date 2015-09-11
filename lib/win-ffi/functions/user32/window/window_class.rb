@@ -1,9 +1,11 @@
-require_relative '../../../enums/user32/window/get_class_long_flags'
-require_relative '../../../enums/user32/window/window_long'
-require_relative '../../../enums/user32/window/get_window_long_flags'
+require 'win-ffi/functions/user32'
 
-require_relative '../../../structs/user32/window/wndclass'
-require_relative '../../../structs/user32/window/wndclassex'
+require 'win-ffi/enums/user32/window/get_class_long_flags'
+require 'win-ffi/enums/user32/window/window_long'
+require 'win-ffi/enums/user32/window/get_window_long_flags'
+
+require 'win-ffi/structs/user32/window/wndclass'
+require 'win-ffi/structs/user32/window/wndclassex'
 
 module WinFFI
   module User32

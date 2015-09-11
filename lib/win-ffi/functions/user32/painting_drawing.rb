@@ -1,10 +1,13 @@
-require_relative '../../enums/user32/draw_caption_flags'
-require_relative '../../enums/user32/edge_flags'
-require_relative '../../enums/user32/border_flags'
-require_relative '../../enums/user32/draw_frame_control_flags'
-require_relative '../../enums/user32/draw_frame_control_state_flags'
+require 'win-ffi/functions/user32'
 
-require_relative '../../structs/paint_struct'
+require 'win-ffi/enums/user32/draw_caption_flags'
+require 'win-ffi/enums/user32/edge_flags'
+require 'win-ffi/enums/user32/border_flags'
+require 'win-ffi/enums/user32/draw_frame_control_flags'
+require 'win-ffi/enums/user32/draw_frame_control_state_flags'
+
+require 'win-ffi/structs/rect'
+require 'win-ffi/structs/paint_struct'
 
 module WinFFI
   module User32

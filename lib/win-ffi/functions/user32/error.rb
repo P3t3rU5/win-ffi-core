@@ -1,3 +1,5 @@
+require 'win-ffi/functions/user32'
+
 module WinFFI
   ffi_lib 'user32'
 

@@ -1,3 +1,5 @@
+require 'win-ffi/functions/user32'
+
 require_relative '../../../enums/user32/window/animate_window_flags'
 require_relative '../../../enums/user32/window/get_window_flags'
 require_relative '../../../enums/user32/window/set_window_pos_flags'

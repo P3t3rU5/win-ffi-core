@@ -1,3 +1,5 @@
+require 'win-ffi/enums/kernel32'
+
 module WinFFI
   SetErrorModeFlags = enum :set_error_mode_flags,
   [

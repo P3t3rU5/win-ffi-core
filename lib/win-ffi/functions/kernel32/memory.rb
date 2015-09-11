@@ -1,8 +1,10 @@
-require_relative '../../enums/kernel32/global_alloc_flags'
-require_relative '../../enums/kernel32/heap_flags'
-require_relative '../../enums/kernel32/local_flags'
-require_relative '../../enums/kernel32/memory_flags'
-require_relative '../../enums/kernel32/memory_protection_constants'
+require 'win-ffi/functions/kernel32'
+
+require 'win-ffi/enums/kernel32/global_alloc_flags'
+require 'win-ffi/enums/kernel32/heap_flags'
+require 'win-ffi/enums/kernel32/local_flags'
+require 'win-ffi/enums/kernel32/memory_flags'
+require 'win-ffi/enums/kernel32/memory_protection_constants'
 
 module WinFFI
   module Kernel32

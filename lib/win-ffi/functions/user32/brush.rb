@@ -1,4 +1,6 @@
-require_relative '../../enums/color_types'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/enums/color_types'
 
 module WinFFI
   module User32

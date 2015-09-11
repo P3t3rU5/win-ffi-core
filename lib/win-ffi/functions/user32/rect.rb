@@ -1,3 +1,7 @@
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/structs/rect'
+
 module WinFFI
   module User32
     #BOOL CopyRect(

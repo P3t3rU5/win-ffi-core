@@ -1,4 +1,7 @@
-require_relative '../../structs/user32/draw_text_params'
+require 'win-ffi/functions/user32'
+
+require 'win-ffi/structs/rect'
+require 'win-ffi/structs/user32/draw_text_params'
 
 module WinFFI
   module User32

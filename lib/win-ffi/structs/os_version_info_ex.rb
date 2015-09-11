@@ -22,10 +22,18 @@ module WinFFI
       self
     end
 
-    def major; self[:dwMajorVersion] end
-    def minor; self[:dwMinorVersion] end
-    def build; self[:dwBuildNumber]  end
-    def sp; self[:wServicePackMajor] end
+    def major; dwMajorVersion end
+    def minor; dwMinorVersion end
+    def build; dwBuildNumber  end
+    def sp; wServicePackMajor end
+
+    def major=(major)
+      self.dwMajorVersion = major
+    end
+
+    def minor=(minor)
+      self.dwMinorVersion = minor
+    end
 
     def hex; (major << 8) + minor end
 
@@ -52,11 +60,11 @@ module WinFFI
       when 0x0601; 'Windows 7'
       when 0x0602; 'Windows 8'
       when 0x0603; 'Windows 8.1'
-      when 0x0604; 'Windows 10'
+      when 0x0a00; 'Windows 10'
       else 'Unknown'
       end
     end
 
-    def to_s; "#{major}.#{minor}.#{build} SP#{sp} (#{name})" end
+    def to_s; "#{name} v#{major}.#{minor}.#{build} SP#{sp}" end
   end
 end

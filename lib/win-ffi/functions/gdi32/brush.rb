@@ -1,6 +1,8 @@
-require_relative '../../enums/gdi32/hatch_styles'
+require 'win-ffi/functions/gdi32'
 
-require_relative '../../structs/gdi32/log_brush'
+require 'win-ffi/enums/gdi32/hatch_styles'
+
+require 'win-ffi/structs/gdi32/log_brush'
 
 module WinFFI
   module Gdi32

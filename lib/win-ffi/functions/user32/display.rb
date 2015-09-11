@@ -1,3 +1,5 @@
+require 'win-ffi/functions/user32'
+
 module WinFFI
   module User32
     #LONG DisplayConfigGetDeviceInfo(   _Inout_  DISPLAYCONFIG_DEVICE_INFO_HEADER *requestPacket )

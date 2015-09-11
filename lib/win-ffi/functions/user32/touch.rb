@@ -1,7 +1,10 @@
-require_relative '../../enums/user32/touch_injection_flags'
+require 'win-ffi/functions/user32'
 
-require_relative '../../structs/user32/touch_hit_testing_input'
-require_relative '../../structs/user32/touch_hit_testing_proximity_evaluation'
+require 'win-ffi/enums/user32/touch_injection_flags'
+
+require 'win-ffi/structs/rect'
+require 'win-ffi/structs/user32/touch_hit_testing_input'
+require 'win-ffi/structs/user32/touch_hit_testing_proximity_evaluation'
 
 module WinFFI
   module User32

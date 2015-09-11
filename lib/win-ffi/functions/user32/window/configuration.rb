@@ -1,3 +1,5 @@
+require 'win-ffi/functions/user32'
+
 require_relative '../../../enums/user32/window/system_parameters_info_action'
 
 module WinFFI

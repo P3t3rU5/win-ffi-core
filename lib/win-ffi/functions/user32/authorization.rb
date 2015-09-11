@@ -1,3 +1,5 @@
+require 'win-ffi/functions/user32'
+
 module WinFFI
   module User32
     #BOOL WINAPI GetUserObjectSecurity(

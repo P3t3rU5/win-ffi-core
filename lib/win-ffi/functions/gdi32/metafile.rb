@@ -1,6 +1,8 @@
-require_relative '../../structs/gdi32/handle_table'
-require_relative '../../structs/gdi32/meta_file_pict'
-require_relative '../../structs/gdi32/palette_entry'
+require 'win-ffi/functions/gdi32'
+
+require 'win-ffi/structs/gdi32/handle_table'
+require 'win-ffi/structs/gdi32/meta_file_pict'
+require 'win-ffi/structs/gdi32/palette_entry'
 
 module WinFFI
   module Gdi32

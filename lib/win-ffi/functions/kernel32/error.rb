@@ -1,5 +1,6 @@
-require_relative '../../enums/kernel32/format_message_flags'
-require_relative '../../enums/kernel32/set_error_mode_flags'
+require 'win-ffi/functions/kernel32'
+require 'win-ffi/enums/kernel32/format_message_flags'
+require 'win-ffi/enums/kernel32/set_error_mode_flags'
 
 module WinFFI
   module Kernel32

@@ -1,4 +1,5 @@
-require_relative '../../structs/kernel32/actctx'
+require 'win-ffi/functions/kernel32'
+require 'win-ffi/structs/kernel32/actctx'
 
 module WinFFI
   module Kernel32

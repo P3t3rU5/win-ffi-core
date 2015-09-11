@@ -1,3 +1,5 @@
+require 'win-ffi/functions/kernel32'
+
 module WinFFI
   module Kernel32
     #Warning  Do not use. Consider using StringCchCat instead.

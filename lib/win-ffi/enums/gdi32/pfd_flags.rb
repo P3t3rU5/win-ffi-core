@@ -1,3 +1,5 @@
+require 'win-ffi/enums/gdi32'
+
 module WinFFI
   module Gdi32
     PFDFlags = enum :pfd_flags,

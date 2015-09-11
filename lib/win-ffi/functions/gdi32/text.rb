@@ -1,6 +1,8 @@
-require_relative '../../structs/gdi32/abc'
-require_relative '../../structs/gdi32/abcfloat'
-require_relative '../../structs/gdi32/kerning_pair'
+require 'win-ffi/functions/gdi32'
+
+require 'win-ffi/structs/gdi32/abc'
+require 'win-ffi/structs/gdi32/abcfloat'
+require 'win-ffi/structs/gdi32/kerning_pair'
 
 module WinFFI
   module Gdi32

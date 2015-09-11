@@ -1,7 +1,9 @@
-require_relative '../../enums/lr'
+require 'win-ffi/functions/user32'
 
-require_relative '../../structs/user32/icon_info'
-require_relative '../../structs/user32/icon_info_ex'
+require 'win-ffi/enums/lr'
+
+require 'win-ffi/structs/user32/icon_info'
+require 'win-ffi/structs/user32/icon_info_ex'
 
 module WinFFI
   module User32

@@ -1,6 +1,8 @@
-require_relative '../../enums/user32/window_hook'
+require 'win-ffi/functions/user32'
 
-require_relative '../../structs/user32/msg'
+require 'win-ffi/enums/user32/window_hook'
+
+require 'win-ffi/structs/user32/msg'
 
 module WinFFI
   module User32
@@ -17,83 +19,83 @@ module WinFFI
     #  _In_      LPARAM lParam )
     attach_function 'CallNextHookEx', [:pointer, :int, :wparam, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK CallWndProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    CallWndProc = callback :CallWndProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK CallWndRetProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    CallWndRetProc = callback :CallWndRetProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK CBTProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    CBTProc = callback :CBTProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK DebugProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    DebugProc = callback :DebugProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #DWORD CALLBACK ForegroundIdleProc(
     #  _In_  int code,
     #  DWORD wParam,
     #  LONG lParam )
+    ForegroundIdleProc = callback :ForegroundIdleProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK GetMsgProc(
     #  _In_  int code,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    GetMsgProc = callback :GetMsgProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK JournalPlaybackProc(
     #  _In_  int code,
     #  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    JournalPlaybackProc = callback :JournalPlaybackProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK JournalRecordProc(
     #  _In_  int code,
     #  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    JournalRecordProc = callback :JournalRecordProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK KeyboardProc(
     #  _In_  int code,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    KeyboardProc = callback :KeyboardProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK LowLevelKeyboardProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    LowLevelKeyboardProc = callback :LowLevelKeyboardProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK LowLevelMouseProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    LowLevelMouseProc = callback :LowLevelMouseProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK MessageProc(
     #  _In_  int code,
     #  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    MessageProc = callback :MessageProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK MouseProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    MouseProc = callback :MouseProc, [:int, :wparma, :lparam], :lresult
 
     #HHOOK WINAPI SetWindowsHookEx(
     #  _In_  int idHook,
@@ -103,17 +105,17 @@ module WinFFI
     attach_function 'SetWindowsHookExA', [WindowHook, :pointer, :pointer, :dword], :pointer
     attach_function 'SetWindowsHookExW', [WindowHook, :pointer, :pointer, :dword], :pointer
 
-    #TODO
     #LRESULT CALLBACK ShellProc(
     #  _In_  int nCode,
     #  _In_  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    ShellProc = callback :ShellProc, [:int, :wparma, :lparam], :lresult
 
-    #TODO
     #LRESULT CALLBACK SysMsgProc(
     #  _In_  int nCode,
     #  WPARAM wParam,
     #  _In_  LPARAM lParam )
+    SysMsgProc = callback :SysMsgProc, [:int, :wparma, :lparam], :lresult
 
     #BOOL WINAPI UnhookWindowsHookEx( _In_  HHOOK hhk )
     attach_function 'UnhookWindowsHookEx', [:pointer], :bool

@@ -1,4 +1,5 @@
-require_relative '../../enums/kernel32/get_module_handle_ex_flag'
+require 'win-ffi/functions/kernel32'
+require 'win-ffi/enums/kernel32/get_module_handle_ex_flag'
 
 module WinFFI
   module Kernel32
