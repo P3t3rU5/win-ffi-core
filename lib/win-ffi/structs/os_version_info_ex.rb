@@ -45,7 +45,7 @@ module WinFFI
               when '7', 7;         then 0x0601
               when '8', 8;         then 0x0602
               when '8.1', 8.1;     then 0x0603
-              when '10', 10;       then 0x0604
+              when '10', 10;       then 0x0a00
               else raise ArgumentError, 'Unknown Version'
               end
     end

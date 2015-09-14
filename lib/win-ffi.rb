@@ -29,11 +29,8 @@ module WinFFI
       net_info = WKSTA_INFO_100.new(pinfoRawData.get_pointer(0))
       major = net_info.wki100_ver_major
       minor = net_info.wki100_ver_minor
-      puts major
-      puts minor
       WindowsVersion.major = major
       WindowsVersion.minor = minor
-      puts WindowsVersion.major
     end
   end
 

@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
   gem.authors       = %w'P3t3rU5 SilverPhoenix99'
   gem.email         = %w'pedro.megastore@gmail.com silver.phoenix99@gmail.com'
-  gem.homepage      = 'https://github.com/P3t3rU5/win-fii'
+  gem.homepage      = 'https://github.com/P3t3rU5/win-ffi'
   gem.require_paths = %w'lib'
   gem.files         = Dir['{lib/**/*.rb,*.md}']
   gem.add_runtime_dependency 'ffi', '~> 1.9', '>= 1.9.10'
