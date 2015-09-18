@@ -1,3 +1,6 @@
+require 'win-ffi/structs/point'
+require 'win-ffi/structs/rect'
+
 module WinFFI
   module User32
     class TOUCH_HIT_TESTING_INPUT < FFIStruct

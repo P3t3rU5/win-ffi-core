@@ -2,7 +2,7 @@ require 'win-ffi/structs/rect'
 
 module WinFFI
   module User32
-    class GuiThreadInfo < FFIStruct
+    class GUITHREADINFO < FFIStruct
       layout :cbSize,        :dword,
              :flags,         :dword,
              :hwndActive,    :hwnd,

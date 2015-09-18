@@ -1,5 +1,5 @@
-require_relative 'bitmap_info_header'
-require_relative 'rgb_quad'
+require 'win-ffi/structs/gdi32/bitmap_info_header'
+require 'win-ffi/structs/gdi32/rgb_quad'
 
 module WinFFI
   module Gdi32

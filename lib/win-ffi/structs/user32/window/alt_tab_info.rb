@@ -2,7 +2,7 @@ require 'win-ffi/structs/point'
 
 module WinFFI
   module User32
-    class AltTabInfo < FFIStruct
+    class ALTTABINFO < FFIStruct
       layout :cbSize,    :dword,
              :cItems,    :int,
              :cColumns,  :int,

@@ -1,5 +1,5 @@
-require_relative '../../enums/user32/pointer_input_type'
-require_relative '../../enums/user32/pointer_flags'
+require 'win-ffi/enums/user32/pointer_input_type'
+require 'win-ffi/enums/user32/pointer_flags'
 
 module WinFFI
   module User32

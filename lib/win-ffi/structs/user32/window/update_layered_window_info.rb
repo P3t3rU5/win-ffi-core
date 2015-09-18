@@ -6,7 +6,7 @@ require 'win-ffi/structs/rect'
 
 module WinFFI
   module User32
-    class UpdateLayeredWindowInfo < FFIStruct
+    class UPDATELAYEREDWINDOWINFO < FFIStruct
       layout :cbSize,   :dword,
              :hdcDst,   :hdc,
              :pptDst,   POINT.ptr,

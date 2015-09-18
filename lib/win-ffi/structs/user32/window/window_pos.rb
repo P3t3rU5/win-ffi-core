@@ -2,7 +2,7 @@ require_relative '../../../enums/user32/window/set_window_pos_flags'
 
 module WinFFI
   module User32
-    class WindowPos < FFIStruct
+    class WINDOWPOS < FFIStruct
       FLAGS_INV = SetWindowPosFlags.to_hash.reduce(Hash.new{|h,k| h[k] = []}){|h,(k,v)| h[v] << k; h}.freeze
 
       layout :hwnd,            :pointer, #HWND

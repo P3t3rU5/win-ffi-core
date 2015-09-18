@@ -1,9 +1,23 @@
+require 'win-ffi/struct'
+
 module WinFFI
   class RECT < FFIStruct
     layout :left,   :long,
            :top,    :long,
            :right,  :long,
            :bottom, :long
+
+    # def initialize(left, top, right, bottom)
+    #   self.left, self.top, self.right, self.bottom = left, top, right, bottom
+    # end
+
+    def area
+      width * height
+    end
+
+    def perimeter
+      2 * width + 2 * height
+    end
 
     def width
       right - left

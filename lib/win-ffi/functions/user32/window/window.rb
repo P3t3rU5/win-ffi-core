@@ -1,5 +1,6 @@
 require 'win-ffi/functions/user32'
 
+require 'win-ffi/enums/color_types'
 require 'win-ffi/enums/user32/window/animate_window_flags'
 require 'win-ffi/enums/user32/window/get_window_flags'
 require 'win-ffi/enums/user32/window/set_window_pos_flags'
@@ -186,7 +187,7 @@ module WinFFI
     attach_function 'FlashWindow', [:hwnd, :bool], :bool
 
     #BOOL WINAPI FlashWindowEx( _In_  PFLASHWINFO pfwi )
-    attach_function 'FlashWindowEx', [FlashwInfo.ptr], :bool
+    attach_function 'FlashWindowEx', [FLASHWINFO.ptr], :bool
 
     #BOOL WINAPI GetAltTabInfo(
     #  _In_opt_   HWND hwnd,
@@ -194,8 +195,8 @@ module WinFFI
     #  _Inout_    PALTTABINFO pati,
     #  _Out_opt_  LPTSTR pszItemText,
     #  _In_       UINT cchItemText )
-    attach_function 'GetAltTabInfoA', [:hwnd, :int, AltTabInfo.ptr, :string, :uint], :bool
-    attach_function 'GetAltTabInfoW', [:hwnd, :int, AltTabInfo.ptr, :string, :uint], :bool
+    attach_function 'GetAltTabInfoA', [:hwnd, :int, ALTTABINFO.ptr, :string, :uint], :bool
+    attach_function 'GetAltTabInfoW', [:hwnd, :int, ALTTABINFO.ptr, :string, :uint], :bool
 
     #HWND WINAPI GetAncestor(
     #  _In_  HWND hwnd,
@@ -216,7 +217,7 @@ module WinFFI
     #BOOL WINAPI GetGUIThreadInfo(
     #  _In_     DWORD idThread,
     #  _Inout_  LPGUITHREADINFO lpgui )
-    attach_function 'GetGUIThreadInfo', [:dword, GuiThreadInfo.ptr], :bool
+    attach_function 'GetGUIThreadInfo', [:dword, GUITHREADINFO.ptr], :bool
 
     #HWND WINAPI GetLastActivePopup( _In_  HWND hWnd )
     attach_function 'GetLastActivePopup', [:hwnd], :hwnd
@@ -236,7 +237,7 @@ module WinFFI
     attach_function 'GetShellWindow', [], :hwnd
 
     #DWORD WINAPI GetSysColor( _In_  int nIndex )
-    attach_function 'GetSysColor', [WinFFI::ColorTypes], :dword
+    attach_function 'GetSysColor', [ColorTypes], :dword
 
     #int WINAPI GetSystemMetrics( _In_  int nIndex )
     attach_function 'GetSystemMetrics', [SystemMetricsFlags], :int
@@ -244,7 +245,7 @@ module WinFFI
     #BOOL WINAPI GetTitleBarInfo(
     #  _In_     HWND hwnd,
     #  _Inout_  PTITLEBARINFO pti )
-    attach_function 'GetTitleBarInfo', [:hwnd, TitleBarInfo.ptr], :bool
+    attach_function 'GetTitleBarInfo', [:hwnd, TITLEBARINFO.ptr], :bool
 
     #HWND WINAPI GetTopWindow(   _In_opt_  HWND hWnd )
     attach_function 'GetTopWindow', [:hwnd], :hwnd
@@ -271,7 +272,7 @@ module WinFFI
     #BOOL GetWindowPlacement(
     #  __in     HWND             hWnd,
     #  __inout  WINDOWPLACEMENT *lpwndpl)
-    attach_function 'GetWindowPlacement', [:hwnd, WindowPlacement.ptr], :bool
+    attach_function 'GetWindowPlacement', [:hwnd, WINDOWPLACEMENT.ptr], :bool
 
     #BOOL GetWindowRect(
     #  __in   HWND   hWnd,
@@ -391,7 +392,7 @@ module WinFFI
     #BOOL SetWindowPlacement(
     #  __in     HWND             hWnd,
     #  __inout  WINDOWPLACEMENT *lpwndpl)
-    attach_function 'SetWindowPlacement', [:hwnd, WindowPlacement.ptr], :bool
+    attach_function 'SetWindowPlacement', [:hwnd, WINDOWPLACEMENT.ptr], :bool
 
     #BOOL WINAPI SetWindowText(
     #  __in      HWND    hWnd,
@@ -496,7 +497,7 @@ module WinFFI
         #BOOL WINAPI UpdateLayeredWindowIndirect(
         #  _In_  HWND hwnd,
         #  _In_  const UPDATELAYEREDWINDOWINFO *pULWInfo )
-        attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UpdateLayeredWindowInfo.ptr], :bool
+        attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UPDATELAYEREDWINDOWINFO.ptr], :bool
 
         #HWND WINAPI WindowFromPhysicalPoint( _In_  POINT Point )
         attach_function 'WindowFromPhysicalPoint', [WinFFI::POINT], :hwnd
@@ -533,11 +534,11 @@ module WinFFI
             #HRESULT WINAPI GetProcessDPIAwareness(
             #  _In_   HANDLE hprocess,
             #  _Out_  PROCESS_DPI_AWARENESS *value )
-            attach_function 'GetProcessDPIAwareness', [:handle, :pointer], :hresult
+            # attach_function 'GetProcessDPIAwareness', [:handle, :pointer], :hresult
 
             #HRESULT WINAPI SetProcessDPIAwareness(
             #  _In_  PROCESS_DPI_AWARENESS value )
-            attach_function 'SetProcessDPIAwareness', [:pointer], :hresult
+            # attach_function 'SetProcessDPIAwareness', [:pointer], :hresult
           end
         end
       end

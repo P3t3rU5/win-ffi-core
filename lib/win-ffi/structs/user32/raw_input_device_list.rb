@@ -1,4 +1,4 @@
-require_relative '../../enums/user32/rim'
+require 'win-ffi/enums/user32/rim'
 
 module WinFFI
   module User32

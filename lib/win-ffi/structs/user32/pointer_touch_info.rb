@@ -1,6 +1,7 @@
-require_relative '../../enums/user32/touch_mask'
+require 'win-ffi/enums/user32/touch_mask'
 
-require_relative 'pointer_info'
+require 'win-ffi/structs/rect'
+require 'win-ffi/structs/user32/pointer_info'
 
 module WinFFI
   module User32

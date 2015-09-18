@@ -1,4 +1,4 @@
-require_relative '../../../structs/user32/window/luid'
+require 'win-ffi/structs/user32/window/luid'
 
 module WinFFI
   module User32

@@ -3,7 +3,7 @@ require 'win-ffi/functions/user32'
 require 'win-ffi/enums/user32/mouse_keys_flags'
 require 'win-ffi/enums/user32/mouse_event_flags'
 
-require 'lib/win-ffi/structs/point'
+require 'win-ffi/structs/point'
 require 'win-ffi/structs/user32/mouse_move_point'
 require 'win-ffi/structs/user32/track_mouse_event'
 

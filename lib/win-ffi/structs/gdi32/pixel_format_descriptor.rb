@@ -37,16 +37,16 @@ module WinFFI
 
       def initialize
         super
-        self[:nSize] = self.size
+        self.nSize = self.size
       end
 
       def dwFlags
-        val = self[:dwFlags]
+        val = self.dwFlags
         Set.new(FLAGS_INV.select{|k,_| val & k != 0}.reduce([]) {|a,(_,v)| a << v}.flatten)
       end
 
       def dwFlags=(flags)
-        self[:dwFlags] = [*flags].reduce(0) {|a,f| a | PFDFlags[f].to_i}
+        self.dwFlags = [*flags].reduce(0) {|a,f| a | PFDFlags[f].to_i}
       end
 
       def to_s

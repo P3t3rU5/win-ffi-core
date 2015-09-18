@@ -1,6 +1,6 @@
 module WinFFI
   module User32
-    class FlashwInfo < FFIStruct
+    class FLASHWINFO < FFIStruct
       layout :cbSize,    :uint,
              :hwnd,      :hwnd,
              :dwFlags,   :dword,

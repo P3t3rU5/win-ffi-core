@@ -1,6 +1,6 @@
 module WinFFI
   module User32
-    class WindowPlacement < FFIStruct
+    class WINDOWPLACEMENT < FFIStruct
       layout :length,           :uint,
              :flags,            :uint,
              :showCmd,          :uint,
