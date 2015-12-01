@@ -35,6 +35,10 @@ module WinFFI
       self.dwMinorVersion = minor
     end
 
+    def build=(build)
+      self.dwBuildNumber = build
+    end
+
     def hex; (major << 8) + minor end
 
     def <=>(version)
@@ -42,10 +46,11 @@ module WinFFI
               when '2000',  2000   then 0x0500
               when 'xp',    :xp    then 0x0501
               when 'vista', :vista then 0x0600
-              when '7', 7;         then 0x0601
-              when '8', 8;         then 0x0602
-              when '8.1', 8.1;     then 0x0603
-              when '10', 10;       then 0x0a00
+              when '7', 7          then 0x0601
+              when '8', 8          then 0x0602
+              when '8.1', 8.1      then 0x0603
+              when '10', 10        then 0x0a00
+              when Integer         then version
               else raise ArgumentError, 'Unknown Version'
               end
     end

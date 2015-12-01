@@ -215,8 +215,8 @@ module WinFFI
         :EM_GETBIDIOPTIONS,         0x04C9,
         :WM_APP,                    0x8000,
     ]
-    messages += `ver`[/\d.\d/].to_f >= 5.1 ? [:WM_KEYLAST, 0x0109] : [:WM_KEYLAST, 0x0109]
-    WindowMessages = enum :window_messages, messages
+    messages += WindowsVersion > :xp ? [:WM_KEYLAST, 0x0109] : [:WM_KEYLAST, 0x0108]
+    WindowMessage = enum :window_message, messages
 
   end
 end

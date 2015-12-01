@@ -108,8 +108,8 @@ module WinFFI
         #  _In_  UINT Msg,
         #  _In_  WPARAM wParam,
         #  _In_  LPARAM lParam )
-        attach_function 'SendMessageA', [:hwnd, WindowMessages, :wparam, :lparam], :lresult
-        attach_function 'SendMessageW', [:hwnd, WindowMessages, :wparam, :lparam], :lresult
+        attach_function 'SendMessageA', [:hwnd, :uint, :wparam, :lparam], :lresult
+        attach_function 'SendMessageW', [:hwnd, :uint, :wparam, :lparam], :lresult
 
         #BOOL WINAPI SendMessageCallback(
         #  _In_  HWND hWnd,

@@ -1,4 +1,5 @@
 require 'win-ffi/functions/user32'
+require 'win-ffi/enums/user32/window/control/dlg_dir_list_flags'
 
 module WinFFI
   module User32
@@ -8,8 +9,8 @@ module WinFFI
     #  _In_     int nIDListBox,
     #  _In_     int nIDStaticPath,
     #  _In_     UINT uFileType )
-    attach_function 'DlgDirListA', [:hwnd, :string, :int, :int, :uint], :int
-    attach_function 'DlgDirListW', [:hwnd, :string, :int, :int, :uint], :int
+    attach_function 'DlgDirListA', [:hwnd, :string, :int, :int, DlgDirListFlags], :int
+    attach_function 'DlgDirListW', [:hwnd, :string, :int, :int, DlgDirListFlags], :int
 
     #BOOL DlgDirSelectEx(
     #  _In_   HWND hDlg,

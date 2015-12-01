@@ -21,19 +21,19 @@ module WinFFI
 
   WindowsVersion = OSVERSIONINFOEX.new.get!
 
-  require 'win-ffi/functions/netapi32/network_management'
-  require 'win-ffi/structs/netapi32/wksta_info_100'
-
-  FFI::MemoryPointer.new(:long) do |pinfoRawData|
-    if Netapi32.NetWkstaGetInfo(nil, 100, pinfoRawData) == 0
-      net_info = WKSTA_INFO_100.new(pinfoRawData.get_pointer(0))
-      major = net_info.wki100_ver_major
-      minor = net_info.wki100_ver_minor
-      WindowsVersion.major = major
-      WindowsVersion.minor = minor
-    end
-  end
+  WindowsVersion.major, WindowsVersion.minor, WindowsVersion.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
 
   puts "WinFFI #{WinFFI::VERSION}"
   puts WinFFI::WindowsVersion.to_s
+
+  @encoding = __ENCODING__.name =~ /ASCII/ ? 'A' : 'W'
+
+  def self.encoding
+    @encoding
+  end
+
+  def self.encoding=(encoding)
+    @encoding = encoding
+  end
+  puts __ENCODING__
 end

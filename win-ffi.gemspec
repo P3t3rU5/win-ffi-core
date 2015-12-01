@@ -22,7 +22,7 @@ Gem::Specification.new do |gem|
 
   ==========================================================================
   #{WinFFI::VERSION} Changes:
-    - First Official Version
+    - Added missing requires and changed the name of some structs to be upcased
 
   ==========================================================================
 
