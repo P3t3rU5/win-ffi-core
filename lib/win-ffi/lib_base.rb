@@ -14,32 +14,24 @@ module WinFFI
     typedef :uint,      :wparam
     typedef :long,      :lparam
     typedef :long,      :lresult
+    typedef :long,      :hresult
     typedef :ushort,    :langid
     %i'
-      haccel
       handle
       hbitmap
       hbrush
-      hconv
-      hcursor
       hdc
-      hddedata
-      hdesk
-      hgdiobj
       hglobal
       hicon
       hinstance
-      hkl
-      hmenu
-      hmetafile
-      hmonitor
       hmodule
-      hrgn
-      hsz
       hwnd
-      hwinsta
     '.each do |s|
       typedef :pointer, s
+    end
+
+    def encoded_function(name, *args)
+      attach_function name, name + WinFFI.encoding, *args
     end
 
     def self.extended(c)
