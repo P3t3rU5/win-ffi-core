@@ -10,6 +10,7 @@ module WinFFI
   module User32
 
     typedef :pointer, :hdesk
+    typedef :pointer, :hwinsta
 
     #BOOL WINAPI CloseDesktop( _In_  HDESK hDesktop )
     attach_function 'CloseDesktop', [:hdesk], :bool

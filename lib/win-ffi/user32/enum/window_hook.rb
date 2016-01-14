@@ -20,7 +20,7 @@ module WinFFI
       # information, see the GetMsgProc hook procedure.
 
       :CALLWNDPROC, 4, # Installs a hook procedure that monitors messages before the system sends them to the
-      # destination window procedure. For more information, see the CallWndProc hook procedure.
+      # destination window_class procedure. For more information, see the CallWndProc hook procedure.
 
       :CBT, 5, # Installs a hook procedure that receives notifications useful to a CBT application. For more
       # information, see the CBTProc hook procedure.
@@ -44,7 +44,7 @@ module WinFFI
       # information, see the ForegroundIdleProc hook procedure.
 
       :CALLWNDPROCRET, 12, # Installs a hook procedure that monitors messages after they have been processed by the
-      # destination window procedure. For more information, see the CallWndRetProc hook procedure.
+      # destination window_class procedure. For more information, see the CallWndRetProc hook procedure.
 
       :KEYBOARD_LL, 13, # Installs a hook procedure that monitors low-level keyboard input events. For more
       # information, see the LowLevelKeyboardProc hook procedure.

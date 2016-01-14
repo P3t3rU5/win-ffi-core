@@ -62,7 +62,7 @@ module WinFFI
           :MEDIA_CHANNEL_UP,                  51,
           :MEDIA_CHANNEL_DOWN,                52
       ]
-      if WindowsVersion >= Vista
+      if WindowsVersion >= :vista
         buffer += [
             :DELETE,     53,
             :DWM_FLIP3D, 54,

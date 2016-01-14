@@ -13,8 +13,8 @@ module WinFFI
       :LOADFROMFILE,  0x00000010, # Loads the stand-alone image from the file specified by lpszName (icon, cursor, or
       # bitmap file).
       :LOADTRANSPARENT, 0x00000020, # Retrieves the color value of the first pixel in the image and replaces the
-      # corresponding entry in the color table with the default window color (COLOR_WINDOW). All pixels in the image
-      # that use that entry become the default window color. This value applies only to images that have corresponding
+      # corresponding entry in the color table with the default window_class color (COLOR_WINDOW). All pixels in the image
+      # that use that entry become the default window_class color. This value applies only to images that have corresponding
       # color tables.
       :DEFAULTSIZE, 0x00000040, # Uses the width or height specified by the system metric values for cursors or icons,
       # if the cxDesired or cyDesired values are set to zero. If this flag is not specified and cxDesired and

@@ -2,7 +2,7 @@ require 'win-ffi/user32'
 
 require 'win-ffi/general/struct/rect'
 require 'win-ffi/general/struct/point'
-require 'win-ffi/user32/struct/cursor_info'
+require 'win-ffi/user32/struct/info/cursor_info'
 
 module WinFFI
   module User32
@@ -10,7 +10,10 @@ module WinFFI
     attach_function 'ClipCursor', [RECT.ptr], :bool
 
     #HCURSOR WINAPI CopyCursor( _In_  HCURSOR pcur )
-    attach_function 'CopyCursor', [:hcursor], :hcursor
+    #define CopyCursor(pcur) ((HCURSOR)CopyIcon((HICON)(pcur)))
+    def CopyCursor(hcursor)
+      CopyIcon(hcursor)
+    end
 
     #HCURSOR WINAPI CreateCursor(
     #  _In_opt_  HINSTANCE hInst,

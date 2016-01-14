@@ -27,6 +27,7 @@ module WinFFI
         :WM_SYSTEMERROR,            0x0017,
         :WM_SHOWWINDOW,             0x0018,
         :WM_CTLCOLOR,               0x0019,
+        :WM_WININICHANGE,
         :WM_SETTINGCHANGE,          0x001A,
         :WM_DEVMODECHANGE,          0x001B,
         :WM_ACTIVATEAPP,            0x001C,
@@ -53,7 +54,9 @@ module WinFFI
         :WM_GETHOTKEY,              0x0033,
         :WM_QUERYDRAGICON,          0x0037,
         :WM_COMPAREITEM,            0x0039,
+        :WM_GETOBJECT,              0x003D,
         :WM_COMPACTING,             0x0041,
+        :WM_COMMNOTIFY,             0x0044, # no longer suported
         :WM_WINDOWPOSCHANGING,      0x0046,
         :WM_WINDOWPOSCHANGED,       0x0047,
         :WM_POWER,                  0x0048,
@@ -79,6 +82,7 @@ module WinFFI
         :WM_NCPAINT,                0x0085,
         :WM_NCACTIVATE,             0x0086,
         :WM_GETDLGCODE,             0x0087,
+        :WM_SYNCPAINT,              0x0088,
         :WM_NCMOUSEMOVE,            0x00A0,
         :WM_NCLBUTTONDOWN,          0x00A1,
         :WM_NCLBUTTONUP,            0x00A2,
@@ -89,8 +93,12 @@ module WinFFI
         :WM_NCMBUTTONDOWN,          0x00A7,
         :WM_NCMBUTTONUP,            0x00A8,
         :WM_NCMBUTTONDBLCLK,        0x00A9,
+        :WM_NCXBUTTONDOWN,          0x00AB,
+        :WM_NCXBUTTONUP,            0x00AC,
+        :WM_NCXBUTTONDBLCLK,        0x00AD,
         :WM_NCUAHDRAWCAPTION,       0x00AE,
         :WM_NCUAHDRAWFRAME,         0x00AF,
+        :WM_KEYFIRST,
         :WM_KEYDOWN,                0x0100,
         :WM_KEYUP,                  0x0101,
         :WM_CHAR,                   0x0102,
@@ -101,6 +109,7 @@ module WinFFI
         :WM_SYSDEADCHAR,            0x0107,
         :WM_IME_STARTCOMPOSITION,   0x010D,
         :WM_IME_ENDCOMPOSITION,     0x010E,
+        :WM_IME_KEYLAST,
         :WM_IME_COMPOSITION,        0x010F,
         :WM_INITDIALOG,             0x0110,
         :WM_COMMAND,                0x0111,
@@ -113,10 +122,14 @@ module WinFFI
         :WM_MENUSELECT,             0x011F,
         :WM_MENUCHAR,               0x0120,
         :WM_ENTERIDLE,              0x0121,
-        :WM_MENURBUTTONUP,          0x0122,
-        :WM_MENUDRAG,               0x0123,
-        :WM_MENUGETOBJECT,          0x0124,
-        :WM_UNINITMENUPOPUP,        0x0125,
+
+        # WindowsCE
+        # :WM_MENURBUTTONUP,          0x0122,
+        # :WM_MENUDRAG,               0x0123,
+        # :WM_MENUGETOBJECT,          0x0124,
+        # :WM_UNINITMENUPOPUP,        0x0125,
+        # :WM_MENUCOMMAND,            0x0126,
+
         :WM_CHANGEUISTATE,          0x0127,
         :WM_UPDATEUISTATE,          0x0128,
         :WM_QUERYUISTATE,           0x0129,
@@ -127,6 +140,7 @@ module WinFFI
         :WM_CTLCOLORDLG,            0x0136,
         :WM_CTLCOLORSCROLLBAR,      0x0137,
         :WM_CTLCOLORSTATIC,         0x0138,
+        :WM_MOUSEFIRST,
         :WM_MOUSEMOVE,              0x0200,
         :WM_LBUTTONDOWN,            0x0201,
         :WM_LBUTTONUP,              0x0202,
@@ -138,7 +152,10 @@ module WinFFI
         :WM_MBUTTONUP,              0x0208,
         :WM_MBUTTONDBLCLK,          0x0209,
         :WM_MOUSEWHEEL,             0x020A,
-        :WM_MOUSEHWHEEL,            0x020E,
+        :WM_XBUTTONDOWN,            0x020B,
+        :WM_XBUTTONUP,              0x020C,
+        :WM_XBUTTONDBLCLK,          0x020D,
+
         :WM_PARENTNOTIFY,           0x0210,
         :WM_ENTERMENULOOP,          0x0211,
         :WM_EXITMENULOOP,           0x0212,
@@ -163,18 +180,22 @@ module WinFFI
         :WM_EXITSIZEMOVE,           0x0232,
         :WM_DROPFILES,              0x0233,
         :WM_MDIREFRESHMENU,         0x0234,
+
         :WM_IME_SETCONTEXT,         0x0281,
         :WM_IME_NOTIFY,             0x0282,
         :WM_IME_CONTROL,            0x0283,
         :WM_IME_COMPOSITIONFULL,    0x0284,
         :WM_IME_SELECT,             0x0285,
         :WM_IME_CHAR,               0x0286,
+        :WM_IME_REQUEST,            0x0288,
         :WM_IME_KEYDOWN,            0x0290,
         :WM_IME_KEYUP,              0x0291,
 
+        :WM_NCMOUSEHOVER,           0x02A0,
         :WM_MOUSEHOVER,             0x02A1,
         :WM_NCMOUSELEAVE,           0x02A2,
         :WM_MOUSELEAVE,             0x02A3,
+
         :WM_CUT,                    0x0300,
         :WM_COPY,                   0x0301,
         :WM_PASTE,                  0x0302,
@@ -196,8 +217,11 @@ module WinFFI
         :WM_HOTKEY,                 0x0312,
         :WM_PRINT,                  0x0317,
         :WM_PRINTCLIENT,            0x0318,
+        :WM_APPCOMMAND,             0x0319,
         :WM_HANDHELDFIRST,          0x0358,
         :WM_HANDHELDLAST,           0x035F,
+        :WM_AFXFIRST,               0x0360,
+        :WM_AFXLAST,                0x037F,
         :WM_PENWINFIRST,            0x0380,
         :WM_PENWINLAST,             0x038F,
         :WM_COALESCE_FIRST,         0x0390,
@@ -216,7 +240,66 @@ module WinFFI
         :EM_GETBIDIOPTIONS,         0x04C9,
         :WM_APP,                    0x8000,
     ]
-    buffer += WindowsVersion > :xp ? [:WM_KEYLAST, 0x0109] : [:WM_KEYLAST, 0x0108]
+    buffer += WindowsVersion >= :xp ? [:WM_UNICHAR, :WM_KEYLAST, 0x0109] : [:WM_UNICHAR, :WM_KEYLAST, 0x0108]
+
+    if WindowsVersion >= :vista
+      buffer += [:WM_MOUSELAST, 0x020E]
+    elsif WindowsVersion >= 2000
+      buffer += [:WM_MOUSELAST, 0x020D]
+    end
+
+    if WindowsVersion >= :xp
+      buffer += [
+          :WM_INPUT_DEVICE_CHANGE, 0x00FE,
+          :WM_INPUT,               0x00FF,
+          :WM_WTSSESSION_CHANGE,   0x02B1,
+          :WM_TABLET_FIRST,        0x02C0,
+          :WM_TABLET_LAST,         0x02DF,
+          :WM_THEMECHANGED,        0x031A,
+          :WM_CLIPBOARDUPDATE,     0x031D,
+      ]
+      if WindowsVersion >= :vista
+        buffer += [
+            :WM_MOUSEHWHEEL,                 0x020E,
+            :WM_DWMCOMPOSITIONCHANGED,       0x031E,
+            :WM_DWMNCRENDERINGCHANGED,       0x031F,
+            :WM_DWMCOLORIZATIONCOLORCHANGED, 0x0320,
+            :WM_DWMWINDOWMAXIMIZEDCHANGE,    0x0321,
+            :WM_GETTITLEBARINFOEX,           0x033F
+        ]
+        if WindowsVersion >= 7
+          buffer += [
+              :WM_GESTURE,                        0x0119,
+              :WM_GESTURENOTIFY,                  0x011A,
+              :WM_TOUCH,                          0x0240,
+              :WM_DPICHANGED,                     0x02E0,
+              :WM_DWMSENDICONICTHUMBNAIL,         0x0323,
+              :WM_DWMSENDICONICLIVEPREVIEWBITMAP, 0x0326,
+          ]
+          if WindowsVersion >= 8
+            buffer += [
+                :WM_POINTERDEVICECHANGE,     0x0238,
+                :WM_POINTERDEVICEINRANGE,    0x0239,
+                :WM_POINTERDEVICEOUTOFRANGE, 0x023A,
+                :WM_NCPOINTERUPDATE,         0x0241,
+                :WM_NCPOINTERDOWN,           0x0242,
+                :WM_NCPOINTERUP,             0x0243,
+                :WM_POINTERUPDATE,           0x0245,
+                :WM_POINTERDOWN,             0x0246,
+                :WM_POINTERUP,               0x0247,
+                :WM_POINTERENTER,            0x0249,
+                :WM_POINTERLEAVE,            0x024A,
+                :WM_POINTERACTIVATE,         0x024B,
+                :WM_POINTERCAPTURECHANGED,   0x024C,
+                :WM_TOUCHHITTESTING,         0x024D,
+                :WM_POINTERWHEEL,            0x024E,
+                :WM_POINTERHWHEEL,           0x024F,
+            ]
+          end
+        end
+      end
+    end
+
     WindowMessage = enum :window_message, buffer
 
   end

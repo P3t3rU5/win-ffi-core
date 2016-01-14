@@ -1,7 +1,7 @@
 module WinFFI
   class SECURITY_ATTRIBUTES < FFIStruct
     layout :nLength,              :dword,
-           :lpSecurityDescriptor, :lpvoid,
+           :lpSecurityDescriptor, :pointer,
            :bInheritHandle,       :bool
   end
 end

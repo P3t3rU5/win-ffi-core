@@ -1,3 +1,6 @@
+require 'win-ffi/user32/enum/window/style/window_style'
+require 'win-ffi/user32/enum/window/style/window_style_ex'
+
 module WinFFI
   module User32
     class CREATESTRUCT < FFIStruct

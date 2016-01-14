@@ -1,3 +1,5 @@
+require 'win-ffi/user32/enum/display_device_flags'
+
 module WinFFI
   module User32
     class DISPLAY_DEVICE < FFIStruct

@@ -4,21 +4,14 @@ module WinFFI
 
     ffi_lib 'user32'
 
+    typedef :pointer, :handle
     typedef :pointer, :hcursor
     typedef :pointer, :hmenu
     typedef :pointer, :hrgn
     
     if WindowsVersion >= :xp
-
       #VOID WINAPI DisableProcessWindowsGhosting(void)
       attach_function 'DisableProcessWindowsGhosting', [], :void
-
-      if WindowsVersion >= 8
-
-        #BOOL GetCurrentInputMessageSource( _Out_  INPUT_MESSAGE_SOURCE *inputMessageSource )
-        attach_function 'GetCurrentInputMessageSource', [:pointer], :bool
-
-      end
     end
 
     CW_USEDEFAULT   = -0x80000000
@@ -36,16 +29,6 @@ module WinFFI
       :WINLOGO,     32517,
       :SHIELD,      32518
     ]
-
-    require 'win-ffi/user32/enum/user_object_information_flags'
-
-    #BOOL WINAPI GetUserObjectInformation(
-    #  _In_       HANDLE hObj,
-    #  _In_       int nIndex,
-    #  _Out_opt_  PVOID pvInfo,
-    #  _In_       DWORD nLength,
-    #  _Out_opt_  LPDWORD lpnLengthNeeded )
-    encoded_function 'GetUserObjectInformation', [:handle, UserObjectInformationFlags, :pointer, :dword, :pointer], :bool
 
     #BOOL WINAPI IsWinEventHookInstalled( _In_  DWORD event )
     attach_function 'IsWinEventHookInstalled', [:dword], :bool
@@ -91,13 +74,6 @@ module WinFFI
     #  __in  int nIndex,
     #  __in  LONG_PTR dwNewLong)
     #encoded_function 'SetClassLongPtr', [:hwnd, ClassLong, :pointer], :pointer
-
-    #BOOL WINAPI SetUserObjectInformation(
-    #  _In_  HANDLE hObj,
-    #  _In_  int nIndex,
-    #  _In_  PVOID pvInfo,
-    #  _In_  DWORD nLength )
-    encoded_function 'SetUserObjectInformation', [:handle, :int, :pointer, :dword], :bool
 
     #HWINEVENTHOOK WINAPI SetWinEventHook(
     #  _In_  UINT eventMin,

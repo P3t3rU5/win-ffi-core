@@ -15,7 +15,7 @@ module WinFFI
         :NOTIMEOUTIFNOTHUNG, 0x0008, # The function does not enforce the time-out period as long as the receiving thread
         # is processing messages.
 
-        :ERRORONEXIT, 0x0020, # The function should return 0 if the receiving window is destroyed or its owning thread
+        :ERRORONEXIT, 0x0020, # The function should return 0 if the receiving window_class is destroyed or its owning thread
         # dies while the message is being processed.
       ]
   end

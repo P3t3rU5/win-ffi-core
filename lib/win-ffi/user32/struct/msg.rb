@@ -2,12 +2,13 @@ require 'win-ffi/general/struct/point'
 
 module WinFFI
   module User32
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644958(v=vs.85).aspx
     class MSG < FFIStruct
-      layout :hwnd,    :pointer,
+      layout :hwnd,    :hwnd,
              :message, :uint,
-             :ulong,   :ulong,
-             :long,    :long,
-             :time,    :uint,
+             :wParam,  :ulong,
+             :lParam,  :long,
+             :time,    :dword,
              :pt,      POINT
 
       def to_s

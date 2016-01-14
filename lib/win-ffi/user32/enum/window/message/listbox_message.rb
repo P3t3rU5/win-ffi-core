@@ -2,7 +2,7 @@ require 'win-ffi/user32'
 
 module WinFFI
   module User32
-    list_messages = [
+    buffer = [
         :ADDSTRING,           0x0180,
         :INSERTSTRING,        0x0181,
         :DELETESTRING,        0x0182,
@@ -51,8 +51,8 @@ module WinFFI
 #elif defined(_WIN32_WCE) && (_WIN32_WCE >= 0x0400)
 # :MSGMAX,              0x01B1,
 
-    list_messages += WindowsVersion > :xp ? [:GETLISTBOXINFO, 0x01B2, :MSGMAX, 0x01B3] : [:MSGMAX, 0x01B0]
+    buffer += WindowsVersion > :xp ? [:GETLISTBOXINFO, 0x01B2, :MSGMAX, 0x01B3] : [:MSGMAX, 0x01B0]
 
-    ListBoxMessage = enum :list_box_message, list_messages
+    ListBoxMessage = enum :list_box_message, buffer
   end
 end
