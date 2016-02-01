@@ -1,6 +1,8 @@
+require 'win-ffi/lib_base'
+
 module WinFFI
   module Msimg32
-    extend LibBase
+    extend WinFFI::LibBase
 
     ffi_lib 'msimg32'
   end

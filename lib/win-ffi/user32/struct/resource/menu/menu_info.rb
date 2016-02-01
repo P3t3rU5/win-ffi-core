@@ -1,5 +1,5 @@
-require 'win-ffi/user32/enum/window/control/menu/menu_info_member'
-require 'win-ffi/user32/enum/window/style/menu_style'
+require 'win-ffi/user32/enum/resource/menu/menu_info_member'
+require 'win-ffi/user32/enum/resource/menu/menu_style'
 
 module WinFFI
   module User32

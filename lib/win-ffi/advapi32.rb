@@ -1,3 +1,5 @@
+require 'win-ffi/lib_base'
+
 module WinFFI
   module Advapi32
     extend LibBase

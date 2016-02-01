@@ -2,6 +2,8 @@ require 'win-ffi/user32'
 
 module WinFFI
   module User32
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ff485971(v=vs.85).aspx
+    # Listbox messages
     buffer = [
         :ADDSTRING,           0x0180,
         :INSERTSTRING,        0x0181,

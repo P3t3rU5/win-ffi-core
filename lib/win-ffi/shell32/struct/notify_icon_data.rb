@@ -1,4 +1,6 @@
-require 'win-ffi/shell32/struct/guid'
+require 'win-ffi/shell32'
+
+require 'win-ffi/general/struct/guid'
 
 module WinFFI
   module Shell32

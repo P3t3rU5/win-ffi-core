@@ -2,6 +2,14 @@ require 'win-ffi/user32'
 
 module WinFFI
   module User32
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633573(v=vs.85).aspx
+    # LRESULT CALLBACK WindowProc(
+    #   _In_  HWND hwnd,
+    #   _In_  UINT uMsg,
+    #   _In_  WPARAM wParam,
+    #   _In_  LPARAM lParam )
+    WindowProc = callback :WindowProc, [:hwnd, :uint, :wparam, :lparam], :lresult
+
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633571(v=vs.85).aspx
     # LRESULT WINAPI CallWindowProc(
     #   _In_  WNDPROC lpPrevWndFunc,
@@ -18,13 +26,5 @@ module WinFFI
     #   __in  WPARAM wParam,
     #   __in  LPARAM lParam)
     encoded_function 'DefWindowProc', [:hwnd, :uint, :wparam, :lparam], :lresult
-
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633573(v=vs.85).aspx
-    # LRESULT CALLBACK WindowProc(
-    #   _In_  HWND hwnd,
-    #   _In_  UINT uMsg,
-    #   _In_  WPARAM wParam,
-    #   _In_  LPARAM lParam )
-    WindowProc = callback :WindowProc, [:hwnd, :uint, :wparam, :lparam], :lresult
   end
 end

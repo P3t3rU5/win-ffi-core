@@ -1,4 +1,5 @@
-require 'win-ffi/user32/enum/window_class/show_window_flags'
+require 'win-ffi/user32/enum/window/flag/show_window_flags'
+require 'win-ffi/user32/enum/window/control/scrollbar'
 
 module WinFFI
   module User32

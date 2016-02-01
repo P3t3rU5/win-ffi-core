@@ -1,3 +1,4 @@
+require 'win-ffi/lib_base'
 module WinFFI
   module User32
     extend LibBase
@@ -10,8 +11,37 @@ module WinFFI
     typedef :pointer, :hrgn
     
     if WindowsVersion >= :xp
-      #VOID WINAPI DisableProcessWindowsGhosting(void)
+      # VOID WINAPI DisableProcessWindowsGhosting(void)
       attach_function 'DisableProcessWindowsGhosting', [], :void
+
+      #Active Accessibility
+      # https://msdn.microsoft.com/en-us/library/windows/desktop/dd318528(v=vs.85).aspx
+      # BOOL WINAPI IsWinEventHookInstalled( _In_  DWORD event )
+      attach_function 'IsWinEventHookInstalled', [:dword], :bool
+
+      # https://msdn.microsoft.com/en-us/library/windows/desktop/dd373603(v=vs.85).aspx
+      # void WINAPI NotifyWinEvent(
+      #   _In_  DWORD event,
+      #   _In_  HWND hwnd,
+      #   _In_  LONG idObject,
+      #   _In_  LONG idChild )
+      attach_function 'NotifyWinEvent', [:dword, :hwnd, :long, :long], :void
+
+      # https://msdn.microsoft.com/en-us/library/windows/desktop/dd373640(v=vs.85).aspx
+      # HWINEVENTHOOK WINAPI SetWinEventHook(
+      #   _In_  UINT eventMin,
+      #   _In_  UINT eventMax,
+      #   _In_  HMODULE hmodWinEventProc,
+      #   _In_  WINEVENTPROC lpfnWinEventProc,
+      #   _In_  DWORD idProcess,
+      #   _In_  DWORD idThread,
+      #   _In_  UINT dwflags )
+      attach_function 'SetWinEventHook', [:uint, :uint, :pointer, :pointer, :dword, :dword, :uint], :pointer
+
+      # Process and Threads
+      # https://msdn.microsoft.com/en-us/library/windows/desktop/ms684136(v=vs.85).aspx
+      # BOOL WINAPI IsWow64Message(void)
+      attach_function 'IsWow64Message', [], :bool
     end
 
     CW_USEDEFAULT   = -0x80000000
@@ -30,40 +60,8 @@ module WinFFI
       :SHIELD,      32518
     ]
 
-    #BOOL WINAPI IsWinEventHookInstalled( _In_  DWORD event )
-    attach_function 'IsWinEventHookInstalled', [:dword], :bool
-
-    #BOOL WINAPI IsWow64Message(void)
-    attach_function 'IsWow64Message', [], :bool
-
-    require 'win-ffi/user32/enum/queue_status_flags'
-
-    #DWORD WINAPI MsgWaitForMultipleObjects(
-    #  _In_  DWORD nCount,
-    #  _In_  const HANDLE *pHandles,
-    #  _In_  BOOL bWaitAll,
-    #  _In_  DWORD dwMilliseconds,
-    #  _In_  DWORD dwWakeMask )
-    attach_function 'MsgWaitForMultipleObjects', [:dword, :pointer, :bool, :dword, QueueStatusFlags], :dword
-
-    require 'win-ffi/user32/enum/mwmo'
-
-    #DWORD WINAPI MsgWaitForMultipleObjectsEx(
-    #  _In_  DWORD nCount,
-    #  _In_  const HANDLE *pHandles,
-    #  _In_  DWORD dwMilliseconds,
-    #  _In_  DWORD dwWakeMask,
-    #  _In_  DWORD dwFlags )
-    attach_function 'MsgWaitForMultipleObjectsEx', [:dword, :pointer, :dword, QueueStatusFlags, MWMO], :dword
-
-    #void WINAPI NotifyWinEvent(
-    #  _In_  DWORD event,
-    #  _In_  HWND hwnd,
-    #  _In_  LONG idObject,
-    #  _In_  LONG idChild )
-    attach_function 'NotifyWinEvent', [:dword, :hwnd, :long, :long], :void
-
-    #[This function is obsolete and should not be used.]
+    # https://msdn.microsoft.com/en-us/library/aa969468(v=vs.85).aspx
+    #This function is obsolete and should not be used.
     #LRESULT WINAPI SendIMEMessageEx(
     #  _In_  HWND hwnd,
     #  _In_  LPARAM lParam )
@@ -74,16 +72,6 @@ module WinFFI
     #  __in  int nIndex,
     #  __in  LONG_PTR dwNewLong)
     #encoded_function 'SetClassLongPtr', [:hwnd, ClassLong, :pointer], :pointer
-
-    #HWINEVENTHOOK WINAPI SetWinEventHook(
-    #  _In_  UINT eventMin,
-    #  _In_  UINT eventMax,
-    #  _In_  HMODULE hmodWinEventProc,
-    #  _In_  WINEVENTPROC lpfnWinEventProc,
-    #  _In_  DWORD idProcess,
-    #  _In_  DWORD idThread,
-    #  _In_  UINT dwflags )
-    attach_function 'SetWinEventHook', [:uint, :uint, :pointer, :pointer, :dword, :dword, :uint], :pointer
 
     #BOOL WINAPI UnhookWinEvent( _In_  HWINEVENTHOOK hWinEventHook )
     attach_function 'UnhookWinEvent', [:pointer], :bool

@@ -1,12 +1,12 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window_class/message_box_flags'
+require 'win-ffi/user32/enum/window/flag/message_box_flags'
 require 'win-ffi/user32/enum/window/return/message_box_return'
 
 require 'win-ffi/general/struct/rect'
-require 'win-ffi/user32/struct/window_class/dlg_template'
-require 'win-ffi/user32/struct/msg'
-require 'win-ffi/user32/struct/window_class/msgbox_params'
+require 'win-ffi/user32/struct/window/dialog/dlg_template'
+require 'win-ffi/user32/struct/window/message/msg'
+require 'win-ffi/user32/struct/window/dialog/msgbox_params'
 
 module WinFFI
   module User32

@@ -1,6 +1,20 @@
+
+
 require 'ffi'
+require 'win-ffi/struct'
 
 module WinFFI
+
+  @encoding = __ENCODING__.name =~ /ASCII/ ? 'A' : 'W'
+
+  def self.encoding
+    @encoding
+  end
+
+  def self.encoding=(encoding)
+    @encoding = encoding
+  end
+
   module LibBase
 
     extend FFI::Library
@@ -43,4 +57,22 @@ module WinFFI
       end
     end
   end
+
+  module Kernel32
+    extend LibBase
+
+    ffi_lib 'kernel32'
+
+    #BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
+    encoded_function 'GetVersionEx', [:pointer], :bool
+  end
+
+  require 'win-ffi/kernel32/struct/os_version_info_ex'
+
+  WindowsVersion = OSVERSIONINFOEX.new.get!
+
+  WindowsVersion.major, WindowsVersion.minor, WindowsVersion.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
+
+  Architecture = 1.size * 8
 end
+

@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/flag/queue_status_flags'
+require 'win-ffi/user32/enum/queue_status_flags'
 
 module WinFFI
   module User32

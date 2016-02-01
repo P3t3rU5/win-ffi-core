@@ -1,15 +1,16 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window/flag/broadcast_special_flags'
-require 'win-ffi/user32/enum/window/flag/broadcast_special_message_flags'
+require 'win-ffi/user32/enum/window/message/broadcast_special_flags'
+require 'win-ffi/user32/enum/window/message/broadcast_special_message_flags'
 require 'win-ffi/user32/enum/window/flag/peek_message_flags'
 require 'win-ffi/user32/enum/window/smto'
 require 'win-ffi/user32/enum/window/message/window_message'
-require 'win-ffi/user32/enum/flag/queue_status_flags'
-require 'win-ffi/user32/enum/icon'
+require 'win-ffi/user32/enum/queue_status_flags'
+require 'win-ffi/user32/enum/resource/icon/icon'
+require 'win-ffi/user32/enum/window/return/in_send_message_ex_return'
 
 require 'win-ffi/user32/struct/window/message/bsm_info'
-require 'win-ffi/user32/struct/msg'
+require 'win-ffi/user32/struct/window/message/msg'
 
 module WinFFI
   module User32
@@ -106,7 +107,7 @@ module WinFFI
     #   _In_ UINT      uMsg,
     #   _In_ ULONG_PTR dwData,
     #   _In_ LRESULT   lResult)
-    SendAsyncProc = callback 'SendAsyncProc', [:hwnd, :uint, :ulong, :lresult]
+    SendAsyncProc = callback 'SendAsyncProc', [:hwnd, :uint, :ulong, :lresult], :void
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644950(v=vs.85).aspx
     # LRESULT WINAPI SendMessage(

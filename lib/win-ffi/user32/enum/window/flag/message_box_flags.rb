@@ -5,21 +5,20 @@ module WinFFI
       MessageBoxFlags = enum :message_box_flags,
       [
          # Buttons ---------------------
-
          :OK,                0x00000000, # Push button: OK. This is the default.
          :OKCANCEL,          0x00000001, # Push buttons: OK and Cancel.
          :ABORTRETRYIGNORE,  0x00000002, # Push buttons: Abort, Retry, and Ignore.
          :YESNOCANCEL,       0x00000003, # Push buttons: Yes, No, and Cancel.
          :YESNO,             0x00000004, # Push buttons: Yes and No.
          :RETRYCANCEL,       0x00000005, # Push buttons: Retry and Cancel.
-         # The message box contains three push buttons: Cancel, Try Again, Continue. Use this message box type instead of MB_ABORTRETRYIGNORE.
+         # The message box contains three push buttons: Cancel, Try Again, Continue. Use this message box type instead
+         # of MB_ABORTRETRYIGNORE.
          :CANCELTRYCONTINUE, 0x00000006,
          # Adds a Help button to the message box. When the user clicks the Help button or presses F1, the system sends a
          # WM_HELP message to the owner.
          :HELP,              0x00004000,
 
          # Icons -----------------------
-
          :ICONERROR,                   # Same as above
          :ICONHAND,                    # Same as above
          :ICONSTOP,        0x00000010, # A stop-sign icon
@@ -31,14 +30,12 @@ module WinFFI
          :USERICON,        0x00000080,
 
          # Default button
-
          :DEFBUTTON1, 0x00000000,
          :DEFBUTTON2, 0x00000100,
          :DEFBUTTON3, 0x00000200,
          :DEFBUTTON4, 0x00000300,
          
          # Modality --------------------
-
          # The user must respond to the message box before continuing work in the
          # window_class identified by the hWnd parameter. However, the user can move to the
          # windows of other threads and work in those windows.

@@ -1,16 +1,16 @@
+require 'win-ffi/user32/enum/window/flag/window_placement_flags'
+require 'win-ffi/user32/enum/window/flag/show_window_flags'
+
 module WinFFI
   module User32
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms632611(v=vs.85).aspx
     class WINDOWPLACEMENT < FFIStruct
       layout :length,           :uint,
-             :flags,            :uint,
+             :flags,            WindowPlacementFlags,
              :showCmd,          :uint,
              :ptMinPosition,    POINT,
              :ptMaxPosition,    POINT,
              :rcNormalPosition, RECT
-
-      #remove_method :length=
-      undef :length=
 
       def initialize
         super
@@ -18,11 +18,11 @@ module WinFFI
       end
 
       def showCmd
-        User32.ShowWindowEnum[self[:showCmd]]
+        User32.ShowWindowFlags[self[:showCmd]]
       end
 
       def showCmd=(v)
-        self.showCmd = v.is_a?(Integer) ? v : User32::ShowWindowEnum[v]
+        self.showCmd = v.is_a?(Integer) ? v : User32::ShowWindowFlags[v]
       end
 
       def to_s

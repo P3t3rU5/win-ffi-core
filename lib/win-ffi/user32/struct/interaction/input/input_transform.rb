@@ -2,7 +2,6 @@ module WinFFI
   module User32
 
     #TODO
-
     # typedef struct tagINPUT_TRANSFORM {
     #   union {
     #     struct {
@@ -14,13 +13,12 @@ module WinFFI
     #     float m[4][4];
     #   } DUMMYUNIONNAME;
     # } INPUT_TRANSFORM;
-    class INPUT_TRANSFORM_UNION < FFIStruct
-
-    end
-
-
-    class INPUT_TRANSFORM < FFIStruct
-      layout :dummy_union, INPUT_TRANSFORM_UNION
-    end
+    # class INPUT_TRANSFORM_UNION < FFIStruct
+    #
+    # end
+    #
+    # class INPUT_TRANSFORM < FFIStruct
+    #   layout :dummy_union, INPUT_TRANSFORM_UNION
+    # end
   end
 end

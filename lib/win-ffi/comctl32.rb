@@ -1,6 +1,9 @@
+require 'win-ffi'
+require 'win-ffi/lib_base'
+
 module WinFFI
   module Comctl32
-    extend LibBase
+    extend WinFFI::LibBase
 
     ffi_lib 'comctl32'
 

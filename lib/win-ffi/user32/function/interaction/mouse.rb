@@ -1,11 +1,11 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/interaction/mouse_keys_flags'
-require 'win-ffi/user32/enum/interaction/mouse_event_flags'
+require 'win-ffi/user32/enum/interaction/mouse/mouse_keys_state'
+require 'win-ffi/user32/enum/interaction/mouse/mouse_event_flags'
 
 require 'win-ffi/general/struct/point'
-require 'win-ffi/user32/struct/interaction/mouse_move_point'
-require 'win-ffi/user32/struct/interaction/track_mouse_event'
+require 'win-ffi/user32/struct/interaction/mouse/mouse_move_point'
+require 'win-ffi/user32/struct/interaction/mouse/track_mouse_event'
 
 module WinFFI
   module User32

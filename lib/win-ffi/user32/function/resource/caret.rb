@@ -1,5 +1,7 @@
 require 'win-ffi/user32'
 
+require 'win-ffi/general/struct/point'
+
 module WinFFI
   module User32
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms648399(v=vs.85).aspx

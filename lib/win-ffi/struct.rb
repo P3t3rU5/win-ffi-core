@@ -1,4 +1,5 @@
 require 'ffi'
+require 'win-ffi/lib_base'
 
 module WinFFI
   class FFIStruct < FFI::Struct

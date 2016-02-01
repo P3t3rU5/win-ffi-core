@@ -1,4 +1,4 @@
-require 'win-ffi/user32/function/interaction/track_mouse_event_flags'
+require 'win-ffi/user32/enum/interaction/mouse/track_mouse_event_flags'
 
 module WinFFI
   module User32

@@ -33,7 +33,7 @@ module WinFFI
     class RID_DEVICE_INFO < FFIStruct
       layout :cbSize, :dword,
              :dwType, :dword,
-             :u,      RID_DEVICE_INFO_UNION,
+             :u,      RID_DEVICE_INFO_UNION
     end
 
     def initialize

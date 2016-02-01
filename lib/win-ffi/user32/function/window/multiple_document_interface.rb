@@ -2,7 +2,7 @@ require 'win-ffi/user32'
 
 require 'win-ffi/user32/enum/window/style/window_style'
 
-require 'win-ffi/user32/struct/msg'
+require 'win-ffi/user32/struct/window/message/msg'
 
 module WinFFI
   module User32

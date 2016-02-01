@@ -1,6 +1,8 @@
+require 'win-ffi/lib_base'
+
 module WinFFI
   module Ntdll
-    extend LibBase
+    extend WinFFI::LibBase
 
     ffi_lib 'Ntdll'
   end

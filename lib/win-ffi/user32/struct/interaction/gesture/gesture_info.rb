@@ -1,5 +1,5 @@
-require 'win-ffi/user32/enum/interaction/gesture_flags'
-require 'win-ffi/user32/enum/interaction/gesture_identifiers'
+require 'win-ffi/user32/enum/interaction/gesture/gesture_flags'
+require 'win-ffi/user32/enum/interaction/gesture/gesture_identifiers'
 
 module WinFFI
   module User32
@@ -9,16 +9,16 @@ module WinFFI
              :dwFlags,      GestureFlags,        # see GF_* flags,
              :dwID,         GestureIdentifiers,  # gesture ID, see GID_* defines,
              :hwndTarget,   :hwnd,   # handle to window targeted by this gesture,
-             :ptsLocation,  :points, # current location of this gesture,
+             :ptsLocation,  :pointer, # current location of this gesture,
              :dwInstanceID, :dword,  # internally used,
              :dwSequenceID, :dword,  # internally used,
              :ullArguments, :ulong,  # arguments for gestures whose arguments fit in 8 BYTES,
-             :cbExtraArgs,  :uint,   # size, in bytes, of extra arguments, if any, that accompany this gesture
+             :cbExtraArgs,  :uint    # size, in bytes, of extra arguments, if any, that accompany this gesture
 
-          def initialize
-            super
-            self.cbSize = self.size
-          end
+      def initialize
+        super
+        self.cbSize = self.size
+      end
     end
   end
 end

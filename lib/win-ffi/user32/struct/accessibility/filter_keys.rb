@@ -7,7 +7,7 @@ module WinFFI
              :iWaitMSec,   :dword, # Acceptance Delay,
              :iDelayMSec,  :dword, # Delay Until Repeat,
              :iRepeatMSec, :dword, # Repeat Rate,
-             :iBounceMSec, :dword, # Debounce Time
+             :iBounceMSec, :dword  # Debounce Time
 
       def initialize
         super

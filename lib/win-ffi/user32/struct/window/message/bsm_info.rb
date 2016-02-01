@@ -1,4 +1,4 @@
-require 'win-ffi/user32/function/desktop'
+require 'win-ffi/user32/function/desktop/desktop'
 
 require 'win-ffi/user32/struct/window/luid'
 

@@ -2,7 +2,7 @@ require 'win-ffi/user32'
 
 require 'win-ffi/user32/enum/window/control/dlg_dir_list_flags'
 
-require 'win-ffi/user32/struct/control/combobox_info'
+require 'win-ffi/user32/struct/window/control/combobox/combobox_info'
 
 module WinFFI
   module User32

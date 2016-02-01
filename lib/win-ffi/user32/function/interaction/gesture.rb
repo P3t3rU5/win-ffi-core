@@ -3,6 +3,10 @@ require 'win-ffi/user32'
 module WinFFI
   module User32
     if WindowsVersion >= 7
+
+      require 'win-ffi/user32/struct/interaction/gesture/gesture_config'
+      require 'win-ffi/user32/struct/interaction/gesture/gesture_info'
+
       # https://msdn.microsoft.com/en-us/library/windows/desktop/dd353228(v=vs.85).aspx
       # BOOL WINAPI CloseGestureInfoHandle( HGESTUREINFO hGestureInfo )
       attach_function 'CloseGestureInfoHandle', [:pointer], :bool

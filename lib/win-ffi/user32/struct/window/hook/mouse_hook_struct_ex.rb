@@ -1,4 +1,4 @@
-require 'win-ffi/user32/struct/hook/mouse_hook_struct'
+require 'win-ffi/user32/struct/window/hook/mouse_hook_struct'
 
 module WinFFI
   module User32

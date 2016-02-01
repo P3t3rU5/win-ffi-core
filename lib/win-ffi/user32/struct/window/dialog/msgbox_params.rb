@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/window_class/message_box_flags'
+require 'win-ffi/user32/enum/window/flag/message_box_flags'
 
 module WinFFI
   module User32

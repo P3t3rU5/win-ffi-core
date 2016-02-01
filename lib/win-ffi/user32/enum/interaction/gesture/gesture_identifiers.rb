@@ -4,7 +4,7 @@ module WinFFI
   module User32
     if WindowsVersion >= 7
       # Gesture IDs
-      GestureIdentifiers = enu :gesture_identifiers, [
+      GestureIdentifiers = enum :gesture_identifiers, [
           :BEGIN,        1,
           :END,          2,
           :ZOOM,         3,

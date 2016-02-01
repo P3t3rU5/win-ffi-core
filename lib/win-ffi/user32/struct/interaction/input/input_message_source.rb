@@ -1,5 +1,5 @@
-require 'win-ffi/user32/enum/interaction/input_message_device_type'
-require 'win-ffi/user32/enum/interaction/input_message_origin_id'
+require 'win-ffi/user32/enum/interaction/input/input_message_device_type'
+require 'win-ffi/user32/enum/interaction/input/input_message_origin_id'
 
 module WinFFI
   module User32

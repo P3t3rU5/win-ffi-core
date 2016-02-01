@@ -1,13 +1,13 @@
 require 'win-ffi/user32'
-
-require 'win-ffi/user32/struct/interaction/rawinput/rawinput'
-
-require 'win-ffi/user32/enum/interaction/rawinput/raw_input_data'
-require 'win-ffi/user32/enum/interaction/rawinput/rawinput_device_information'
-
 module WinFFI
   module User32
     if WindowsVersion >= :xp
+
+      require 'win-ffi/user32/struct/interaction/rawinput/rawinput'
+
+      require 'win-ffi/user32/enum/interaction/rawinput/raw_input_data'
+      require 'win-ffi/user32/enum/interaction/rawinput/rawinput_device_information'
+
       # https://msdn.microsoft.com/en-us/library/windows/desktop/ms645594(v=vs.85).aspx
       # LRESULT WINAPI DefRawInputProc(
       #   _In_  PRAWINPUT *paRawInput,

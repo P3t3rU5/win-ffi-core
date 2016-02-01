@@ -19,8 +19,6 @@ module WinFFI
              :dwFlags,  LayeredWindowAttributesFlags,
              :prcDirty, RECT.ptr
 
-      undef :cbSize=
-
       def initialize
         super
         self.cbSize = self.size

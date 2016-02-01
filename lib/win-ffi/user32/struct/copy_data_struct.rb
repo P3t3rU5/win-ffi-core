@@ -1,3 +1,5 @@
+require 'win-ffi/user32'
+
 module WinFFI
   module User32
     # lParam of WM_COPYDATA message points to...

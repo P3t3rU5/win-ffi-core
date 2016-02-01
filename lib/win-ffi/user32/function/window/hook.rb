@@ -2,7 +2,7 @@ require 'win-ffi/user32'
 
 require 'win-ffi/user32/enum/window_hook'
 
-require 'win-ffi/user32/struct/msg'
+require 'win-ffi/user32/struct/window/message/msg'
 
 module WinFFI
   module User32

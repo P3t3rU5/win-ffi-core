@@ -1,15 +1,15 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/pointer_input_type'
-
-require 'win-ffi/user32/struct/interaction/pointer_info'
-require 'win-ffi/user32/struct/interaction/pointer_pen_info'
-require 'win-ffi/user32/struct/interaction/pointer_touch_info'
-require 'win-ffi/user32/struct/interaction/pointer_device_info'
-
 module WinFFI
   module User32
     if WindowsVersion >= 8
+      require 'win-ffi/user32/enum/interaction/pointer/pointer_input_type'
+
+      require 'win-ffi/user32/struct/interaction/pointer/pointer_info'
+      require 'win-ffi/user32/struct/interaction/pointer/pointer_pen_info'
+      require 'win-ffi/user32/struct/interaction/pointer/pointer_touch_info'
+      require 'win-ffi/user32/struct/interaction/pointer/pointer_device_info'
+
       # https://msdn.microsoft.com/en-us/library/windows/desktop/hh447467(v=vs.85).aspx
       # BOOL WINAPI EnableMouseInPointer( _In_  BOOL fEnable )
       attach_function 'EnableMouseInPointer', [:bool], :bool

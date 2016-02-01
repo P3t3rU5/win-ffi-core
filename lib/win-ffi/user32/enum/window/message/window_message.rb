@@ -55,6 +55,7 @@ module WinFFI
         :WM_QUERYDRAGICON,          0x0037,
         :WM_COMPAREITEM,            0x0039,
         :WM_GETOBJECT,              0x003D,
+
         :WM_COMPACTING,             0x0041,
         :WM_COMMNOTIFY,             0x0044, # no longer suported
         :WM_WINDOWPOSCHANGING,      0x0046,
@@ -226,6 +227,8 @@ module WinFFI
         :WM_PENWINLAST,             0x038F,
         :WM_COALESCE_FIRST,         0x0390,
         :WM_COALESCE_LAST,          0x039F,
+
+        :WM_DDE_FIRST,              0x03E0,
         :WM_DDE_INITIATE,           0x03E0,
         :WM_DDE_TERMINATE,          0x03E1,
         :WM_DDE_ADVISE,             0x03E2,
@@ -235,12 +238,14 @@ module WinFFI
         :WM_DDE_REQUEST,            0x03E6,
         :WM_DDE_POKE,               0x03E7,
         :WM_DDE_EXECUTE,            0x03E8,
+        :WM_DDE_LAST,               0x03E8,
+
         :WM_USER,                   0x0400,
         :WM_TRAYICON,               0x0401,
         :EM_GETBIDIOPTIONS,         0x04C9,
         :WM_APP,                    0x8000,
     ]
-    buffer += WindowsVersion >= :xp ? [:WM_UNICHAR, :WM_KEYLAST, 0x0109] : [:WM_UNICHAR, :WM_KEYLAST, 0x0108]
+    buffer += WindowsVersion >= :xp ? [:WM_UNICHAR, 0x0109, :WM_KEYLAST, 0x0109] : [:WM_UNICHAR, :WM_KEYLAST, 0x0108]
 
     if WindowsVersion >= :vista
       buffer += [:WM_MOUSELAST, 0x020E]

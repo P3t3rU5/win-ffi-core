@@ -1,3 +1,5 @@
+require 'win-ffi'
+
 module WinFFI
   class SECURITY_ATTRIBUTES < FFIStruct
     layout :nLength,              :dword,

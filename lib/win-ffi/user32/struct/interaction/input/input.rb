@@ -1,5 +1,5 @@
-require 'win-ffi/user32/enum/interaction/mouse_event_flags'
-require 'win-ffi/user32/enum/interaction/keyboard_event_flags'
+require 'win-ffi/user32/enum/interaction/mouse/mouse_event_flags'
+require 'win-ffi/user32/enum/interaction/keyboard/keyboard_event_flags'
 
 module WinFFI
   module User32

@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/window_class/combobox_message'
+require 'win-ffi/user32/enum/window/message/combobox_message'
 
 module WinFFI
   module User32

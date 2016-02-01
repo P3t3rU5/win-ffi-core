@@ -1,6 +1,6 @@
-require 'win-ffi/user32/enum/interaction/pointer_flags'
-require 'win-ffi/user32/enum/interaction/pointer_input_type'
-require 'win-ffi/user32/enum/interaction/pointer_button_change_type'
+require 'win-ffi/user32/enum/interaction/pointer/pointer_flags'
+require 'win-ffi/user32/enum/interaction/pointer/pointer_input_type'
+require 'win-ffi/user32/enum/interaction/pointer/pointer_button_change_type'
 
 module WinFFI
   module User32

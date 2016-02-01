@@ -19,8 +19,6 @@ module WinFFI
              :lpszClassName, :pointer,
              :hIconSm,       :pointer
 
-      undef :cbSize=
-
       def initialize(class_name)
         super()
         @class_name = class_name

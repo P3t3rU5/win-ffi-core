@@ -1,13 +1,12 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/keyboard_layout_flags'
-require 'win-ffi/user32/enum/virtual_key_flags'
-require 'win-ffi/user32/enum/keyboard_modifiers'
-require 'win-ffi/user32/enum/map_virtual_key'
-require 'win-ffi/user32/enum/key_event_flags'
+require 'win-ffi/user32/enum/interaction/keyboard/keyboard_layout_flags'
+require 'win-ffi/user32/enum/interaction/keyboard/virtual_key_code'
+require 'win-ffi/user32/enum/interaction/keyboard/map_virtual_key'
+require 'win-ffi/user32/enum/interaction/keyboard/key_event_flags'
 
-require 'win-ffi/user32/struct/info/last_input_info'
-require 'win-ffi/user32/struct/input'
+require 'win-ffi/user32/struct/interaction/keyboard/last_input_info'
+require 'win-ffi/user32/struct/interaction/input/input'
 
 module WinFFI
   module User32
@@ -34,7 +33,7 @@ module WinFFI
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646293(v=vs.85).aspx
     # SHORT WINAPI GetAsyncKeyState#(_In_  int vKey)
-    attach_function 'GetAsyncKeyState', [VirtualKeyFlags], :short
+    attach_function 'GetAsyncKeyState', [VirtualKeyCode], :short
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646294(v=vs.85).aspx
     # HWND WINAPI GetFocus(void)
@@ -76,7 +75,7 @@ module WinFFI
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646301(v=vs.85).aspx
     # SHORT WINAPI GetKeyState()_In_  int nVirtKey)
-    attach_function 'GetKeyState', [VirtualKeyFlags], :short
+    attach_function 'GetKeyState', [VirtualKeyCode], :short
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646302(v=vs.85).aspx
     # BOOL WINAPI GetLastInputInfo( _Out_  PLASTINPUTINFO plii )
@@ -93,7 +92,7 @@ module WinFFI
     #   _In_  BYTE bScan,
     #   _In_  DWORD dwFlags,
     #   _In_  ULONG_PTR dwExtraInfo )
-    attach_function 'keybd_event', [VirtualKeyFlags, :byte, KeyEventFlags, :ulong], :void
+    attach_function 'keybd_event', [VirtualKeyCode, :byte, KeyEventFlags, :ulong], :void
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646305(v=vs.85).aspx
     # HKL WINAPI LoadKeyboardLayout(
@@ -105,14 +104,14 @@ module WinFFI
     # UINT WINAPI MapVirtualKey(
     #   _In_  UINT uCode,
     #   _In_  UINT uMapType )
-    encoded_function 'MapVirtualKey', [VirtualKeyFlags, MapVirtualKey], :uint
+    encoded_function 'MapVirtualKey', [VirtualKeyCode, MapVirtualKey], :uint
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646307(v=vs.85).aspx
     # UINT WINAPI MapVirtualKeyEx(
     #   _In_         UINT uCode,
     #   _In_         UINT uMapType,
     #   _Inout_opt_  HKL dwhkl )
-    encoded_function 'MapVirtualKeyEx', [VirtualKeyFlags, MapVirtualKey, :hkl], :uint
+    encoded_function 'MapVirtualKeyEx', [VirtualKeyCode, MapVirtualKey, :hkl], :uint
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646308(v=vs.85).aspx
     # DWORD WINAPI OemKeyScan( _In_  WORD wOemChar )
@@ -144,7 +143,7 @@ module WinFFI
     #   _In_opt_  const BYTE *lpKeyState,
     #   _Out_     LPWORD lpChar,
     #   _In_      UINT uFlags )
-    attach_function 'ToAscii', [VirtualKeyFlags, :uint, :pointer, :pointer, :uint], :int
+    attach_function 'ToAscii', [VirtualKeyCode, :uint, :pointer, :pointer, :uint], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646318(v=vs.85).aspx
     # int WINAPI ToAsciiEx(
@@ -154,7 +153,7 @@ module WinFFI
     #   _Out_     LPWORD lpChar,
     #   _In_      UINT uFlags,
     #   _In_opt_  HKL dwhkl )
-    attach_function 'ToAsciiEx', [VirtualKeyFlags, :uint, :pointer, :pointer, :uint, :hkl], :int
+    attach_function 'ToAsciiEx', [VirtualKeyCode, :uint, :pointer, :pointer, :uint, :hkl], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646320(v=vs.85).aspx
     # int WINAPI ToUnicode(
@@ -164,7 +163,7 @@ module WinFFI
     #   _Out_     LPWSTR pwszBuff,
     #   _In_      int cchBuff,
     #   _In_      UINT wFlags )
-    attach_function 'ToUnicode', [VirtualKeyFlags, :uint, :pointer, :string, :int, :uint], :int
+    attach_function 'ToUnicode', [VirtualKeyCode, :uint, :pointer, :string, :int, :uint], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646322(v=vs.85).aspx
     # int WINAPI ToUnicodeEx(
@@ -175,7 +174,7 @@ module WinFFI
     #   _In_      int cchBuff,
     #   _In_      UINT wFlags,
     #   _In_opt_  HKL dwhkl )
-    attach_function 'ToUnicodeEx', [VirtualKeyFlags, :uint, :pointer, :string, :int, :uint, :hkl], :int
+    attach_function 'ToUnicodeEx', [VirtualKeyCode, :uint, :pointer, :string, :int, :uint, :hkl], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646324(v=vs.85).aspx
     # BOOL WINAPI UnloadKeyboardLayout( _In_  HKL hkl )
@@ -198,13 +197,16 @@ module WinFFI
     encoded_function 'VkKeyScanEx', [:char, :hkl], :short
 
     if WindowsVersion >= :vista
+
+      require 'win-ffi/user32/enum/interaction/keyboard/keyboard_modifiers'
+
       # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx
       # BOOL WINAPI RegisterHotKey(
       #   __in_opt  HWND hWnd,
       #   __in      int  id,
       #   __in      UINT fsModifiers,
       #   __in      UINT vk)
-      attach_function 'RegisterHotKey', [:hwnd, :int, KeyboardModifiers, VirtualKeyFlags], :bool
+      attach_function 'RegisterHotKey', [:hwnd, :int, KeyboardModifiers, VirtualKeyCode], :bool
     end
   end
 end

@@ -2,8 +2,7 @@ require 'win-ffi/user32'
 
 require 'win-ffi/general/enum/load_resource_flags'
 
-require 'win-ffi/user32/struct/info/icon_info'
-require 'win-ffi/user32/struct/info/icon_info_ex'
+require 'win-ffi/user32/struct/resource/icon/icon_info'
 
 module WinFFI
   module User32
@@ -111,6 +110,9 @@ module WinFFI
     encoded_function 'PrivateExtractIcons', [:string, :int, :int, :int, :hicon, :pointer, :uint, LoadResourceFlags], :uint
 
     if WindowsVersion >= :vista
+
+      require 'win-ffi/user32/struct/resource/icon/icon_info_ex'
+
       # https://msdn.microsoft.com/en-us/library/windows/desktop/ms648071(v=vs.85).aspx
       # BOOL WINAPI GetIconInfoEx(
       #   _In_     HICON hIcon,

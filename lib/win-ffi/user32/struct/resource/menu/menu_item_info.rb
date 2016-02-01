@@ -1,6 +1,6 @@
-require 'win-ffi/user32/enum/window/control/menu/menu_item_info_member'
-require 'win-ffi/user32/enum/window/control/menu/menu_flags_type'
-require 'win-ffi/user32/enum/window/state/menu_flags_state'
+require 'win-ffi/user32/enum/resource/menu/menu_item_info_member'
+require 'win-ffi/user32/enum/resource/menu/menu_flags_type'
+require 'win-ffi/user32/enum/resource/menu/menu_flags_state'
 
 module WinFFI
   module User32

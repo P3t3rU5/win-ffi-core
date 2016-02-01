@@ -1,4 +1,6 @@
-module WinFII
+require 'win-ffi/user32'
+
+module WinFFI
   module User32
     if WindowsVersion >= 7
       WindowDisplayAffinity = enum :window_display_affinity, [

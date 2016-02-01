@@ -6,23 +6,25 @@ require 'win-ffi/user32/enum/window/flag/get_window_flags'
 require 'win-ffi/user32/enum/window/flag/set_window_pos_flags'
 require 'win-ffi/user32/enum/window/flag/show_window_flags'
 require 'win-ffi/user32/enum/window/flag/system_metrics_flags'
-require 'win-ffi/user32/enum/window/flag/track_popup_menu_flags'
+require 'win-ffi/user32/enum/resource/menu/track_popup_menu_flags'
 require 'win-ffi/user32/enum/window/style/window_style'
 require 'win-ffi/user32/enum/window/style/window_style_ex'
-require 'win-ffi/user32/enum/flag/get_ancestor_flags'
+require 'win-ffi/user32/enum/window/get_ancestor_flags'
 require 'win-ffi/user32/enum/window/message_filter'
 require 'win-ffi/user32/enum/window/message_filter_info'
 require 'win-ffi/user32/enum/window/window_display_affinity'
-require 'win-ffi/user32/enum/window/feedback_type'
+require 'win-ffi/user32/enum/feedback_type'
+require 'win-ffi/user32/enum/window/child_window_from_point_ex_flags'
 
 require 'win-ffi/general/struct/rect'
-require 'win-ffi/user32/struct/info/alt_tab_info'
-require 'win-ffi/user32/struct/info/flash_window_info'
-require 'win-ffi/user32/struct/info/gui_thread_info'
-require 'win-ffi/user32/struct/window/update_layered_window_info'
-require 'win-ffi/user32/struct/info/title_bar_info'
-require 'win-ffi/user32/struct/window/window_placement'
-require 'win-ffi/user32/struct/info/window_info'
+require 'win-ffi/user32/struct/window/window/alt_tab_info'
+require 'win-ffi/user32/struct/window/window/flash_window_info'
+require 'win-ffi/user32/struct/window/window/gui_thread_info'
+require 'win-ffi/user32/struct/window/window/update_layered_window_info'
+require 'win-ffi/user32/struct/window/window/title_bar_info'
+require 'win-ffi/user32/struct/window/window/window_placement'
+require 'win-ffi/user32/struct/window/window/window_info'
+require 'win-ffi/user32/struct/window/window/change_filter_struct'
 
 module WinFFI
   module User32
@@ -337,7 +339,7 @@ module WinFFI
     #   _In_   HWND hWnd,
     #   _Out_  LPTSTR lpString,
     #   _In_   int nMaxCount )
-    encoded_function 'GetWindowText', [:hwnd, :string, :int], :int
+    encoded_function 'GetWindowText', [:hwnd, :pointer, :int], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633521(v=vs.85).aspx
     # int WINAPI GetWindowTextLength( _In_  HWND hWnd )
@@ -631,13 +633,13 @@ module WinFFI
 
           if WindowsVersion >= 8
             # https://msdn.microsoft.com/en-us/library/windows/desktop/hh405402(v=vs.85).aspx
-            # BOOL WINAPI SetWindowFeedbackSettings(
+            # BOOL WINAPI SetWindowFeedbackSetting(
             #   _In_           HWND          hwnd,
             #   _In_           FEEDBACK_TYPE feedback,
             #   _In_           DWORD         flags,
             #   _In_           UINT32        size,
             #   _In_opt_ const VOID          *configuration)
-            attach_function 'SetWindowFeedbackSettings', [:hwnd, FEEDBACK_TYPE, :dword, :uint, :pointer], :bool
+            attach_function 'SetWindowFeedbackSetting', [:hwnd, FEEDBACK_TYPE, :dword, :uint, :pointer], :bool
           end
         end
       end

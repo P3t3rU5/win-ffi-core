@@ -2,6 +2,8 @@ require 'win-ffi/user32'
 
 module WinFFI
   module User32
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ff485967(v=vs.85).aspx
+    # Listbox Styles
     ListBoxStyle = enum :list_box_style,
         [
             :NOTIFY,            0x0001,
@@ -20,6 +22,7 @@ module WinFFI
             :NODATA,            0x2000,
             :NOSEL,             0x4000,
             :COMBOBOX,          0x8000,
+            #define LBS_STANDARD (LBS_NOTIFY | LBS_SORT | WS_VSCROLL | WS_BORDER)
             :STANDARD,          0xa00003
         ]
   end

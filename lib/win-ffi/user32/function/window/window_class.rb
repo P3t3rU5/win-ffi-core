@@ -4,8 +4,8 @@ require 'win-ffi/user32/enum/window/flag/get_class_long_flags'
 require 'win-ffi/user32/enum/window/flag/get_window_long_flags'
 require 'win-ffi/user32/enum/window/window_long'
 
-require 'win-ffi/user32/struct/window_class/wndclass'
-require 'win-ffi/user32/struct/window_class/wndclassex'
+require 'win-ffi/user32/struct/window/window_class/wndclass'
+require 'win-ffi/user32/struct/window/window_class/wndclassex'
 
 module WinFFI
   module User32

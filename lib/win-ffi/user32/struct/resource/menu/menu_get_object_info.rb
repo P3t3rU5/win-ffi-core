@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/window/control/menu/menu_get_object_info_flags'
+require 'win-ffi/user32/enum/resource/menu/menu_get_object_info_flags'
 
 module WinFFI
   module User32
@@ -7,8 +7,8 @@ module WinFFI
       layout :dwFlags, MenuGetObjectInfoFlags,
              :uPos,    :uint,
              :hmenu,   :hmenu,
-             :riid,    :pvoid,
-             :pvObj,   :pvoid
+             :riid,    :pointer,
+             :pvObj,   :pointer
     end
   end
 end

@@ -1,16 +1,16 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window_class/menu_flags'
-require 'win-ffi/user32/enum/append_menu_flags'
-require 'win-ffi/user32/enum/window_class/track_popup_menu_flags'
-require 'win-ffi/user32/enum/window/control/menu/get_menu_default_item_flags'
+require 'win-ffi/user32/enum/resource/menu/menu_flags'
+require 'win-ffi/user32/enum/resource/menu/append_menu_flags'
+require 'win-ffi/user32/enum/resource/menu/track_popup_menu_flags'
+require 'win-ffi/user32/enum/resource/menu/get_menu_default_item_flags'
 
 require 'win-ffi/general/struct/point'
-require 'win-ffi/user32/struct/info/menubar_info'
-require 'win-ffi/user32/struct/info/menu_info'
-require 'win-ffi/user32/struct/info/menu_item_info'
-require 'win-ffi/user32/struct/window_class/menu_item_template'
-require 'win-ffi/user32/struct/window_class/tpm_params'
+require 'win-ffi/user32/struct/resource/menu/menubar_info'
+require 'win-ffi/user32/struct/resource/menu/menu_info'
+require 'win-ffi/user32/struct/resource/menu/menu_item_info'
+require 'win-ffi/user32/struct/resource/menu/menu_item_template'
+require 'win-ffi/user32/struct/resource/menu/tpm_params'
 
 module WinFFI
   module User32
@@ -30,7 +30,7 @@ module WinFFI
     #   _In_opt_ LPCSTR lpszNewItem,
     #   _In_ UINT cmdInsert,
     #   _In_ UINT flags)
-    enconded_function 'ChangeMenu', [:hmenu, :uint, :string, :uint, :uint], :bool
+    encoded_function 'ChangeMenu', [:hmenu, :uint, :string, :uint, :uint], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms647619(v=vs.85).aspx
     # DWORD WINAPI CheckMenuItem(

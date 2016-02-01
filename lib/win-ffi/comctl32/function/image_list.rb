@@ -1,5 +1,6 @@
 require 'win-ffi/comctl32'
 
+require 'win-ffi/general/enum/load_resource_flags'
 require 'win-ffi/comctl32/enum/image_list_draw'
 require 'win-ffi/comctl32/enum/image_list_creation_flags'
 
