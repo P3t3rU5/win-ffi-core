@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/window/flag/show_window_flags'
+require 'win-ffi/user32/enum/window/flag/show_window_flag'
 require 'win-ffi/user32/enum/window/control/scrollbar'
 
 module WinFFI
@@ -25,7 +25,7 @@ module WinFFI
       end
 
       def ScrollBar_Show(hwndCtl, fShow)
-        ShowWindow(hwndCtl, fShow ? ShowWindowFlags[:SHOWNORMAL] : ShowWindowFlags[:HIDE])
+        ShowWindow(hwndCtl, fShow ? ShowWindowFlag[:SHOWNORMAL] : ShowWindowFlag[:HIDE])
       end
     end
   end

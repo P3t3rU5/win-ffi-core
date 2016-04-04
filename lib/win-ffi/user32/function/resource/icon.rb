@@ -67,7 +67,7 @@ module WinFFI
     #   _In_      UINT istepIfAniCur,
     #   _In_opt_  HBRUSH hbrFlickerFreeDraw,
     #   _In_      UINT diFlags )
-    attach_function 'DrawIconEx', [:hdc, :int, :int, :hicon, :int, :int, :uint, :hbrush, DrawIconExFlags], :bool
+    attach_function 'DrawIconEx', [:hdc, :int, :int, :hicon, :int, :int, :uint, :hbrush, DrawIconExFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms648070(v=vs.85).aspx
     # BOOL WINAPI GetIconInfo(

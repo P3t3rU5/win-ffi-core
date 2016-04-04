@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/interaction/pointer/pointer_flags'
+require 'win-ffi/user32/enum/interaction/pointer/pointer_flag'
 require 'win-ffi/user32/enum/interaction/pointer/pointer_input_type'
 require 'win-ffi/user32/enum/interaction/pointer/pointer_button_change_type'
 
@@ -6,10 +6,10 @@ module WinFFI
   module User32
     # https://msdn.microsoft.com/en-us/library/windows/desktop/hh454907(v=vs.85).aspx
     class POINTER_INFO < FFIStruct
-      layout :pointerType,           POINTER_INPUT_TYPE,
+      layout :pointerType,           PointerInputType,
              :pointerId,             :uint32,
              :frameId,               :uint32,
-             :pointerFlags,          PointerFlags,
+             :pointerFlags,          PointerFlag,
              :sourceDevice,          :handle,
              :hwndTarget,            :hwnd,
              :ptPixelLocation,       POINT,
@@ -21,7 +21,7 @@ module WinFFI
              :inputData,             :int32,
              :dwKeyStates,           :dword,
              :PerformanceCount,      :uint,
-             :ButtonChangeType,      POINTER_BUTTON_CHANGE_TYPE
+             :ButtonChangeType,      PointerButtonChangeType
     end
   end
 end

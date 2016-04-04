@@ -1,7 +1,7 @@
 module WinFFI
   module User32
     # https://msdn.microsoft.com/en-us/library/windows/desktop/jj653868(v=vs.85).aspx
-    POINTER_BUTTON_CHANGE_TYPE = enum :pointer_button_change_type, [
+    PointerButtonChangeType = enum :pointer_button_change_type, [
         :NONE,
         :FIRSTBUTTON_DOWN,
         :FIRSTBUTTON_UP,

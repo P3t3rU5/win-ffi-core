@@ -7,12 +7,12 @@ module WinFFI
     [
         :CLICKED,       0,
         :PAINT,         1,
-        :HILITE,
+        :HILITE,        2,
         :PUSHED,        2,
-        :UNHILITE,
+        :UNHILITE,      3,
         :UNPUSHED,      3,
         :DISABLE,       4,
-        :DBLCLK,
+        :DBLCLK,        5,
         :DOUBLECLICKED, 5,
         :SETFOCUS,      6,
         :KILLFOCUS,     7

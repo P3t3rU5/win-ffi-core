@@ -1,9 +1,9 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/resource/menu/menu_flags'
-require 'win-ffi/user32/enum/resource/menu/append_menu_flags'
-require 'win-ffi/user32/enum/resource/menu/track_popup_menu_flags'
-require 'win-ffi/user32/enum/resource/menu/get_menu_default_item_flags'
+require 'win-ffi/user32/enum/resource/menu/menu_flag'
+require 'win-ffi/user32/enum/resource/menu/append_menu_flag'
+require 'win-ffi/user32/enum/resource/menu/track_popup_menu_flag'
+require 'win-ffi/user32/enum/resource/menu/get_menu_default_item_flag'
 
 require 'win-ffi/general/struct/point'
 require 'win-ffi/user32/struct/resource/menu/menubar_info'
@@ -20,7 +20,7 @@ module WinFFI
     #   _In_      UINT uFlags,
     #   _In_      UINT_PTR uIDNewItem,
     #   _In_opt_  LPCTSTR lpNewItem )
-    encoded_function 'AppendMenu', [:hmenu, AppendMenuFlags, :uint, :pointer], :bool
+    encoded_function 'AppendMenu', [:hmenu, AppendMenuFlag, :uint, :pointer], :bool
 
     # Deprecated
     # http://winapi.freetechsecrets.com/win32/WIN32ChangeMenu.htm
@@ -103,7 +103,7 @@ module WinFFI
     #   _In_  HMENU hMenu,
     #   _In_  UINT fByPos,
     #   _In_  UINT gmdiFlags )
-    attach_function 'GetMenuDefaultItem', [:hmenu, :uint, GetMenuDefaultItemFlags], :uint
+    attach_function 'GetMenuDefaultItem', [:hmenu, :uint, GetMenuDefaultItemFlag], :uint
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms647977(v=vs.85).aspx
     # BOOL WINAPI GetMenuInfo(
@@ -181,7 +181,7 @@ module WinFFI
     #   _In_      UINT uFlags,
     #   _In_      UINT_PTR uIDNewItem,
     #   _In_opt_  LPCTSTR lpNewItem )
-    encoded_function 'InsertMenu', [:hmenu, :uint, MenuFlags, :ulong, MenuFlags], :bool
+    encoded_function 'InsertMenu', [:hmenu, :uint, MenuFlag, :ulong, MenuFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms647988(v=vs.85).aspx
     # BOOL WINAPI InsertMenuItem(
@@ -220,7 +220,7 @@ module WinFFI
     #   _In_      UINT uFlags,
     #   _In_      UINT_PTR uIDNewItem,
     #   _In_opt_  LPCTSTR lpNewItem )
-    encoded_function 'ModifyMenu', [:hmenu, :uint, MenuFlags, :uint, :string], :bool
+    encoded_function 'ModifyMenu', [:hmenu, :uint, MenuFlag, :uint, :string], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms647994(v=vs.85).aspx
     # BOOL WINAPI RemoveMenu(
@@ -255,7 +255,7 @@ module WinFFI
     #   _In_      UINT uFlags,
     #   _In_opt_  HBITMAP hBitmapUnchecked,
     #   _In_opt_  HBITMAP hBitmapChecked )
-    attach_function 'SetMenuItemBitmaps', [:hmenu, :uint, MenuFlags, :hbitmap, :hbitmap], :bool
+    attach_function 'SetMenuItemBitmaps', [:hmenu, :uint, MenuFlag, :hbitmap, :hbitmap], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms648001(v=vs.85).aspx
     # BOOL WINAPI SetMenuItemInfo(
@@ -274,7 +274,7 @@ module WinFFI
     #   _In_      int nReserved,
     #   _In_      HWND hWnd,
     #   _In_opt_  const RECT *prcRect )
-    attach_function 'TrackPopupMenu', [:hmenu, TrackPopupMenuFlags, :int, :int, :int, :hwnd, RECT.ptr], :bool
+    attach_function 'TrackPopupMenu', [:hmenu, TrackPopupMenuFlag, :int, :int, :int, :hwnd, RECT.ptr], :bool
 
     # BOOL WINAPI TrackPopupMenuEx(
     #   _In_      HMENU hmenu,
@@ -283,6 +283,6 @@ module WinFFI
     #   _In_      int y,
     #   _In_      HWND hwnd,
     #   _In_opt_  LPTPMPARAMS lptpm )
-    attach_function 'TrackPopupMenuEx', [:hmenu, TrackPopupMenuFlags, :int, :int, :hwnd, TPMPARAMS.ptr], :bool
+    attach_function 'TrackPopupMenuEx', [:hmenu, TrackPopupMenuFlag, :int, :int, :hwnd, TPMPARAMS.ptr], :bool
   end
 end

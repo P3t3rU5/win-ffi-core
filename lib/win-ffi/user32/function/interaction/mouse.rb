@@ -1,7 +1,7 @@
 require 'win-ffi/user32'
 
 require 'win-ffi/user32/enum/interaction/mouse/mouse_keys_state'
-require 'win-ffi/user32/enum/interaction/mouse/mouse_event_flags'
+require 'win-ffi/user32/enum/interaction/mouse/mouse_event_flag'
 
 require 'win-ffi/general/struct/point'
 require 'win-ffi/user32/struct/interaction/mouse/mouse_move_point'
@@ -39,7 +39,7 @@ module WinFFI
     #   _In_  DWORD dy,
     #   _In_  DWORD dwData,
     #   _In_  ULONG_PTR dwExtraInfo )
-    attach_function 'mouse_event', [MouseEventFlags, :dword, :dword, :dword, :ulong], :void
+    attach_function 'mouse_event', [MouseEventFlag, :dword, :dword, :dword, :ulong], :void
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646261(v=vs.85).aspx
     # BOOL WINAPI ReleaseCapture(void)

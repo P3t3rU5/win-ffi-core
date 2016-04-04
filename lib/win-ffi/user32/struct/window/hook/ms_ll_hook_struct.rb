@@ -1,5 +1,5 @@
 require 'win-ffi/user32/enum/window/hook/xbutton'
-require 'win-ffi/user32/enum/window/hook/low_level_mouse_hook_flags'
+require 'win-ffi/user32/enum/window/hook/low_level_mouse_hook_flag'
 
 require 'win-ffi/general/struct/point'
 
@@ -10,7 +10,7 @@ module WinFFI
     class MSLLHOOKSTRUCT < FFIStruct
       layout :pt,          POINT,
              :mouseData,   XButton,
-             :flags,       LowLevelMouseHookFlags,
+             :flags,       LowLevelMouseHookFlag,
              :time,        :dword,
              :dwExtraInfo, :ulong
     end

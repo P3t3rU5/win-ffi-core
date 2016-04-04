@@ -1,17 +1,16 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/painting_drawing/draw_caption_flags'
-require 'win-ffi/user32/enum/painting_drawing/edge_flags'
-require 'win-ffi/user32/enum/painting_drawing/border_flags'
-require 'win-ffi/user32/enum/painting_drawing/draw_frame_control_flags'
-require 'win-ffi/user32/enum/painting_drawing/draw_frame_control_state_flags'
-require 'win-ffi/user32/enum/painting_drawing/redraw_window_flags'
+require 'win-ffi/user32/enum/painting_drawing/draw_caption_flag'
+require 'win-ffi/user32/enum/painting_drawing/edge_flag'
+require 'win-ffi/user32/enum/painting_drawing/border_flag'
+require 'win-ffi/user32/enum/painting_drawing/draw_frame_control_flag'
+require 'win-ffi/user32/enum/painting_drawing/draw_frame_control_state_flag'
+require 'win-ffi/user32/enum/painting_drawing/redraw_window_flag'
+require 'win-ffi/user32/enum/painting_drawing/draw_text_format_flag'
 
 require 'win-ffi/general/struct/rect'
-require 'win-ffi/user32/struct/paint_struct'
-
-require 'win-ffi/general/struct/rect'
-require 'win-ffi/user32/struct/draw_text_params'
+require 'win-ffi/user32/struct/painting_drawing/paint_struct'
+require 'win-ffi/user32/struct/painting_drawing/draw_text_params'
 
 module WinFFI
   module User32
@@ -19,7 +18,7 @@ module WinFFI
     # HDC BeginPaint(
     #   _In_   HWND hwnd,
     #   _Out_  LPPAINTSTRUCT lpPaint )
-    attach_function 'BeginPaint', [:hwnd, PAINTSTRUCT.ptr], :hdc
+    attach_function 'BeginPaint', [:hwnd, PAINTSTRUCT.ptr(:out)], :hdc
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162475(v=vs.85).aspx
     # BOOL DrawAnimatedRects(
@@ -35,7 +34,7 @@ module WinFFI
     #   _In_  HDC hdc,
     #   _In_  LPCRECT lprc,
     #   _In_  UINT uFlags )
-    attach_function 'DrawCaption', [:hwnd, :hdc, RECT.ptr, DrawCaptionFlags], :bool
+    attach_function 'DrawCaption', [:hwnd, :hdc, RECT.ptr(:in), DrawCaptionFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162477(v=vs.85).aspx
     # BOOL DrawEdge(
@@ -43,13 +42,13 @@ module WinFFI
     #   _Inout_  LPRECT qrc,
     #   _In_     UINT edge,
     #   _In_     UINT grfFlags )
-    attach_function 'DrawEdge', [:hdc, RECT.ptr, EdgeFlags, BorderFlags], :bool
+    attach_function 'DrawEdge', [:hdc, RECT.ptr, EdgeFlag, BorderFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162479(v=vs.85).aspx
     # BOOL DrawFocusRect(
     #   _In_  HDC hDC,
     #   _In_  const RECT *lprc )
-    attach_function 'DrawFocusRect', [:hdc, RECT.ptr], :bool
+    attach_function 'DrawFocusRect', [:hdc, RECT.ptr(:in)], :bool
 
     # https://www.google.pt/search?q=DrawFrameControl&oq=DrawFrameControl&aqs=chrome..69i57j0l5.10631j0j4&sourceid=chrome&es_sm=93&ie=UTF-8
     # BOOL DrawFrameControl(
@@ -57,7 +56,16 @@ module WinFFI
     #   _In_  LPRECT lprc,
     #   _In_  UINT uType,
     #   _In_  UINT uState )
-    attach_function 'DrawFrameControl', [:hdc, RECT.ptr, DrawFrameControlFlags, DrawFrameControlStateFlags], :bool
+    attach_function 'DrawFrameControl', [:hdc, RECT.ptr(:in), DrawFrameControlFlag, DrawFrameControlStateFlag], :bool
+
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162497(v=vs.85).aspx
+    # BOOL CALLBACK DrawStateProc(
+    #   _In_  HDC hdc,
+    #   _In_  LPARAM lData,
+    #   _In_  WPARAM wData,
+    #   _In_  int cx,
+    #   _In_  int cy )
+    DrawStateProc = callback 'DrawStateProc', [:hdc, :lparam, :wparam, :int, :int], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162496(v=vs.85).aspx
     # BOOL DrawState(
@@ -71,22 +79,13 @@ module WinFFI
     #   _In_  int cx,
     #   _In_  int cy,
     #   _In_  UINT fuFlags, DrawStateState or DrawStateType )
-    encoded_function 'DrawState', [:hdc, :hbrush, :pointer, :lparam, :wparam, :int, :int, :int, :int, :uint], :bool
-
-    # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162497(v=vs.85).aspx
-    # BOOL CALLBACK DrawStateProc(
-    #   _In_  HDC hdc,
-    #   _In_  LPARAM lData,
-    #   _In_  WPARAM wData,
-    #   _In_  int cx,
-    #   _In_  int cy )
-    callback 'DrawStateProc', [:hdc, :lparam, :wparam, :int, :int], :bool
+    encoded_function 'DrawState', [:hdc, :hbrush, DrawStateProc, :lparam, :wparam, :int, :int, :int, :int, :uint], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162598(v=vs.85).aspx
     # BOOL EndPaint(
     #   _In_  HWND hWnd,
     #   _In_  const PAINTSTRUCT *lpPaint )
-    attach_function 'EndPaint', [:hwnd, PAINTSTRUCT.ptr], :bool
+    attach_function 'EndPaint', [:hwnd, PAINTSTRUCT.ptr(:in)], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162703(v=vs.85).aspx
     # int ExcludeUpdateRgn(
@@ -103,7 +102,7 @@ module WinFFI
     #   _In_   HWND hWnd,
     #   _Out_  LPRECT lpRect,
     #   _In_   BOOL bErase )
-    attach_function 'GetUpdateRect', [:hwnd, RECT.ptr, :bool], :bool
+    attach_function 'GetUpdateRect', [:hwnd, RECT.ptr(:out), :bool], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd144944(v=vs.85).aspx
     # int GetUpdateRgn(
@@ -166,7 +165,7 @@ module WinFFI
     #   _In_  const RECT *lprcUpdate,
     #   _In_  HRGN hrgnUpdate,
     #   _In_  UINT flags )
-    attach_function 'RedrawWindow', [:hwnd, RECT, :hrgn, RedrawWindowFlags], :bool
+    attach_function 'RedrawWindow', [:hwnd, RECT.ptr, :hrgn, RedrawWindowFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd145102(v=vs.85).aspx
     # int SetWindowRgn(
@@ -183,7 +182,7 @@ module WinFFI
     # BOOL ValidateRect(
     #   __in  HWND        hWnd,
     #   __in  const RECT *lpRect)
-    attach_function 'ValidateRect', [:hwnd, RECT.ptr], :bool
+    attach_function 'ValidateRect', [:hwnd, RECT.ptr(:in)], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd145195(v=vs.85).aspx
     # BOOL ValidateRgn(
@@ -199,7 +198,7 @@ module WinFFI
     #   _In_     int nCount,
     #   _Inout_  LPRECT lpRect,
     #   _In_     UINT uFormat )
-    encoded_function 'DrawText', [:hdc, :string, :int, RECT.ptr, :uint], :int
+    encoded_function 'DrawText', [:hdc, :string, :int, RECT.ptr, DrawTextFormatFlag], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162499(v=vs.85).aspx
     # int DrawTextEx(
@@ -209,7 +208,7 @@ module WinFFI
     #   _Inout_  LPRECT lprc,
     #   _In_     UINT dwDTFormat,
     #   _In_     LPDRAWTEXTPARAMS lpDTParams )
-    encoded_function 'DrawTextEx', [:hdc, :string, :int, RECT.ptr, :uint, DRAWTEXTPARAMS.ptr], :int
+    encoded_function 'DrawTextEx', [:hdc, :string, :int, RECT.ptr, DrawTextFormatFlag, DRAWTEXTPARAMS.ptr(:in)], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd144930(v=vs.85).aspx
     # DWORD GetTabbedTextExtent(
@@ -237,7 +236,7 @@ module WinFFI
       # int GetWindowRgnBox(
       #   _In_   HWND hWnd,
       #   _Out_  LPRECT lprc )
-      attach_function 'GetWindowRgnBox', [:hwnd, RECT.ptr], :int
+      attach_function 'GetWindowRgnBox', [:hwnd, RECT.ptr(:out)], :int
     end
   end
 end

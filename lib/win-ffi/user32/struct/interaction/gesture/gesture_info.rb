@@ -1,13 +1,13 @@
-require 'win-ffi/user32/enum/interaction/gesture/gesture_flags'
-require 'win-ffi/user32/enum/interaction/gesture/gesture_identifiers'
+require 'win-ffi/user32/enum/interaction/gesture/gesture_flag'
+require 'win-ffi/user32/enum/interaction/gesture/gesture_identifier'
 
 module WinFFI
   module User32
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd353232(v=vs.85).aspx
     class GESTUREINFO < FFIStruct
       layout :cbSize,       :uint,   # size, in bytes, of this structure (including variable length Args field),
-             :dwFlags,      GestureFlags,        # see GF_* flags,
-             :dwID,         GestureIdentifiers,  # gesture ID, see GID_* defines,
+             :dwFlags,      GestureFlag,        # see GF_* flags,
+             :dwID,         GestureIdentifier,  # gesture ID, see GID_* defines,
              :hwndTarget,   :hwnd,   # handle to window targeted by this gesture,
              :ptsLocation,  :pointer, # current location of this gesture,
              :dwInstanceID, :dword,  # internally used,

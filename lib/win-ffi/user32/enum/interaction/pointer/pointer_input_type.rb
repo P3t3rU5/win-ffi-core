@@ -18,7 +18,7 @@ module WinFFI
             :TOUCHPAD, 0x00000005  #Touchpad pointer type
         ]
       end
-      POINTER_INPUT_TYPE = enum :pointer_input_type, buffer
+      PointerInputType = enum :pointer_input_type, buffer
     end
   end
 end

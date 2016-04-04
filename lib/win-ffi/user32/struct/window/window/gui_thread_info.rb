@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/window/flag/gui_flags'
+require 'win-ffi/user32/enum/window/flag/gui_flag'
 
 require 'win-ffi/general/struct/rect'
 
@@ -7,7 +7,7 @@ module WinFFI
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms632604(v=vs.85).aspx
     class GUITHREADINFO < FFIStruct
       layout :cbSize,        :dword,
-             :flags,         GUIFlags,
+             :flags,         GUIFlag,
              :hwndActive,    :hwnd,
              :hwndFocus,     :hwnd,
              :hwndCapture,   :hwnd,

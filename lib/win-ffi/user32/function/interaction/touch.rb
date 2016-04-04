@@ -4,7 +4,7 @@ module WinFFI
   module User32
     if WindowsVersion >= 7
 
-      require 'win-ffi/user32/enum/interaction/touch/touch_injection_flags'
+      require 'win-ffi/user32/enum/interaction/touch/touch_injection_flag'
 
       require 'win-ffi/user32/struct/interaction/touch/touch_input'
 
@@ -26,13 +26,13 @@ module WinFFI
       # BOOL WINAPI IsTouchWindow(
       #   _In_       HWND hWnd,
       #   _Out_opt_  PULONG pulFlags )
-      attach_function 'IsTouchWindow', [:hwnd, TouchWindowFlags], :bool
+      attach_function 'IsTouchWindow', [:hwnd, TouchWindowFlag], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/dd317326(v=vs.85).aspx
       # BOOL WINAPI RegisterTouchWindow(
       #   _In_  HWND hWnd,
       #   _In_  ULONG ulFlags )
-      attach_function 'RegisterTouchWindow', [:hwnd, TouchWindowFlags], :bool
+      attach_function 'RegisterTouchWindow', [:hwnd, TouchWindowFlag], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/dd317335(v=vs.85).aspx
       # BOOL WINAPI UnregisterTouchWindow( _In_  HWND hWnd )
@@ -65,7 +65,7 @@ module WinFFI
         # BOOL InitializeTouchInjection(
         #   _In_  UINT32 maxCount,
         #   _In_  DWORD dwMode )
-        attach_function 'InitializeTouchInjection', [:uint32, TouchInjectionFlags], :bool
+        attach_function 'InitializeTouchInjection', [:uint32, TouchInjectionFlag], :bool
 
         # https://msdn.microsoft.com/en-us/library/windows/desktop/hh802881(v=vs.85).aspx
         # BOOL InjectTouchInput(

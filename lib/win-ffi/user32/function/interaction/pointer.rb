@@ -148,7 +148,7 @@ module WinFFI
       # BOOL WINAPI GetPointerType (
       #   _In_   UINT32 pointerId,
       #   _Out_  POINTER_INPUT_TYPE *pointerType )
-      attach_function 'GetPointerType', [:uint32, POINTER_INPUT_TYPE], :bool
+      attach_function 'GetPointerType', [:uint32, PointerInputType], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/hh802887(v=vs.85).aspx
       # BOOL GetRawPointerDeviceData(

@@ -1,6 +1,7 @@
 require 'win-ffi/struct'
 
 module WinFFI
+  # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162897(v=vs.85).aspx
   class RECT < FFIStruct
     layout :left,   :long,
            :top,    :long,

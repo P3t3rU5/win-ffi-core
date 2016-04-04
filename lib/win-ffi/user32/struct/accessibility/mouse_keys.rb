@@ -1,11 +1,11 @@
-require 'win-ffi/user32/enum/accessibility/flag/mouse_keys_flags'
+require 'win-ffi/user32/enum/accessibility/flag/mouse_keys_flag'
 
 module WinFFI
   module User32
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd373593(v=vs.85).aspx
     class MOUSEKEYS < FFIStruct
       layout :cbSize,          :uint,
-             :dwFlags,         MouseKeysFlags,
+             :dwFlags,         MouseKeysFlag,
              :iMaxSpeed,       :dword,
              :iTimeToMaxSpeed, :dword,
              :iCtrlSpeed,      :dword,

@@ -152,7 +152,7 @@ module WinFFI
     #   _In_        PFNCALLBACK pfnCallback,
     #   _In_        DWORD afCmd,
     #   _Reserved_  DWORD ulRes )
-    encoded_function 'DdeInitialize', [:pointer, DdeCallback, :dword, :dword], DdeManagementLibraryError
+    encoded_function 'DdeInitialize', [:pointer, DdeCallback, :dword, :dword], :uint
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms648758(v=vs.85).aspx
     # BOOL WINAPI DdeKeepStringHandle(

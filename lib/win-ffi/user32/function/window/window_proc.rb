@@ -10,6 +10,7 @@ module WinFFI
     #   _In_  LPARAM lParam )
     WindowProc = callback :WindowProc, [:hwnd, :uint, :wparam, :lparam], :lresult
 
+    # TODO FARPROC
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633571(v=vs.85).aspx
     # LRESULT WINAPI CallWindowProc(
     #   _In_  WNDPROC lpPrevWndFunc,

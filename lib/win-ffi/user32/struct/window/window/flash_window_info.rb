@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/window/flag/flash_window_flags'
+require 'win-ffi/user32/enum/window/flag/flash_window_flag'
 
 module WinFFI
   module User32
@@ -7,7 +7,7 @@ module WinFFI
       class FLASHWINFO < FFIStruct
         layout :cbSize,    :uint,
                :hwnd,      :hwnd,
-               :dwFlags,   FlashWindowFlags,
+               :dwFlags,   FlashWindowFlag,
                :uCount,    :uint,
                :dwTimeout, :dword
 

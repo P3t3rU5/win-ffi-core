@@ -12,8 +12,8 @@ module WinFFI
           :SESSION_LOCK,           0x7,
           :SESSION_UNLOCK,         0x8,
           :SESSION_REMOTE_CONTROL, 0x9,
-          :SESSION_CREATE,         0xa,
-          :SESSION_TERMINATE,      0xb
+          :SESSION_CREATE,         0xA,
+          :SESSION_TERMINATE,      0xB
       ]
     end
   end

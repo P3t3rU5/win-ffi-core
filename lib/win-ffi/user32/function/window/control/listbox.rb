@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window/control/dlg_dir_list_flags'
+require 'win-ffi/user32/enum/window/control/dlg_dir_list_flag'
 
 module WinFFI
   module User32
@@ -11,7 +11,7 @@ module WinFFI
     #   _In_     int nIDListBox,
     #   _In_     int nIDStaticPath,
     #   _In_     UINT uFileType )
-    encoded_function 'DlgDirList', [:hwnd, :string, :int, :int, DlgDirListFlags], :int
+    encoded_function 'DlgDirList', [:hwnd, :string, :int, :int, DlgDirListFlag], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/bb761368(v=vs.85).aspx
     # BOOL DlgDirSelectEx(

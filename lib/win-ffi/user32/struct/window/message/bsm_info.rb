@@ -1,6 +1,6 @@
 require 'win-ffi/user32/function/desktop/desktop'
 
-require 'win-ffi/user32/struct/window/luid'
+require 'win-ffi/general/struct/luid'
 
 module WinFFI
   module User32

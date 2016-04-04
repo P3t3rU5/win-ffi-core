@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/data_exchange/clipboard_formats'
+require 'win-ffi/user32/enum/data_exchange/clipboard_format'
 
 module WinFFI
   module User32
@@ -57,7 +57,7 @@ module WinFFI
     # int WINAPI GetPriorityClipboardFormat(
     #   _In_  UINT *paFormatPriorityList,
     #   _In_  int cFormats )
-    attach_function 'GetPriorityClipboardFormat', [ClipboardFormats, :int], :int
+    attach_function 'GetPriorityClipboardFormat', [ClipboardFormat, :int], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms649047(v=vs.85).aspx
     # BOOL WINAPI IsClipboardFormatAvailable( _In_  UINT format )

@@ -1,9 +1,9 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/interaction/keyboard/keyboard_layout_flags'
+require 'win-ffi/user32/enum/interaction/keyboard/keyboard_layout_flag'
 require 'win-ffi/user32/enum/interaction/keyboard/virtual_key_code'
 require 'win-ffi/user32/enum/interaction/keyboard/map_virtual_key'
-require 'win-ffi/user32/enum/interaction/keyboard/key_event_flags'
+require 'win-ffi/user32/enum/interaction/keyboard/key_event_flag'
 
 require 'win-ffi/user32/struct/interaction/keyboard/last_input_info'
 require 'win-ffi/user32/struct/interaction/input/input'
@@ -15,7 +15,7 @@ module WinFFI
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646289(v=vs.85).aspx
     # HKL WINAPI ActivateKeyboardLayout( _In_  HKL hkl, _In_  UINT Flags )
-    attach_function 'ActivateKeyboardLayout', [:hkl, KeyboardLayoutFlags], :hkl
+    attach_function 'ActivateKeyboardLayout', [:hkl, KeyboardLayoutFlag], :hkl
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646290(v=vs.85).aspx
     # BOOL WINAPI BlockInput( _In_  BOOL fBlockIt )
@@ -92,13 +92,13 @@ module WinFFI
     #   _In_  BYTE bScan,
     #   _In_  DWORD dwFlags,
     #   _In_  ULONG_PTR dwExtraInfo )
-    attach_function 'keybd_event', [VirtualKeyCode, :byte, KeyEventFlags, :ulong], :void
+    attach_function 'keybd_event', [VirtualKeyCode, :byte, KeyEventFlag, :ulong], :void
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646305(v=vs.85).aspx
     # HKL WINAPI LoadKeyboardLayout(
     #   _In_  LPCTSTR pwszKLID,
     #   _In_  UINT Flags )
-    encoded_function 'LoadKeyboardLayout', [:string, KeyboardLayoutFlags], :hkl
+    encoded_function 'LoadKeyboardLayout', [:string, KeyboardLayoutFlag], :hkl
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646306(v=vs.85).aspx
     # UINT WINAPI MapVirtualKey(
@@ -198,7 +198,7 @@ module WinFFI
 
     if WindowsVersion >= :vista
 
-      require 'win-ffi/user32/enum/interaction/keyboard/keyboard_modifiers'
+      require 'win-ffi/user32/enum/interaction/keyboard/keyboard_modifier'
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/ms646309(v=vs.85).aspx
       # BOOL WINAPI RegisterHotKey(
@@ -206,7 +206,7 @@ module WinFFI
       #   __in      int  id,
       #   __in      UINT fsModifiers,
       #   __in      UINT vk)
-      attach_function 'RegisterHotKey', [:hwnd, :int, KeyboardModifiers, VirtualKeyCode], :bool
+      attach_function 'RegisterHotKey', [:hwnd, :int, KeyboardModifier, VirtualKeyCode], :bool
     end
   end
 end

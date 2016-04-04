@@ -22,8 +22,7 @@ module WinFFI
         :LINELENGTH,           0x00C1,
         :REPLACESEL,           0x00C2,
         :GETLINE,              0x00C4,
-        :SETLIMITTEXT,                 # win40 Name change
-        :LIMITTEXT,            0x00C5,
+        :SETLIMITTEXT,         0x00C5,  # win40 Name change        :LIMITTEXT,            0x00C5,
         :CANUNDO,              0x00C6,
         :UNDO,                 0x00C7,
         :FMTLINES,             0x00C8,

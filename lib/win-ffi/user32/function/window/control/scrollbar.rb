@@ -3,9 +3,9 @@ require 'win-ffi/user32'
 module WinFFI
   module User32
     if WindowsVersion >= :vista
-      require 'win-ffi/user32/enum/window/control/enable_scrollbar_flags'
+      require 'win-ffi/user32/enum/window/control/enable_scrollbar_flag'
       require 'win-ffi/user32/enum/window/control/scrollbar'
-      require 'win-ffi/user32/enum/window/control/scroll_window_flags'
+      require 'win-ffi/user32/enum/window/control/scroll_window_flag'
 
       require 'win-ffi/user32/struct/window/control/scrollbar/scrollbar_info'
       require 'win-ffi/user32/struct/window/control/scrollbar/scroll_info'
@@ -15,14 +15,14 @@ module WinFFI
       #   _In_  HWND hWnd,
       #   _In_  UINT wSBflags,
       #   _In_  UINT wArrows )
-      attach_function 'EnableScrollBar', [:hwnd, Scrollbar, EnableScrollBarFlags], :bool
+      attach_function 'EnableScrollBar', [:hwnd, Scrollbar, EnableScrollBarFlag], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/bb787581(v=vs.85).aspx
       # BOOL GetScrollBarInfo(
       #   _In_   HWND hwnd,
       #   _In_   LONG idObject,
       #   _Out_  PSCROLLBARINFO psbi )
-      attach_function 'GetScrollBarInfo', [:hwnd, SystemObjectId, SCROLLBARINFO.ptr], :bool
+      attach_function 'GetScrollBarInfo', [:hwnd, SystemObjectId, SCROLLBARINFO.ptr(:out)], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/bb787583(v=vs.85).aspx
       # BOOL GetScrollInfo(
@@ -54,7 +54,7 @@ module WinFFI
       #   _In_   const RECT *lprcClip,
       #   _In_   HRGN hrgnUpdate,
       #   _Out_  LPRECT lprcUpdate )
-      attach_function 'ScrollDC', [:hdc, :int, :int, RECT.ptr, RECT.ptr, :hrgn, RECT.ptr], :bool
+      attach_function 'ScrollDC', [:hdc, :int, :int, RECT.ptr(:in), RECT.ptr(:in), :hrgn, RECT.ptr(:out)], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/bb787591(v=vs.85).aspx
       # BOOL ScrollWindow(
@@ -63,7 +63,7 @@ module WinFFI
       #   _In_  int YAmount,
       #   _In_  const RECT *lpRect,
       #   _In_  const RECT *lpClipRect )
-      attach_function 'ScrollWindow', [:hwnd, :int, :int, RECT.ptr, RECT.ptr], :bool
+      attach_function 'ScrollWindow', [:hwnd, :int, :int, RECT.ptr(:in), RECT.ptr(:in)], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/bb787593(v=vs.85).aspx
       # int ScrollWindowEx(
@@ -75,7 +75,7 @@ module WinFFI
       #   _In_   HRGN hrgnUpdate,
       #   _Out_  LPRECT prcUpdate,
       #   _In_   UINT flags )
-      attach_function 'ScrollWindowEx', [:hwnd, :int, :int, RECT.ptr, RECT.ptr, :hrgn, RECT.ptr, ScrollWindowFlags], :int
+      attach_function 'ScrollWindowEx', [:hwnd, :int, :int, RECT.ptr(:in), RECT.ptr(:in), :hrgn, RECT.ptr(:out), ScrollWindowFlag], :int
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/bb787595(v=vs.85).aspx
       # int SetScrollInfo(
@@ -83,7 +83,7 @@ module WinFFI
       #   _In_  int fnBar,
       #   _In_  LPCSCROLLINFO lpsi,
       #   _In_  BOOL fRedraw )
-      attach_function 'SetScrollInfo', [:hwnd, Scrollbar, SCROLLINFO.ptr, :bool], :int
+      attach_function 'SetScrollInfo', [:hwnd, Scrollbar, SCROLLINFO.ptr(:in), :bool], :int
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/bb787595(v=vs.85).aspx
       # int SetScrollPos(

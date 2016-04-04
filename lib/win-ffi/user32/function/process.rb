@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/gui_resources_flags'
+require 'win-ffi/user32/enum/gui_resources_flag'
 
 module WinFFI
   module User32
@@ -8,7 +8,7 @@ module WinFFI
     # DWORD WINAPI GetGuiResources(
     #   _In_  HANDLE hProcess,
     #   _In_  DWORD uiFlags )
-    attach_function 'GetGuiResources', [:handle, GuiResourcesFlags], :dword
+    attach_function 'GetGuiResources', [:handle, GuiResourcesFlag], :dword
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms686884(v=vs.85).aspx
     # BOOL WINAPI UserHandleGrantAccess(

@@ -1,11 +1,11 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/device_context/get_dc_ex_flags'
-require 'win-ffi/user32/enum/device_context/change_display_settings_flags'
+require 'win-ffi/user32/enum/device_context/get_dc_ex_flag'
+require 'win-ffi/user32/enum/device_context/change_display_settings_flag'
 require 'win-ffi/user32/enum/device_context/change_display_settings_return'
-require 'win-ffi/user32/enum/device_context/enum_display_devices_flags'
+require 'win-ffi/user32/enum/device_context/enum_display_devices_flag'
 require 'win-ffi/user32/enum/device_context/enum_mode'
-require 'win-ffi/user32/enum/device_context/enum_display_settings_ex_flags'
+require 'win-ffi/user32/enum/device_context/enum_display_settings_ex_flag'
 
 require 'win-ffi/user32/struct/display_device'
 
@@ -16,7 +16,7 @@ module WinFFI
     # LONG ChangeDisplaySettings(
     #   _In_  DEVMODE *lpDevMode,
     #   _In_  DWORD dwflags )
-    encoded_function 'ChangeDisplaySettings', [:pointer, ChangeDisplaySettingsFlags], ChangeDisplaySettingsReturn
+    encoded_function 'ChangeDisplaySettings', [:pointer, ChangeDisplaySettingsFlag], :long
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd183413(v=vs.85).aspx
     # LONG ChangeDisplaySettingsEx(
@@ -26,7 +26,7 @@ module WinFFI
     #   _In_  DWORD dwflags,
     #   _In_  LPVOID lParam )
     encoded_function 'ChangeDisplaySettingsEx',
-                     [:string, :pointer, :hwnd, ChangeDisplaySettingsFlags, :pointer], ChangeDisplaySettingsReturn
+                     [:string, :pointer, :hwnd, ChangeDisplaySettingsFlag, :pointer], :long
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162609(v=vs.85).aspx
     # BOOL EnumDisplayDevices(
@@ -34,7 +34,7 @@ module WinFFI
     #   _In_   DWORD iDevNum,
     #   _Out_  PDISPLAY_DEVICE lpDisplayDevice,
     #   _In_   DWORD dwFlags )
-    encoded_function 'EnumDisplayDevices', [:pointer, :dword, DISPLAY_DEVICE.ptr, EnumDisplayDevicesFlags], :bool
+    encoded_function 'EnumDisplayDevices', [:pointer, :dword, DISPLAY_DEVICE.ptr(:out), EnumDisplayDevicesFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162611(v=vs.85).aspx
     # BOOL EnumDisplaySettings(
@@ -49,7 +49,7 @@ module WinFFI
     #   _In_   DWORD iModeNum,
     #   _Out_  DEVMODE *lpDevMode,
     #   _In_   DWORD dwFlags )
-    encoded_function 'EnumDisplaySettingsEx', [:string, EnumMode, :pointer, EnumDisplaySettingsExFlags], :bool
+    encoded_function 'EnumDisplaySettingsEx', [:string, EnumMode, :pointer, EnumDisplaySettingsExFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd144871(v=vs.85).aspx
     # HDC GetDC( _In_  HWND hWnd )
@@ -60,7 +60,7 @@ module WinFFI
     #   _In_  HWND hWnd,
     #   _In_  HRGN hrgnClip,
     #   _In_  DWORD flags )
-    attach_function 'GetDCEx', [:hwnd, :hrgn, GetDCExFlags], :hdc
+    attach_function 'GetDCEx', [:hwnd, :hrgn, GetDCExFlag], :hdc
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162920(v=vs.85).aspx
     # int ReleaseDC(

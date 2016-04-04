@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window/flag/message_box_flags'
+require 'win-ffi/user32/enum/window/flag/message_box_flag'
 require 'win-ffi/user32/enum/window/return/message_box_return'
 
 require 'win-ffi/general/struct/rect'
@@ -130,7 +130,7 @@ module WinFFI
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms680356(v=vs.85).aspx
     # BOOL WINAPI MessageBeep( _In_  UINT uType )
-    attach_function 'MessageBeep', [MessageBoxFlags], :bool
+    attach_function 'MessageBeep', [MessageBoxFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms645505(v=vs.85).aspx
     # int WINAPI MessageBox(
@@ -138,7 +138,7 @@ module WinFFI
     #   __in_opt LPCTSTR lpText,
     #   __in_opt LPCTSTR lpCaption,
     #   __in     UINT uType)
-    encoded_function 'MessageBox', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlags], :int
+    encoded_function 'MessageBox', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlag], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms645507(v=vs.85).aspx
     # int WINAPI MessageBoxEx(
@@ -147,7 +147,7 @@ module WinFFI
     #   _In_opt_  LPCTSTR lpCaption,
     #   _In_      UINT uType,
     #   _In_      WORD wLanguageId )
-    encoded_function 'MessageBoxEx', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlags, :word], :int
+    encoded_function 'MessageBoxEx', [:hwnd, :buffer_in, :buffer_in, MessageBoxFlag, :word], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms645511(v=vs.85).aspx
     # int WINAPI MessageBoxIndirect( _In_  const LPMSGBOXPARAMS lpMsgBoxParams )

@@ -1,4 +1,4 @@
-require 'win-ffi/user32/enum/window/flag/message_box_flags'
+require 'win-ffi/user32/enum/window/flag/message_box_flag'
 
 module WinFFI
   module User32
@@ -8,7 +8,7 @@ module WinFFI
              :hInstance,          :hinstance,
              :lpszText,           :string,
              :lpszCaption,        :string,
-             :dwStyle,            MessageBoxFlags,
+             :dwStyle,            MessageBoxFlag,
              :lpszIcon,           :string,
              :dwContextHelpId,    :ulong,
              :lpfnMsgBoxCallback, :pointer,

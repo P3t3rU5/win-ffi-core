@@ -1,7 +1,7 @@
 require 'win-ffi/user32'
 
 require 'win-ffi/general/struct/rect'
-require 'win-ffi/user32/enum/color_types'
+require 'win-ffi/user32/enum/color_type'
 
 module WinFFI
   module User32
@@ -11,20 +11,20 @@ module WinFFI
     #   _In_  HDC hDC,
     #   _In_  const RECT *lprc,
     #   _In_  HBRUSH hbr )
-    attach_function 'FillRect', [:hdc, RECT.ptr, :hbrush], :int
+    attach_function 'FillRect', [:hdc, RECT.ptr(:in), :hbrush], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd144838(v=vs.85).aspx
     # int FrameRect(
     #   _In_  HDC hDC,
     #   _In_  const RECT *lprc,
     #   _In_  HBRUSH hbr )
-    attach_function 'FrameRect', [:hdc, RECT.ptr, :hbrush], :int
+    attach_function 'FrameRect', [:hdc, RECT.ptr(:in), :hbrush], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd145007(v=vs.85).aspx
     # BOOL InvertRect(
     #   _In_  HDC hDC,
     #   _In_  const RECT *lprc )
-    attach_function 'InvertRect', [:hdc, RECT.ptr], :bool
+    attach_function 'InvertRect', [:hdc, RECT.ptr(:in)], :bool
 
     # Bitmap
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd145033(v=vs.85).aspx
@@ -36,7 +36,7 @@ module WinFFI
     # Brush
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd144927(v=vs.85).aspx
     # HBRUSH GetSysColorBrush( _In_  int nIndex )
-    attach_function 'GetSysColorBrush', [ColorTypes], :int
+    attach_function 'GetSysColorBrush', [ColorType], :int
 
     if WindowsVersion >= :xp
 
@@ -50,21 +50,22 @@ module WinFFI
       attach_function 'SetLastErrorEx', [SetLastErrorExCode, :dword], :void
 
       # Thread
-      #BOOL WINAPI AttachThreadInput(
-      #  _In_  DWORD idAttach,
-      #  _In_  DWORD idAttachTo,
-      #  _In_  BOOL fAttach )
+      # https://msdn.microsoft.com/en-us/library/windows/desktop/ms681956(v=vs.85).aspx
+      # BOOL WINAPI AttachThreadInput(
+      #   _In_  DWORD idAttach,
+      #   _In_  DWORD idAttachTo,
+      #   _In_  BOOL fAttach )
       attach_function 'AttachThreadInput', [:dword, :dword, :bool], :bool
 
       # Print
-      require 'win-ffi/user32/enum/print_window_flags'
+      require 'win-ffi/user32/enum/print_window_flag'
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162869(v=vs.85).aspx
       # BOOL PrintWindow(
       #   HWND hwnd,
       #   HDC hdcBlt,
       #   UINT nFlags )
-      attach_function 'PrintWindow', [:hwnd, :hdc, PrintWindowFlags], :bool
+      attach_function 'PrintWindow', [:hwnd, :hdc, PrintWindowFlag], :bool
 
       if WindowsVersion >= :vista
         # https://msdn.microsoft.com/en-us/library/windows/desktop/gg583869(v=vs.85).aspx

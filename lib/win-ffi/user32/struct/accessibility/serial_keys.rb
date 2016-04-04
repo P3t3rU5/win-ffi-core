@@ -1,11 +1,11 @@
-require 'win-ffi/user32/enum/accessibility/flag/serial_keys_flags'
+require 'win-ffi/user32/enum/accessibility/flag/serial_keys_flag'
 
 module WinFFI
   module User32
 
     class SERIALKEYSA < FFIStruct
       layout :cbSize,         :uint,
-             :dwFlags,        SerialKeysFlags,
+             :dwFlags,        SerialKeysFlag,
              :lpszActivePort, :string,
              :lpszPort,       :string,
              :iBaudRate,      :uint,

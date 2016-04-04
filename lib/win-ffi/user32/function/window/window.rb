@@ -1,20 +1,20 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/color_types'
-require 'win-ffi/user32/enum/window/flag/animate_window_flags'
-require 'win-ffi/user32/enum/window/flag/get_window_flags'
-require 'win-ffi/user32/enum/window/flag/set_window_pos_flags'
-require 'win-ffi/user32/enum/window/flag/show_window_flags'
-require 'win-ffi/user32/enum/window/flag/system_metrics_flags'
-require 'win-ffi/user32/enum/resource/menu/track_popup_menu_flags'
+require 'win-ffi/user32/enum/color_type'
+require 'win-ffi/user32/enum/window/flag/animate_window_flag'
+require 'win-ffi/user32/enum/window/flag/get_window_flag'
+require 'win-ffi/user32/enum/window/flag/set_window_pos_flag'
+require 'win-ffi/user32/enum/window/flag/show_window_flag'
+require 'win-ffi/user32/enum/window/flag/system_metrics_flag'
+require 'win-ffi/user32/enum/resource/menu/track_popup_menu_flag'
 require 'win-ffi/user32/enum/window/style/window_style'
 require 'win-ffi/user32/enum/window/style/window_style_ex'
-require 'win-ffi/user32/enum/window/get_ancestor_flags'
+require 'win-ffi/user32/enum/window/get_ancestor_flag'
 require 'win-ffi/user32/enum/window/message_filter'
 require 'win-ffi/user32/enum/window/message_filter_info'
 require 'win-ffi/user32/enum/window/window_display_affinity'
 require 'win-ffi/user32/enum/feedback_type'
-require 'win-ffi/user32/enum/window/child_window_from_point_ex_flags'
+require 'win-ffi/user32/enum/window/child_window_from_point_ex_flag'
 
 require 'win-ffi/general/struct/rect'
 require 'win-ffi/user32/struct/window/window/alt_tab_info'
@@ -55,7 +55,7 @@ module WinFFI
     #   _In_  HWND hwnd,
     #   _In_  DWORD dwTime,
     #   _In_  DWORD dwFlags )
-    attach_function 'AnimateWindow', [:hwnd, :dword, AnimateWindowFlags], :bool
+    attach_function 'AnimateWindow', [:hwnd, :dword, AnimateWindowFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms632670(v=vs.85).aspx
     # This function is provided only for compatibility with 16-bit versions of Windows. It is generally not useful.
@@ -94,7 +94,7 @@ module WinFFI
     #   _In_  HWND hwndParent,
     #   _In_  POINT pt,
     #   _In_  UINT uFlags )
-    attach_function 'ChildWindowFromPointEx', [:hwnd, POINT, ChildWindowFromPointExFlags], :hwnd
+    attach_function 'ChildWindowFromPointEx', [:hwnd, POINT, ChildWindowFromPointExFlag], :hwnd
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms632678(v=vs.85).aspx
     # Actually minimizes
@@ -134,7 +134,7 @@ module WinFFI
       #   _In_  HWND hWnd,
       #   _In_  UINT wCmd )
       def GetNextWindow(hWnd, wCmd)
-        GetWindow(hWnd, wCmd.is_a?(Symbol) ? GetWindowFlags[wCmd] : wCmd)
+        GetWindow(hWnd, wCmd.is_a?(Symbol) ? GetWindowFlag[wCmd] : wCmd)
       end
     end
 
@@ -164,7 +164,7 @@ module WinFFI
     #   _In_      int cx,
     #   _In_      int cy,
     #   _In_      UINT uFlags )
-    attach_function 'DeferWindowPos', [:pointer, :hwnd, :hwnd, :int, :int, :int, :int, SetWindowPosFlags], :hdwp
+    attach_function 'DeferWindowPos', [:pointer, :hwnd, :hwnd, :int, :int, :int, :int, SetWindowPosFlag], :hdwp
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644979(v=vs.85).aspx
     # BOOL WINAPI DeregisterShellHookWindow( _In_  HWND hWnd )
@@ -251,7 +251,7 @@ module WinFFI
     # HWND WINAPI GetAncestor(
     #   _In_  HWND hwnd,
     #   _In_  UINT gaFlags )
-    attach_function 'GetAncestor', [:hwnd, GetAncestorFlags], :hwnd
+    attach_function 'GetAncestor', [:hwnd, GetAncestorFlag], :hwnd
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633503(v=vs.85).aspx
     # BOOL GetClientRect(
@@ -291,7 +291,7 @@ module WinFFI
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms724371(v=vs.85).aspx
     # DWORD WINAPI GetSysColor( _In_  int nIndex )
-    attach_function 'GetSysColor', [ColorTypes], :dword
+    attach_function 'GetSysColor', [ColorType], :dword
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633513(v=vs.85).aspx
     # BOOL WINAPI GetTitleBarInfo(
@@ -307,7 +307,7 @@ module WinFFI
     # HWND WINAPI GetWindow(
     #   _In_  HWND hWnd,
     #   _In_  UINT uCmd )
-    attach_function 'GetWindow', [:hwnd, GetWindowFlags], :hwnd
+    attach_function 'GetWindow', [:hwnd, GetWindowFlag], :hwnd
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633516(v=vs.85).aspx
     # BOOL GetWindowInfo(
@@ -434,7 +434,7 @@ module WinFFI
     #   _In_  COLORREF crKey,
     #   _In_  BYTE bAlpha,
     #   _In_  DWORD dwFlags )
-    attach_function 'SetLayeredWindowAttributes', [:hwnd, :colorref, :byte, LayeredWindowAttributesFlags], :bool
+    attach_function 'SetLayeredWindowAttributes', [:hwnd, :colorref, :byte, LayeredWindowAttributesFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633541(v=vs.85).aspx
     # HWND WINAPI SetParent(
@@ -467,7 +467,7 @@ module WinFFI
     #   _In_      int cx,
     #   _In_      int cy,
     #   _In_      UINT uFlags )
-    attach_function 'SetWindowPos', [:hwnd, :hwnd, :int, :int, :int, :int, SetWindowPosFlags], :bool
+    attach_function 'SetWindowPos', [:hwnd, :hwnd, :int, :int, :int, :int, SetWindowPosFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633546(v=vs.85).aspx
     # BOOL WINAPI SetWindowText(
@@ -485,7 +485,7 @@ module WinFFI
     # BOOL ShowWindow(
     #   __in  HWND hWnd,
     #   __in  int  nCmdShow)
-    attach_function 'ShowWindow', [:hwnd, ShowWindowFlags], :bool
+    attach_function 'ShowWindow', [:hwnd, ShowWindowFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633549(v=vs.85).aspx
     # BOOL WINAPI ShowWindowAsync(
@@ -519,7 +519,7 @@ module WinFFI
     #   _In_      COLORREF crKey,
     #   _In_opt_  BLENDFUNCTION *pblend,
     #   _In_      DWORD dwFlags )
-    attach_function 'UpdateLayeredWindow', [:hwnd, :hdc, POINT.ptr, SIZE.ptr, :hdc, POINT.ptr, :colorref, :pointer, LayeredWindowAttributesFlags], :bool
+    attach_function 'UpdateLayeredWindow', [:hwnd, :hdc, POINT.ptr, SIZE.ptr, :hdc, POINT.ptr, :colorref, :pointer, LayeredWindowAttributesFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633558(v=vs.85).aspx
     # HWND WINAPI WindowFromPoint( _In_  POINT Point )
@@ -530,7 +530,7 @@ module WinFFI
     #   _In_  HINSTANCE hPrevInstance,
     #   _In_  LPSTR lpCmdLine,
     #   _In_  int nCmdShow )
-    WinMain = callback 'WinMain', [:hinstance, :hinstance, :string, ShowWindowFlags], :int
+    WinMain = callback 'WinMain', [:hinstance, :hinstance, :string, ShowWindowFlag], :int
 
     if WindowsVersion >= :xp
       # https://msdn.microsoft.com/en-us/library/windows/desktop/ms679346(v=vs.85).aspx
@@ -549,7 +549,7 @@ module WinFFI
       #   _Out_opt_  COLORREF *pcrKey,
       #   _Out_opt_  BYTE *pbAlpha,
       #   _Out_opt_  DWORD *pdwFlags )
-      attach_function 'GetLayeredWindowAttributes', [:hwnd, :pointer, :pointer, LayeredWindowAttributesFlags], :bool
+      attach_function 'GetLayeredWindowAttributes', [:hwnd, :pointer, :pointer, LayeredWindowAttributesFlag], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633525(v=vs.85).aspx
       # BOOL WINAPI IsGUIThread( _In_  BOOL bConvert )
@@ -565,7 +565,7 @@ module WinFFI
         # BOOL WINAPI GetWindowMinimizeRect (
         #   HWND hwndToQuery,
         #   RECT* pRect )
-        attach_function 'GetWindowMinimizeRect', [:hwnd, WinFFI::RECT.ptr], :bool
+        attach_function 'GetWindowMinimizeRect', [:hwnd, RECT.ptr], :bool
 
         # https://msdn.microsoft.com/en-us/library/windows/desktop/aa969261(v=vs.85).aspx
         # BOOL WINAPI IsProcessDPIAware(void)
@@ -595,11 +595,11 @@ module WinFFI
         # BOOL WINAPI UpdateLayeredWindowIndirect(
         #   _In_  HWND hwnd,
         #   _In_  const UPDATELAYEREDWINDOWINFO *pULWInfo )
-        attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UPDATELAYEREDWINDOWINFO.ptr], :bool
+        attach_function 'UpdateLayeredWindowIndirect', [:hwnd, UPDATELAYEREDWINDOWINFO.ptr(:in)], :bool
 
         # https://msdn.microsoft.com/en-us/library/windows/desktop/aa969270(v=vs.85).aspx
         #HWND WINAPI WindowFromPhysicalPoint( _In_  POINT Point )
-        attach_function 'WindowFromPhysicalPoint', [POINT.ptr], :hwnd
+        attach_function 'WindowFromPhysicalPoint', [POINT.ptr(:in)], :hwnd
 
         if WindowsVersion >= 7
           # https://msdn.microsoft.com/en-us/library/windows/desktop/dd565861(v=vs.85).aspx
@@ -609,7 +609,7 @@ module WinFFI
           #   _In_      UINT flags,
           #   _In_opt_  RECT *excludeRect,
           #   _Out_     RECT *popupWindowPosition )
-          attach_function 'CalculatePopupWindowPosition', [POINT.ptr, SIZE.ptr, TrackPopupMenuFlags, RECT.ptr, RECT.ptr], :bool
+          attach_function 'CalculatePopupWindowPosition', [POINT.ptr(:in), SIZE.ptr(:in), TrackPopupMenuFlag, RECT.ptr, RECT.ptr(:out)], :bool
 
           # https://msdn.microsoft.com/en-us/library/windows/desktop/dd388202(v=vs.85).aspx
           # BOOL WINAPI ChangeWindowMessageFilterEx(

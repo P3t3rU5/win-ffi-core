@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/user_object_information_flags'
+require 'win-ffi/user32/enum/user_object_information_flag'
 
 module WinFFI
   module User32
@@ -17,7 +17,7 @@ module WinFFI
     #   DWORD dwFlags,
     #   _In_      ACCESS_MASK dwDesiredAccess,
     #   _In_opt_  LPSECURITY_ATTRIBUTES lpsa )
-    encoded_function 'CreateWindowStation', [:string, :dword, DesktopAccessFlags, SECURITY_ATTRIBUTES.ptr], :hwinsta
+    encoded_function 'CreateWindowStation', [:string, :dword, DesktopAccessFlag, SECURITY_ATTRIBUTES.ptr], :hwinsta
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms682643(v=vs.85).aspx
     # BOOL CALLBACK EnumWindowStationProc(
@@ -42,14 +42,14 @@ module WinFFI
     #   _Out_opt_  PVOID pvInfo,
     #   _In_       DWORD nLength,
     #   _Out_opt_  LPDWORD lpnLengthNeeded )
-    encoded_function 'GetUserObjectInformation', [:handle, UserObjectInformationFlags, :pointer, :dword, :pointer], :bool
+    encoded_function 'GetUserObjectInformation', [:handle, UserObjectInformationFlag, :pointer, :dword, :pointer], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms684339(v=vs.85).aspx
     # HWINSTA WINAPI OpenWindowStation(
     #   _In_  LPTSTR lpszWinSta,
     #   _In_  BOOL fInherit,
     #   _In_  ACCESS_MASK dwDesiredAccess )
-    encoded_function 'OpenWindowStation', [:string, :bool, DesktopAccessFlags], :hwinsta
+    encoded_function 'OpenWindowStation', [:string, :bool, DesktopAccessFlag], :hwinsta
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms686232(v=vs.85).aspx
     # BOOL WINAPI SetProcessWindowStation( _In_  HWINSTA hWinSta )
@@ -61,7 +61,7 @@ module WinFFI
     #   _In_  int nIndex,
     #   _In_  PVOID pvInfo,
     #   _In_  DWORD nLength )
-    encoded_function 'SetUserObjectInformation', [:handle, UserObjectInformationFlags, :pointer, :dword], :bool
+    encoded_function 'SetUserObjectInformation', [:handle, UserObjectInformationFlag, :pointer, :dword], :bool
 
     if WindowsVersion >= :xp
       # BOOL WINAPI GetUserObjectSecurity(

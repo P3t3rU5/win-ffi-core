@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window/control/dlg_dir_list_flags'
+require 'win-ffi/user32/enum/window/control/dlg_dir_list_flag'
 
 require 'win-ffi/user32/struct/window/control/combobox/combobox_info'
 
@@ -13,7 +13,7 @@ module WinFFI
     #   _In_     int nIDComboBox,
     #   _In_     int nIDStaticPath,
     #   _In_     UINT uFiletype )
-    encoded_function 'DlgDirListComboBox', [:hwnd, :string, :int, :int, DlgDirListFlags], :int
+    encoded_function 'DlgDirListComboBox', [:hwnd, :string, :int, :int, DlgDirListFlag], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/bb775937(v=vs.85).aspx
     # BOOL DlgDirSelectComboBoxEx(

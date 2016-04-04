@@ -1,6 +1,6 @@
 require 'win-ffi/user32/enum/resource/menu/menu_item_info_member'
-require 'win-ffi/user32/enum/resource/menu/menu_flags_type'
-require 'win-ffi/user32/enum/resource/menu/menu_flags_state'
+require 'win-ffi/user32/enum/resource/menu/menu_flag_type'
+require 'win-ffi/user32/enum/resource/menu/menu_flag_state'
 
 module WinFFI
   module User32
@@ -8,8 +8,8 @@ module WinFFI
     class MENUITEMINFO < FFIStruct
       layout :cbSize,        :uint,
              :fMask,         MenuItemInfoMember,
-             :ftype,         MenuFlagsType,  # used if MIIM_TYPE (4.0) or MIIM_FTYPE (>4.0)
-             :fState,        MenuFlagsState, # used if MIIM_STATE
+             :ftype,         MenuFlagType,  # used if MIIM_TYPE (4.0) or MIIM_FTYPE (>4.0)
+             :fState,        MenuFlagState, # used if MIIM_STATE
              :wID,           :uint,          # used if MIIM_ID
              :hSubMenu,      :hmenu,         # used if MIIM_SUBMENU
              :hbmpChecked,   :pointer,       # used if MIIM_CHECKMARKS

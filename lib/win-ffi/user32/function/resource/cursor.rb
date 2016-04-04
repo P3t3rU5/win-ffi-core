@@ -5,7 +5,7 @@ require 'win-ffi/user32/enum/resource/cursor/oem_cursor'
 
 require 'win-ffi/general/struct/rect'
 require 'win-ffi/general/struct/point'
-require 'win-ffi/user32/struct/resource/cursor_info'
+require 'win-ffi/user32/struct/resource/cursor/cursor_info'
 
 module WinFFI
   module User32

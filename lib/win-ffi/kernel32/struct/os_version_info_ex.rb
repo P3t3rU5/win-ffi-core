@@ -1,11 +1,18 @@
+require 'win-ffi/wide_inline_string'
+
+require 'win-ffi/kernel32/enum/version/win32_winnt'
+
 module WinFFI
   class OSVERSIONINFOEX < FFIStruct
+
+    include Kernel32, Comparable
+
     layout :dwOSVersionInfoSize, :ulong,
            :dwMajorVersion,      :ulong,
            :dwMinorVersion,      :ulong,
            :dwBuildNumber,       :ulong,
            :dwPlatformId,        :ulong,
-           :szCSDVersion,        [:char, 128],
+           :szCSDVersion,        WideInlineString.new(128),
            :wServicePackMajor,   :ushort,
            :wServicePackMinor,   :ushort,
            :wSuiteMask,          :ushort,
@@ -31,42 +38,37 @@ module WinFFI
       self.dwMajorVersion = major
     end
 
-    def minor=(minor)
-      self.dwMinorVersion = minor
-    end
+    def minor=(minor); self.dwMinorVersion = minor end
 
-    def build=(build)
-      self.dwBuildNumber = build
-    end
+    def build=(build); self.dwBuildNumber = build end
 
     def hex; (major << 8) + minor end
 
     def <=>(version)
-      hex <=> case version
-              when '2000',  2000   then 0x0500
-              when 'xp',    :xp    then 0x0501
-              when 'vista', :vista then 0x0600
-              when '7', 7          then 0x0601
-              when '8', 8          then 0x0602
-              when '8.1', 8.1      then 0x0603
-              when '10', 10        then 0x0a00
-              when Integer         then version
-              else raise ArgumentError, 'Unknown Version'
-              end
+      hex <=> WIN32_WINNT[case version
+        when '2000',  2000                          then :WIN2K
+        when 'xp',    :xp                           then :WINXP
+        when 'server2003', :server2003, 2003        then :WS03
+        when 'vista', :vista, 'longhorn', :longhorn then :VISTA
+        when '7',     7                             then :WIN7
+        when '8',     8                             then :WIN8
+        when '8.1',   8.1,    'blue',     :blue     then :WINBLUE
+        when '10',    10,     'thresold', :thresold then :WIN10
+        when Integer         then version
+        else raise ArgumentError, 'Unknown Version'
+      end]
     end
-
-    include Comparable
 
     def name
       case hex
-      when 0x0500...0x0501; 'Windows 2000'
-      when 0x0501...0x0600; 'Windows XP'
-      when 0x0600...0x0601; 'Windows Vista'
-      when 0x0601; 'Windows 7'
-      when 0x0602; 'Windows 8'
-      when 0x0603; 'Windows 8.1'
-      when 0x0a00; 'Windows 10'
-      else 'Unknown'
+        when   WIN32_WINNT[:WIN2K]...WIN32_WINNT[:WINXP]   then 'Windows 2000'
+        when   WIN32_WINNT[:WINXP]...WIN32_WINNT[:VISTA]   then 'Windows XP'
+        when   WIN32_WINNT[:VISTA]...WIN32_WINNT[:WIN7]    then 'Windows Vista'
+        when    WIN32_WINNT[:WIN7]...WIN32_WINNT[:WIN8]    then 'Windows 7'
+        when    WIN32_WINNT[:WIN8]...WIN32_WINNT[:WINBLUE] then 'Windows 8'
+        when WIN32_WINNT[:WINBLUE]...WIN32_WINNT[:WIN10]   then 'Windows 8.1'
+        when   WIN32_WINNT[:WIN10]                         then 'Windows 10'
+        else                                                    'Unknown'
       end
     end
 

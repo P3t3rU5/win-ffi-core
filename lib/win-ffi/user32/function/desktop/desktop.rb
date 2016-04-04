@@ -1,6 +1,6 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/desktop/desktop_access_flags'
+require 'win-ffi/user32/enum/desktop/desktop_access_flag'
 
 require 'win-ffi/general/struct/security_attributes'
 
@@ -24,7 +24,7 @@ module WinFFI
     #   _In_        DWORD dwFlags,
     #   _In_        ACCESS_MASK dwDesiredAccess,
     #   _In_opt_    LPSECURITY_ATTRIBUTES lpsa )
-    encoded_function 'CreateDesktop', [:string, :string, :pointer, :dword, DesktopAccessFlags, SECURITY_ATTRIBUTES.ptr], :hdesk
+    encoded_function 'CreateDesktop', [:string, :string, :pointer, :dword, DesktopAccessFlag, SECURITY_ATTRIBUTES.ptr], :hdesk
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms682612(v=vs.85).aspx
     # BOOL CALLBACK EnumDesktopProc(
@@ -56,14 +56,14 @@ module WinFFI
     #   _In_  DWORD dwFlags,
     #   _In_  BOOL fInherit,
     #   _In_  ACCESS_MASK dwDesiredAccess )
-    encoded_function 'OpenDesktop', [:string, :dword, :bool, DesktopAccessFlags], :hdesk
+    encoded_function 'OpenDesktop', [:string, :dword, :bool, DesktopAccessFlag], :hdesk
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms684309(v=vs.85).aspx
     # HDESK WINAPI OpenInputDesktop(
     #   _In_  DWORD dwFlags,
     #   _In_  BOOL fInherit,
     #   _In_  ACCESS_MASK dwDesiredAccess )
-    attach_function 'OpenInputDesktop', [:dword, :bool, DesktopAccessFlags], :hdesk
+    attach_function 'OpenInputDesktop', [:dword, :bool, DesktopAccessFlag], :hdesk
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms686250(v=vs.85).aspx
     # BOOL WINAPI SetThreadDesktop( _In_  HDESK hDesktop )
@@ -84,7 +84,7 @@ module WinFFI
       #   _In_opt_    LPSECURITY_ATTRIBUTES lpsa,
       #   _In_        ULONG ulHeapSize,
       #   _Reserved_  PVOID pvoid)
-      encoded_function 'CreateDesktopEx', [:string, :string, :pointer, :dword, DesktopAccessFlags, SECURITY_ATTRIBUTES.ptr, :ulong, :pointer], :hdesk
+      encoded_function 'CreateDesktopEx', [:string, :string, :pointer, :dword, DesktopAccessFlag, SECURITY_ATTRIBUTES.ptr, :ulong, :pointer], :hdesk
     end
   end
 end

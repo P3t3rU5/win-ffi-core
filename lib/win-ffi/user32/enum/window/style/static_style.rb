@@ -24,7 +24,6 @@ module WinFFI
         :ETCHEDVERT,     0x00000011,
         :ETCHEDFRAME,    0x00000012,
         :TYPEMASK,       0x0000001F,
-
         :NOPREFIX,       0x00000080, # Don't do "&" character translation
         :NOTIFY,         0x00000100,
         :CENTERIMAGE,    0x00000200,

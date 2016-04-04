@@ -4,7 +4,7 @@ module WinFFI
            :y, :long
 
     def to_s
-      "(x = #{x}, y = #{y})"
+      "POINT x = #{x}, y = #{y}"
     end
   end
 end

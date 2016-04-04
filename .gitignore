@@ -2,4 +2,4 @@
 /test
 /*.gem
 /.idea
-/include/*.h
+/include/

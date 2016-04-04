@@ -1,12 +1,12 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window/message/broadcast_special_flags'
-require 'win-ffi/user32/enum/window/message/broadcast_special_message_flags'
-require 'win-ffi/user32/enum/window/flag/peek_message_flags'
-require 'win-ffi/user32/enum/window/smto'
+require 'win-ffi/user32/enum/window/message/broadcast_special_flag'
+require 'win-ffi/user32/enum/window/message/broadcast_special_message_flag'
+require 'win-ffi/user32/enum/window/flag/peek_message_flag'
+require 'win-ffi/user32/enum/window/message/send_message_timeout_flag'
 require 'win-ffi/user32/enum/window/message/window_message'
-require 'win-ffi/user32/enum/queue_status_flags'
-require 'win-ffi/user32/enum/resource/icon/icon'
+require 'win-ffi/user32/enum/queue_status_flag'
+require 'win-ffi/user32/enum/window/message/icon_type'
 require 'win-ffi/user32/enum/window/return/in_send_message_ex_return'
 
 require 'win-ffi/user32/struct/window/message/bsm_info'
@@ -22,7 +22,7 @@ module WinFFI
     #   _In_         WPARAM wParam,
     #   _In_         LPARAM lParam )
     encoded_function 'BroadcastSystemMessage',
-                     [BroadcastSpecialFlags, BroadcastSpecialMessageFlags, :wparam, :lparam], :long
+                     [BroadcastSpecialFlag, BroadcastSpecialMessageFlag, :wparam, :lparam], :long
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644934(v=vs.85).aspx
     # LRESULT DispatchMessage(__in  const MSG *lpmsg)
@@ -54,7 +54,7 @@ module WinFFI
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644940(v=vs.85).aspx
     # DWORD WINAPI GetQueueStatus( _In_  UINT flags )
-    attach_function 'GetQueueStatus', [QueueStatusFlags], :dword
+    attach_function 'GetQueueStatus', [QueueStatusFlag], :dword
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644941(v=vs.85).aspx
     # BOOL WINAPI InSendMessage(void)
@@ -71,7 +71,7 @@ module WinFFI
     #   _In_      UINT wMsgFilterMin,
     #   _In_      UINT wMsgFilterMax,
     #   _In_      UINT wRemoveMsg )
-    encoded_function 'PeekMessage', [MSG.ptr, :hwnd, :uint, :uint, PeekMessageFlags], :bool
+    encoded_function 'PeekMessage', [MSG.ptr(:out), :hwnd, :uint, :uint, PeekMessageFlag], :bool
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644944(v=vs.85).aspx
     # BOOL WINAPI PostMessage(
@@ -115,7 +115,25 @@ module WinFFI
     #   _In_  UINT Msg,
     #   _In_  WPARAM wParam,
     #   _In_  LPARAM lParam )
-    encoded_function 'SendMessage', [:hwnd, :uint, :wparam, :lparam], :lresult
+    encoded_function 'SendMessage', [:hwnd, :uint, :wparam, :lparam], :lresult, ruby_name: 'SendMessageLong'
+
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644950(v=vs.85).aspx
+    # LRESULT WINAPI SendMessage(
+    #   _In_  HWND hWnd,
+    #   _In_  UINT Msg,
+    #   _In_  WPARAM wParam,
+    #   _In_  LPARAM lParam )
+    encoded_function 'SendMessage', [:hwnd, :uint, :wparam, :ulong], :lresult, ruby_name: 'SendMessagePointer'
+
+    # Needed because lparam might be a pointer and its defined as a ulong
+    def self.SendMessage(handle, msg, wparam, lparam)
+      case lparam
+        when Fixnum
+          SendMessageLong(handle, msg, wparam, lparam)
+        else
+          SendMessagePointer(handle, msg, wparam, lparam)
+      end
+    end
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644951(v=vs.85).aspx
     # BOOL WINAPI SendMessageCallback(
@@ -136,7 +154,7 @@ module WinFFI
     #   _In_       UINT fuFlags,
     #   _In_       UINT uTimeout,
     #   _Out_opt_  PDWORD_PTR lpdwResult )
-    encoded_function 'SendMessageTimeout', [:hwnd, :uint, :wparam, :lparam, SMTO, :uint, :pointer], :lresult
+    encoded_function 'SendMessageTimeout', [:hwnd, :uint, :wparam, :lparam, SendMessageTimeoutFlag, :uint, :pointer], :lresult
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644953(v=vs.85).aspx
     # BOOL WINAPI SendNotifyMessage(
@@ -169,7 +187,7 @@ module WinFFI
       #   _In_         LPARAM lParam,
       #   _Out_opt_    PBSMINFO pBSMInfo )
       encoded_function 'BroadcastSystemMessageEx',
-                       [BroadcastSpecialFlags, BroadcastSpecialMessageFlags, :uint, :wparam, :lparam, BSMINFO.ptr],
+                       [BroadcastSpecialFlag, BroadcastSpecialMessageFlag, :uint, :wparam, :lparam, BSMINFO.ptr],
                        :long
 
     end

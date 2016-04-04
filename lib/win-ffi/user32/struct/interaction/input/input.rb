@@ -1,5 +1,5 @@
-require 'win-ffi/user32/enum/interaction/mouse/mouse_event_flags'
-require 'win-ffi/user32/enum/interaction/keyboard/keyboard_event_flags'
+require 'win-ffi/user32/enum/interaction/mouse/mouse_event_flag'
+require 'win-ffi/user32/enum/interaction/keyboard/keyboard_event_flag'
 
 module WinFFI
   module User32
@@ -7,7 +7,7 @@ module WinFFI
       layout :dx,          :long,
              :dy,          :long,
              :mouseData,   :dword,
-             :dwFlags,     MouseEventFlags,
+             :dwFlags,     MouseEventFlag,
              :time,        :dword,
              :dwExtraInfo, :pointer
     end
@@ -15,7 +15,7 @@ module WinFFI
     class KEYBDINPUT < FFIStruct
       layout :wVk,         :word,
              :wScan,       :word,
-             :dwFlags,     KeyboardEventFlags,
+             :dwFlags,     KeyboardEventFlag,
              :time,        :dword,
              :dwExtraInfo, :pointer
     end

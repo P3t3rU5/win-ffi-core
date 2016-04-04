@@ -21,10 +21,9 @@ module WinFFI
         :FOREGROUNDIDLE, 11,
         :CALLWNDPROCRET, 12,
         :KEYBOARD_LL,    13,
-        :MOUSE_LL,
-        :MAXHOOK,
-        :MAX,            14,
-
+        :MOUSE_LL,       14,
+        :MAXHOOK,        14,
+        :MAX,            14
     ]
   end
 end

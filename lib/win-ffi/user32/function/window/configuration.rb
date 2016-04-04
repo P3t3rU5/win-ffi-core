@@ -6,7 +6,7 @@ module WinFFI
   module User32
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms724385(v=vs.85).aspx
     # int WINAPI GetSystemMetrics( _In_  int nIndex )
-    attach_function 'GetSystemMetrics', [SystemMetricsFlags], :int
+    attach_function 'GetSystemMetrics', [SystemMetricsFlag], :int
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms724947(v=vs.85).aspx
     # BOOL WINAPI SystemParametersInfo(

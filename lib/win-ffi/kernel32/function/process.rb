@@ -6,61 +6,11 @@ module WinFFI
   module Kernel32
     extend LibBase
 
-    # Process access rights
-
-    #TODO
-
-    PROCESS_ALL_ACCESS                = 0x1F0FFF
-    PROCESS_CREATE_PROCESS            = 0x0080
-    PROCESS_CREATE_THREAD             = 0x0002
-    PROCESS_DUP_HANDLE                = 0x0040
-    PROCESS_QUERY_INFORMATION         = 0x0400
-    PROCESS_QUERY_LIMITED_INFORMATION = 0x1000
-    PROCESS_SET_QUOTA                 = 0x0100
-    PROCESS_SET_INFORMATION           = 0x0200
-    PROCESS_SUSPEND_RESUME            = 0x0800
-    PROCESS_TERMINATE                 = 0x0001
-    PROCESS_VM_OPERATION              = 0x0008
-    PROCESS_VM_READ                   = 0x0010
-    PROCESS_VM_WRITE                  = 0x0020
-    SYNCHRONIZE                       = 1048576
-    STILL_ACTIVE                      = 259
-
-    # Process priority flags
-
-    ABOVE_NORMAL_PRIORITY_CLASS = 0x00008000
-    BELOW_NORMAL_PRIORITY_CLASS = 0x00004000
-    HIGH_PRIORITY_CLASS         = 0x00000080
-    IDLE_PRIORITY_CLASS         = 0x00000040
-    NORMAL_PRIORITY_CLASS       = 0x00000020
-    REALTIME_PRIORITY_CLASS     = 0x00000100
-
     # Process creation flags
 
-    CREATE_BREAKAWAY_FROM_JOB        = 0x01000000
-    CREATE_DEFAULT_ERROR_MODE        = 0x04000000
-    CREATE_NEW_CONSOLE               = 0x00000010
-    CREATE_NEW_PROCESS_GROUP         = 0x00000200
-    CREATE_NO_WINDOW                 = 0x08000000
-    CREATE_PRESERVE_CODE_AUTHZ_LEVEL = 0x02000000
-    CREATE_SEPARATE_WOW_VDM          = 0x00000800
-    CREATE_SHARED_WOW_VDM            = 0x00001000
-    CREATE_SUSPENDED                 = 0x00000004
-    CREATE_UNICODE_ENVIRONMENT       = 0x00000400
     DEBUG_ONLY_THIS_PROCESS          = 0x00000002
     DEBUG_PROCESS                    = 0x00000001
     DETACHED_PROCESS                 = 0x00000008
-
-    STARTF_USESHOWWINDOW    = 0x00000001
-    STARTF_USESIZE          = 0x00000002
-    STARTF_USEPOSITION      = 0x00000004
-    STARTF_USECOUNTCHARS    = 0x00000008
-    STARTF_USEFILLATTRIBUTE = 0x00000010
-    STARTF_RUNFULLSCREEN    = 0x00000020
-    STARTF_FORCEONFEEDBACK  = 0x00000040
-    STARTF_FORCEOFFFEEDBACK = 0x00000080
-    STARTF_USESTDHANDLES    = 0x00000100
-    STARTF_USEHOTKEY        = 0x00000200
 
     LOGON_WITH_PROFILE        = 0x00000001
     LOGON_NETCREDENTIALS_ONLY = 0x00000002
@@ -69,59 +19,26 @@ module WinFFI
 
     # Job Object Classes
 
-    JobObjectBasicLimitInformation               = 2
-    JobObjectBasicUIRestrictions                 = 4
-    JobObjectSecurityLimitInformation            = 5
-    JobObjectEndOfJobTimeInformation             = 6
-    JobObjectAssociateCompletionPortInformation  = 7
-    JobObjectExtendedLimitInformation            = 9
-    JobObjectGroupInformation                    = 11
+    JOB_OBJECT_BASIC_LIMIT_INFORMATION               =  2
+    JOB_OBJECT_BASIC_UI_RESTRICTIONS                 =  4
+    JOB_OBJECT_SECURITY_LIMIT_INFORMATION            =  5
+    JOB_OBJECT_END_OF_JOB_TIME_INFORMATION           =  6
+    JOB_OBJECT_ASSOCIATE_COMPLETION_PORT_INFORMATION =  7
+    JOB_OBJECT_EXTENDED_LIMIT_INFORMATION            =  9
+    JOB_OBJECT_GROUP_INFORMATION                     = 11
 
-    # Job Limit Flags
-
-    JOB_OBJECT_LIMIT_WORKINGSET                  = 0x00000001
-    JOB_OBJECT_LIMIT_PROCESS_TIME                = 0x00000002
-    JOB_OBJECT_LIMIT_JOB_TIME                    = 0x00000004
-    JOB_OBJECT_LIMIT_ACTIVE_PROCESS              = 0x00000008
-    JOB_OBJECT_LIMIT_AFFINITY                    = 0x00000010
-    JOB_OBJECT_LIMIT_PRIORITY_CLASS              = 0x00000020
-    JOB_OBJECT_LIMIT_PRESERVE_JOB_TIME           = 0x00000040
-    JOB_OBJECT_LIMIT_SCHEDULING_CLASS            = 0x00000080
-    JOB_OBJECT_LIMIT_PROCESS_MEMORY              = 0x00000100
-    JOB_OBJECT_LIMIT_JOB_MEMORY                  = 0x00000200
-    JOB_OBJECT_LIMIT_DIE_ON_UNHANDLED_EXCEPTION  = 0x00000400
-    JOB_OBJECT_LIMIT_BREAKAWAY_OK                = 0x00000800
-    JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK         = 0x00001000
-    JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE           = 0x00002000
-
-    # Job Access Rights
-
-    JOB_OBJECT_ASSIGN_PROCESS          = 0x0001
-    JOB_OBJECT_SET_ATTRIBUTES          = 0x0002
-    JOB_OBJECT_QUERY                   = 0x0004
-    JOB_OBJECT_TERMINATE               = 0x0008
-    JOB_OBJECT_SET_SECURITY_ATTRIBUTES = 0x0010
-    JOB_OBJECT_ALL_ACCESS              = 0x1F001F
 
     begin
-      ffi_lib 'Psapi'
-
-      # psapi, maybe
-      #BOOL WINAPI EnumProcesses(
-      #  _Out_  DWORD *pProcessIds,
-      #  _In_   DWORD cb,
-      #  _Out_  DWORD *pBytesReturned )
-      attach_function 'EnumProcesses', [:pointer, :dword, :pointer], :bool
-
-    rescue FFI::FunctionNotFound
       ffi_lib 'kernel32'
 
       # psapi, maybe
-      #BOOL WINAPI EnumProcesses(
-      #  _Out_  DWORD *pProcessIds,
-      #  _In_   DWORD cb,
-      #  _Out_  DWORD *pBytesReturned )
+      # BOOL WINAPI EnumProcesses(
+      #   _Out_  DWORD *pProcessIds,
+      #   _In_   DWORD cb,
+      #   _Out_  DWORD *pBytesReturned )
       attach_function 'EnumProcesses', [:pointer, :dword, :pointer], :bool
+    rescue FFI::FunctionNotFound
+
     end
 
     ffi_lib 'kernel32'

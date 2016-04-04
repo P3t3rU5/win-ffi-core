@@ -1,7 +1,7 @@
-require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_flags'
-require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_text_flags'
-require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_graph_flags'
-require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_window_flags'
+require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_flag'
+require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_text_flag'
+require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_graph_flag'
+require 'win-ffi/user32/enum/accessibility/flag/sound_sentry_window_flag'
 
 
 module WinFFI
@@ -9,14 +9,14 @@ module WinFFI
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd373646(v=vs.85).aspx
     class SOUNDSENTRY < FFIStruct
       layout :cbSize,                 :uint,
-             :dwFlags,                SoundSentryFlags,
-             :iFSTextEffect,          SoundSentryTextFlags,
+             :dwFlags,                SoundSentryFlag,
+             :iFSTextEffect,          SoundSentryTextFlag,
              :iFSTextEffectMSec,      :dword,
              :iFSTextEffectColorBits, :dword,
-             :iFSGrafEffect,          SoundSentryGraphFlags,
+             :iFSGrafEffect,          SoundSentryGraphFlag,
              :iFSGrafEffectMSec,      :dword,
              :iFSGrafEffectColor,     :dword,
-             :iWindowsEffect,         SoundSentryWindowFlags,
+             :iWindowsEffect,         SoundSentryWindowFlag,
              :iWindowsEffectMSec,     :dword,
              :lpszWindowsEffectDLL,   :string,
              :iWindowsEffectOrdinal,  :dword

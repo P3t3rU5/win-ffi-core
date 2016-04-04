@@ -4,13 +4,13 @@ module WinFFI
   module User32
     if WindowsVersion >= :xp
 
-      require 'win-ffi/user32/enum/exit_windows_flags'
+      require 'win-ffi/user32/enum/exit_windows_flag'
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/aa376868(v=vs.85).aspx
       # BOOL WINAPI ExitWindowsEx(
       #   _In_  UINT uFlags,
       #   _In_  DWORD dwReason )
-      attach_function 'ExitWindowsEx', [ExitWindowsFlags, :dword], :bool
+      attach_function 'ExitWindowsEx', [ExitWindowsFlag, :dword], :bool
 
       # https://msdn.microsoft.com/en-us/library/windows/desktop/aa376875(v=vs.85).aspx
       # BOOL WINAPI LockWorkStation(void)

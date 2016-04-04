@@ -1,7 +1,7 @@
 require 'win-ffi/user32'
 
-require 'win-ffi/user32/enum/window/flag/get_class_long_flags'
-require 'win-ffi/user32/enum/window/flag/get_window_long_flags'
+require 'win-ffi/user32/enum/window/flag/get_class_long_flag'
+require 'win-ffi/user32/enum/window/flag/get_window_long_flag'
 require 'win-ffi/user32/enum/window/window_long'
 
 require 'win-ffi/user32/struct/window/window_class/wndclass'
@@ -28,7 +28,7 @@ module WinFFI
     # DWORD WINAPI GetClassLong(
     #   __in  HWND hWnd,
     #   __in  int nIndex)
-    encoded_function 'GetClassLong', [:hwnd, GetClassLongFlags], :dword
+    encoded_function 'GetClassLong', [:hwnd, GetClassLongFlag], :dword
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633582(v=vs.85).aspx
     # int WINAPI GetClassName(
@@ -47,7 +47,7 @@ module WinFFI
     # LONG WINAPI GetWindowLong(
     #   __in  HWND hWnd,
     #   __in  int nIndex)
-    encoded_function 'GetWindowLong', [:hwnd, GetWindowLongFlags], :long
+    encoded_function 'GetWindowLong', [:hwnd, GetWindowLongFlag], :long
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633583(v=vs.85).aspx
     # The function is provided only for compatibility with 16-bit versions of Windows
@@ -69,7 +69,7 @@ module WinFFI
     #   __in  HWND hWnd,
     #   __in  int nIndex,
     #   __in  LONG dwNewLong)
-    encoded_function 'SetClassLong', [:hwnd, GetClassLongFlags, :long], :dword
+    encoded_function 'SetClassLong', [:hwnd, GetClassLongFlag, :long], :dword
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633590(v=vs.85).aspx
     # WORD WINAPI SetClassWord(
@@ -83,7 +83,7 @@ module WinFFI
     #   __in  HWND hWnd,
     #   __in  int nIndex,
     #   __in  LONG dwNewLong)
-    encoded_function 'SetWindowLong', [:hwnd, GetWindowLongFlags, :long], :long
+    encoded_function 'SetWindowLong', [:hwnd, GetWindowLongFlag, :long], :long
 
     # WORD SetWindowWord(
     #   _In_ HWND hWnd,
@@ -97,7 +97,7 @@ module WinFFI
     #   __in_opt  HINSTANCE hInstance)
     encoded_function 'UnregisterClass', [:pointer, :hinstance], :bool
 
-    if Architecture == 64
+    if Architecture == 'x64-mingw32'
       # https://msdn.microsoft.com/en-us/library/windows/desktop/ms633581(v=vs.85).aspx
       # LONG_PTR WINAPI GetWindowLongPtr(
       #   __in  HWND hWnd,
@@ -122,7 +122,7 @@ module WinFFI
       #   __in  HWND hWnd,
       #   __in  int nIndex,
       #   __in  LONG_PTR dwNewLong)
-      encoded_function 'SetWindowLongPtr',  [:hwnd, GetWindowLongFlags, :long], :long
+      encoded_function 'SetWindowLongPtr',  [:hwnd, GetWindowLongFlag, :long], :long
     end
   end
 end
