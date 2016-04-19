@@ -1,4 +1,6 @@
-require 'win-ffi/wide_inline_string'
+require 'win-ffi/core/wide_inline_string'
+
+require 'win-ffi/core/struct'
 
 require 'win-ffi/kernel32/enum/version/win32_winnt'
 

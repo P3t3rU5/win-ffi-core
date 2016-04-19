@@ -1,8 +1,9 @@
 require 'rspec'
+require 'win-ffi/core'
 
 RSpec.describe 'Definitions' do
 
-  files = Dir.glob("#{__dir__}/../lib/**/*.rb")
+  files = Dir.glob("#{__dir__}/../lib/**/*.rb").shuffle
 
   files.each do |f|
     it "should load #{f}" do
