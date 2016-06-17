@@ -44,4 +44,6 @@ module WinFFI
       # resource. This function finds the first image in the cache with the requested resource name, regardless of the
       # size requested.
   ]
+
+  define_prefix(:LR, LoadResourceFlags)
 end

@@ -7,8 +7,8 @@ RSpec.describe 'Definitions' do
 
   files.each do |f|
     it "should load #{f}" do
+      next if f.include?("lib_base") || f.include?("version")
       expect { require f }.to_not raise_error
-      # expect { mod.module_eval(File.read(f)) }.to_not raise_error
     end
   end
 

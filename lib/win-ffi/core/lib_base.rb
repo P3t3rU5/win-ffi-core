@@ -1,16 +1,13 @@
 require 'ffi'
 require 'logger'
+require 'win-ffi/core/version'
 
 module WinFFI
-  @logger = Logger.new(STDOUT)
-  @logger.info "WinFFI #{VERSION}"
-  def self.logger
-    @logger
-  end
+  LOGGER = Logger.new(STDOUT)
 
-  WinFFI.logger.debug 'Getting Encoding...'
+  LOGGER.debug 'Getting Encoding...'
   @encoding = (__ENCODING__.name =~ /ASCII/ ? 'A' : 'W')
-  WinFFI.logger.debug 'Got Encoding: ' + @encoding
+  LOGGER.debug 'Got Encoding: ' + @encoding
 
   def self.encoding
     @encoding
@@ -40,6 +37,18 @@ module WinFFI
       end
     end
 
+    def define_prefix(prefix, target_enum, without_underscore = false)
+      target_enum.to_h.each do |k, v|
+        const_set("#{prefix}#{without_underscore ? '' : '_'}#{k}", v)
+      end
+    end
+
+    def define_suffix(suffix, target_enum, without_underscore = false)
+      target_enum.to_h.each do |k, v|
+        const_set("#{k}#{without_underscore ? '' : '_'}#{suffix}", v)
+      end
+    end
+
     def self.extended(c)
       c.extend FFI::Library
       instance_variables.each do |v|
@@ -52,27 +61,29 @@ module WinFFI
 
   require 'win-ffi/core/typedef/core'
 
-  require 'win-ffi/kernel32/struct/os_version_info_ex'
-
   module Kernel32
     extend LibBase
 
-    ffi_lib 'kernel32'
+    ffi_lib 'kernel32', 'KernelBase'
+  end
 
+  require 'win-ffi/kernel32/struct/version/os_version_info_ex'
+
+  module Kernel32
     #BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
     encoded_function 'GetVersionEx', [OSVERSIONINFOEX.ptr], :bool
   end
 
-  WinFFI.logger.debug 'Getting Architecture...'
+  LOGGER.debug 'Getting Architecture...'
   Architecture = RbConfig::CONFIG['arch'] # "i386-mingw32" | "x64-mingw32"
-  WinFFI.logger.debug 'Got Architecture: ' + Architecture
+  LOGGER.debug 'Got Architecture: ' + Architecture
 
-  WinFFI.logger.debug 'Getting Windows Version...'
+  LOGGER.debug 'Getting Windows Version...'
   WindowsVersion = OSVERSIONINFOEX.new.get!
-  WinFFI.logger.debug "Got Windows Version: #{WindowsVersion.hex}-> #{WindowsVersion.to_s}"
+  LOGGER.debug "Got Windows Version: #{WindowsVersion.hex}-> #{WindowsVersion.to_s}"
 
   WindowsVersion.major, WindowsVersion.minor, WindowsVersion.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
 
-  @logger.info "#{WindowsVersion.to_s} #{Architecture} #{__ENCODING__.to_s}"
+  LOGGER.info "#{WindowsVersion.to_s} #{Architecture} #{__ENCODING__.to_s}"
 end
 
