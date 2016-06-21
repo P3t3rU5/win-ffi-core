@@ -1,5 +1,7 @@
 # WinFFI Core
 
+[![Join the chat at https://gitter.im/P3t3rU5/win-ffi-core](https://badges.gitter.im/P3t3rU5/win-ffi-core.svg)](https://gitter.im/P3t3rU5/win-ffi-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 WinFFI Core is the core gem for all WinFFI components. It defines some common functionality to all WinFFI component gems
 This gem is work in progress
 To install:
