@@ -1,18 +1,20 @@
-# WinFFI
+# WinFFI Core
 
-WinFFI is a gem to use the windows API using the ffi gem inspired by windows-pr gem.
+[![Join the chat at https://gitter.im/P3t3rU5/win-ffi-core](https://badges.gitter.im/P3t3rU5/win-ffi-core.svg)](https://gitter.im/P3t3rU5/win-ffi-core?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
+WinFFI Core is the core gem for all WinFFI components. It defines some common functionality to all WinFFI component gems
 This gem is work in progress
 To install:
 
 ```
-gem install win-ffi
+gem install win-ffi-core
 ```
 
 # License
 
 (The MIT License)
 
-Copyright &copy; 2013 Pedro Miranda
+Copyright &copy; 2016 Pedro Miranda
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
