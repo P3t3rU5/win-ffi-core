@@ -1,14 +1,15 @@
-require 'win-ffi/core/lib_base'
-
 module WinFFI
   module LibBase
     typedef (WinFFI.encoding == 'A' ? :char : :ushort), :tchar
+    typedef :ushort,     :wchar
     typedef :ushort,     :atom
     typedef :uchar,      :byte
     typedef :ushort,     :word
     typedef :ulong,      :dword
+    typedef :int64,      :dword64
     typedef :ulong_long, :dword_long
     typedef :ulong_long, :dwordlong
+    typedef :ulong_long, :ulonglong
     typedef :uint64,     :dword64
     typedef :uint,       :wparam
     typedef :long,       :lparam
@@ -16,6 +17,7 @@ module WinFFI
     typedef :long,       :hresult
     typedef :ushort,     :langid
     typedef :size_t,     :ulong_ptr
+    typedef :ulong,      :lcid
 
     typedef :dword,      :colorref
 

@@ -1,22 +1,10 @@
 module WinFFI
   # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162897(v=vs.85).aspx
-  class RECT < FFIStruct
-    layout :left,   :long,
-           :top,    :long,
-           :right,  :long,
-           :bottom, :long
-
-    # def initialize(left, top, right, bottom)
-    #   self.left, self.top, self.right, self.bottom = left, top, right, bottom
-    # end
-
-    def area
-      width * height
-    end
-
-    def perimeter
-      2 * width + 2 * height
-    end
+  class RECT < FFIAdditions::Struct
+    layout left:   :long,
+           top:    :long,
+           right:  :long,
+           bottom: :long
 
     def width
       right - left
@@ -35,7 +23,12 @@ module WinFFI
     end
 
     def to_s
-      "(left = #{left}, top = #{top}, width = #{width}, height = #{height})"
+      "(left = #{left}, top = #{top}, width = #{right - left}, height = #{bottom - top})"
+    end
+
+    def ==(other)
+      return false unless other.is_a?(self.class)
+      left == other.left &&  top == other.top && right == other.right&& bottom == other.bottom
     end
   end
 end

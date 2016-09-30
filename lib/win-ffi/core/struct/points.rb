@@ -1,7 +1,7 @@
 module WinFFI
-  class POINTS < FFIStruct
-    layout :x, :short,
-           :y, :short
+  class POINTS < FFIAdditions::Struct
+    layout x: :short,
+           y: :short
 
     def to_s
       "POINT x = #{x}, y = #{y}"

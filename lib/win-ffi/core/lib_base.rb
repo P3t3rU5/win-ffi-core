@@ -5,6 +5,8 @@ require 'win-ffi/core/version'
 module WinFFI
   LOGGER = Logger.new(STDOUT)
 
+  LOGGER.info "WinFFI v#{WinFFI::VERSION}"
+
   LOGGER.debug 'Getting Encoding...'
   @encoding = (__ENCODING__.name =~ /ASCII/ ? 'A' : 'W')
   LOGGER.debug 'Got Encoding: ' + @encoding
@@ -20,7 +22,13 @@ module WinFFI
   module LibBase
     extend FFI::Library
     ffi_convention :stdcall
+  end
+end
 
+require 'win-ffi/core/typedef/core'
+
+module WinFFI
+  module LibBase
     def encoded_function(name, *args, ruby_name: nil)
       ruby_name = name unless ruby_name
       attach_function ruby_name, name + WinFFI.encoding, *args
@@ -39,13 +47,15 @@ module WinFFI
 
     def define_prefix(prefix, target_enum, without_underscore = false)
       target_enum.to_h.each do |k, v|
-        const_set("#{prefix}#{without_underscore ? '' : '_'}#{k}", v)
+        name = "#{prefix}#{without_underscore ? '' : '_'}#{k}"
+        const_set(name, v) unless const_defined? name
       end
     end
 
     def define_suffix(suffix, target_enum, without_underscore = false)
       target_enum.to_h.each do |k, v|
-        const_set("#{k}#{without_underscore ? '' : '_'}#{suffix}", v)
+        name = "#{k}#{without_underscore ? '' : '_'}#{suffix}"
+        const_set(name, v) unless const_defined? name
       end
     end
 
@@ -58,24 +68,26 @@ module WinFFI
       end
     end
   end
+  extend LibBase
+end
 
-  require 'win-ffi/core/typedef/core'
-
+module WinFFI
   module Kernel32
     extend LibBase
 
     ffi_lib 'kernel32', 'KernelBase'
   end
 
-  require 'win-ffi/kernel32/struct/version/os_version_info_ex'
+  require 'win-ffi/kernel32/struct/system_info/os_version_info_ex'
 
   module Kernel32
-    #BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
+    # https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx
+    # BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
     encoded_function 'GetVersionEx', [OSVERSIONINFOEX.ptr], :bool
   end
 
   LOGGER.debug 'Getting Architecture...'
-  Architecture = RbConfig::CONFIG['arch'] # "i386-mingw32" | "x64-mingw32"
+  Architecture = FFI::Platform::CPU # "i386-mingw32" | "x64-mingw32"
   LOGGER.debug 'Got Architecture: ' + Architecture
 
   LOGGER.debug 'Getting Windows Version...'
@@ -86,4 +98,3 @@ module WinFFI
 
   LOGGER.info "#{WindowsVersion.to_s} #{Architecture} #{__ENCODING__.to_s}"
 end
-

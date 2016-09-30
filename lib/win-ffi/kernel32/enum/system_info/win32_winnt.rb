@@ -2,7 +2,7 @@ require 'win-ffi/kernel32'
 
 module WinFFI
   module Kernel32
-    # _WIN32_WINNT version constants
+    # _WIN32_WINNT system_info constants
     WIN32_WINNT = enum :win32_winnt, [
         :NT4,          0x0400,
         :WIN2K,        0x0500,

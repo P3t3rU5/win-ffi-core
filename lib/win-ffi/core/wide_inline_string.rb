@@ -1,3 +1,5 @@
+require 'win-ffi/core'
+
 module WinFFI
   class WideInlineString
     include FFI::DataConverter
@@ -8,6 +10,7 @@ module WinFFI
       @size = size
       @native_type = FFI::ArrayType.new(WinFFI.find_type(:tchar), size)
     end
+
 
     def to_native(_value, _context)
       raise NotImplementedError

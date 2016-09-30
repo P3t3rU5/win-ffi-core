@@ -1,38 +1,44 @@
 module WinFFI
-  def makeword(a, b)
-    ((a & 0xff) | ((b & 0xff) << 8))
-  end
+  class << self
+    def MAKEWORD(a, b)
+      ((a & 0xff) | ((b & 0xff) << 8))
+    end
 
-  def makelong(a, b)
-    ((a & 0xffff) | ((b & 0xffff) << 16))
-  end
+    def MAKELONG(a, b)
+      ((a & 0xffff) | ((b & 0xffff) << 16))
+    end
 
-  def loword(l)
-    l & 0xffff
-  end
+    def MAKELCID(lgid, srtid) # ulong
+      srtid << 16 | lgid
+    end
 
-  def hiword(l)
-    l >> 16
-  end
+    #define LOWORD(_dw)     ((WORD)(((DWORD_PTR)(_dw)) & 0xffff))
+    def LOWORD(l)
+      l & 0xffff
+    end
 
-  def lobyte(w)
-    w & 0xff
-  end
+    #define HIWORD(_dw)     ((WORD)((((DWORD_PTR)(_dw)) >> 16) & 0xffff))
+    def HIWORD(l)
+      l >> 16
+    end
 
-  def hibyte(w)
-    w >> 8
-  end
+    #define LODWORD(_qw)    ((DWORD)(_qw))
 
-  def points_to_point(pt, pts)
-    pt.x = loword(pts)
-    pt.y = hiword(pts)
-  end
+    #define HIDWORD(_qw)    ((DWORD)(((_qw) >> 32) & 0xffffffff))
 
-  def point_to_points(pt)
-    makelong(pt.x, pt.y)
-  end
+    #define LOBYTE(w)           ((BYTE)(((DWORD_PTR)(w)) & 0xff))
+    def LOBYTE(w)
+      w & 0xff
+    end
 
-  alias_method :makelresult, :makelong
-  alias_method :makelparam,  :makelong
-  alias_method :makewparam,  :makelong
+    #define HIBYTE(w)           ((BYTE)((((DWORD_PTR)(w)) >> 8) & 0xff))
+    def HIBYTE(w)
+      w >> 8
+    end
+
+    #define MAKEPOINTS(l) (*((POINTS FAR *)&(l)))
+    def MAKEPOINTS(l)
+
+    end
+  end
 end

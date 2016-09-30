@@ -1,10 +1,10 @@
 module WinFFI
   # https://msdn.microsoft.com/en-us/library/windows/desktop/aa373931(v=vs.85).aspx
-  class GUID < FFIStruct
-    layout :Data1, :dword,
-           :Data2, :word,
-           :Data3, :word,
-           :Data4, [:byte, 8]
+  class GUID < FFIAdditions::Struct
+    layout Data1: :dword,
+           Data2: :word,
+           Data3: :word,
+           Data4: [:byte, 8]
 
     def from_str(guid)
       data = [guid.gsub(/[{\-}]/, '')].pack('H*').unpack('L>S>2C8')

@@ -1,25 +1,23 @@
 require 'win-ffi/core/wide_inline_string'
 
-require 'win-ffi/core/struct'
-
-require 'win-ffi/kernel32/enum/version/win32_winnt'
+require 'win-ffi/kernel32/enum/system_info/win32_winnt'
 
 module WinFFI
-  class OSVERSIONINFOEX < FFIStruct
+  class OSVERSIONINFOEX < FFIAdditions::Struct
 
     include Kernel32, Comparable
 
-    layout :dwOSVersionInfoSize, :ulong,
-           :dwMajorVersion,      :ulong,
-           :dwMinorVersion,      :ulong,
-           :dwBuildNumber,       :ulong,
-           :dwPlatformId,        :ulong,
-           :szCSDVersion,        WideInlineString.new(128),
-           :wServicePackMajor,   :ushort,
-           :wServicePackMinor,   :ushort,
-           :wSuiteMask,          :ushort,
-           :wProductType,        :uchar,
-           :wReserved,           :uchar
+    layout dwOSVersionInfoSize:                    :ulong,
+           dwMajorVersion:                         :ulong,
+           dwMinorVersion:                         :ulong,
+           dwBuildNumber:                          :ulong,
+           dwPlatformId:                           :ulong,
+           szCSDVersion:        WideInlineString.new(128),
+           wServicePackMajor:                     :ushort,
+           wServicePackMinor:                     :ushort,
+           wSuiteMask:                            :ushort,
+           wProductType:                          :uchar,
+           wReserved:                             :uchar
 
     def initialize
       super

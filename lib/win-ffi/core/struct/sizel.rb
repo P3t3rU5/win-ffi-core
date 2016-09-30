@@ -1,6 +1,6 @@
 module WinFFI
   # https://msdn.microsoft.com/en-us/library/windows/desktop/dd145106(v=vs.85).aspx
-  class SIZE < FFIAdditions::Struct
+  class SIZEL < FFIAdditions::Struct
     layout cx: :long,
            cy: :long
 
