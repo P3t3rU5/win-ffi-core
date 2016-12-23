@@ -1,4 +1,7 @@
 require 'win-ffi/core'
+require 'win-ffi/core/string_utils'
+
+using WinFFI::StringUtils
 
 module WinFFI
   class WideInlineString
@@ -12,12 +15,12 @@ module WinFFI
     end
 
 
-    def to_native(_value, _context)
-      raise NotImplementedError
+    def to_native(value, _context)
+      value.to_byte_array
     end
 
     def from_native(value, _context)
-      LibBase.string_from_byte_array(value.to_a)
+      String.from_byte_array(value.to_a)
     end
 
     alias_method :length, :size

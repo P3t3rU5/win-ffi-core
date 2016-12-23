@@ -1,4 +1,6 @@
+require 'win-ffi/logger'
 require 'win-ffi/core/version'
+
 require 'ffi-additions/struct'
 
 require 'win-ffi/core/lib_base'

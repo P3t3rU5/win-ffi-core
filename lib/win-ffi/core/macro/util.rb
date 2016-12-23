@@ -1,4 +1,7 @@
+require 'win-ffi/core'
+
 module WinFFI
+  HANDLE = WinFFI.find_type(:handle)
   class << self
     def MAKEWORD(a, b)
       ((a & 0xff) | ((b & 0xff) << 8))
@@ -36,9 +39,36 @@ module WinFFI
       w >> 8
     end
 
-    #define MAKEPOINTS(l) (*((POINTS FAR *)&(l)))
-    def MAKEPOINTS(l)
-
+    #define HandleToULong( h ) ((ULONG)(ULONG_PTR)(h) )
+    def HandleToULong(h)
+      h.address
     end
+
+    #define HandleToLong( h )  ((LONG)(LONG_PTR) (h) )
+    def HandleToLong(h)
+      h.address
+    end
+
+    #define ULongToHandle( ul ) ((HANDLE)(ULONG_PTR) (ul) )
+    def ULongToHandle(ul)
+      FFI::Pointer.new(HANDLE, ul)
+    end
+
+    #define LongToHandle( h )   ((HANDLE)(LONG_PTR) (h) )
+    def LongToHandle(h)
+      FFI::Pointer.new(HANDLE, h)
+    end
+
+    #define PtrToUlong( p ) ((ULONG)(ULONG_PTR) (p) )
+    #define PtrToLong( p )  ((LONG)(LONG_PTR) (p) )
+    #define PtrToUint( p ) ((UINT)(UINT_PTR) (p) )
+    #define PtrToInt( p )  ((INT)(INT_PTR) (p) )
+    #define PtrToUshort( p ) ((unsigned short)(ULONG_PTR)(p) )
+    #define PtrToShort( p )  ((short)(LONG_PTR)(p) )
+    #define IntToPtr( i )    ((VOID *)(INT_PTR)((int)i))
+    #define UIntToPtr( ui )  ((VOID *)(UINT_PTR)((unsigned int)ui))
+    #define LongToPtr( l )   ((VOID *)(LONG_PTR)((long)l))
+    #define ULongToPtr( ul ) ((VOID *)(ULONG_PTR)((unsigned long)ul))
+
   end
 end

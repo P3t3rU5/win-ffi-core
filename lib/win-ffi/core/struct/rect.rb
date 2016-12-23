@@ -1,3 +1,5 @@
+require 'win-ffi/core'
+
 module WinFFI
   # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162897(v=vs.85).aspx
   class RECT < FFIAdditions::Struct

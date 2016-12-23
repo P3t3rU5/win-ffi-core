@@ -1,15 +1,10 @@
 require 'ffi'
-require 'logger'
 require 'win-ffi/core/version'
 
 module WinFFI
-  LOGGER = Logger.new(STDOUT)
-
   LOGGER.info "WinFFI v#{WinFFI::VERSION}"
 
-  LOGGER.debug 'Getting Encoding...'
   @encoding = (__ENCODING__.name =~ /ASCII/ ? 'A' : 'W')
-  LOGGER.debug 'Got Encoding: ' + @encoding
 
   def self.encoding
     @encoding
@@ -25,6 +20,7 @@ module WinFFI
   end
 end
 
+require 'win-ffi/core/struct'
 require 'win-ffi/core/typedef/core'
 
 module WinFFI
@@ -32,17 +28,6 @@ module WinFFI
     def encoded_function(name, *args, ruby_name: nil)
       ruby_name = name unless ruby_name
       attach_function ruby_name, name + WinFFI.encoding, *args
-    end
-
-    if WinFFI.encoding == 'A'
-      def self.string_from_byte_array(array)
-        array[0, array.index(0) || array.length].pack('C*').encode(Encoding::UTF_8)
-      end
-    else
-      def self.string_from_byte_array(array)
-        array = array[0, array.index(0) || array.length]
-        array.pack('S*').force_encoding(Encoding::UTF_16LE).encode(Encoding::UTF_8)
-      end
     end
 
     def define_prefix(prefix, target_enum, without_underscore = false)
@@ -86,13 +71,9 @@ module WinFFI
     encoded_function 'GetVersionEx', [OSVERSIONINFOEX.ptr], :bool
   end
 
-  LOGGER.debug 'Getting Architecture...'
   Architecture = FFI::Platform::CPU # "i386-mingw32" | "x64-mingw32"
-  LOGGER.debug 'Got Architecture: ' + Architecture
 
-  LOGGER.debug 'Getting Windows Version...'
   WindowsVersion = OSVERSIONINFOEX.new.get!
-  LOGGER.debug "Got Windows Version: #{WindowsVersion.hex}-> #{WindowsVersion.to_s}"
 
   WindowsVersion.major, WindowsVersion.minor, WindowsVersion.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
 
