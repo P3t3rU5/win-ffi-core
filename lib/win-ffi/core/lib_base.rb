@@ -48,7 +48,7 @@ module WinFFI
       c.extend FFI::Library
       instance_variables.each do |v|
         value = instance_variable_get(v)
-        value = value.dup unless value.is_a?(Fixnum) || value.is_a?(Symbol)
+        value = value.dup unless value.is_a?(Integer) || value.is_a?(Symbol)
         c.instance_variable_set(v, value)
       end
     end
