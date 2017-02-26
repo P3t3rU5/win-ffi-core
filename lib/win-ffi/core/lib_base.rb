@@ -71,11 +71,11 @@ module WinFFI
     encoded_function 'GetVersionEx', [OSVERSIONINFOEX.ptr], :bool
   end
 
-  Architecture = FFI::Platform::CPU # "i386-mingw32" | "x64-mingw32"
+  ARCHITECTURE = FFI::Platform::ARCH # "i386-mingw32" | "x64-mingw32"
 
-  WindowsVersion = OSVERSIONINFOEX.new.get!
+  WINDOWS_VERSION = OSVERSIONINFOEX.new.get!
 
-  WindowsVersion.major, WindowsVersion.minor, WindowsVersion.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
+  WINDOWS_VERSION.major, WINDOWS_VERSION.minor, WINDOWS_VERSION.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
 
-  LOGGER.info "#{WindowsVersion.to_s} #{Architecture} #{__ENCODING__.to_s}"
+  LOGGER.info "#{WINDOWS_VERSION.to_s} #{ARCHITECTURE} #{__ENCODING__.to_s}"
 end

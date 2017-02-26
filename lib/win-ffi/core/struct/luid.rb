@@ -1,5 +1,5 @@
 module WinFFI
-  if WindowsVersion >= :xp
+  if WINDOWS_VERSION >= :xp
     # Locally Unique Identifier
     # https://msdn.microsoft.com/en-us/library/windows/desktop/aa379261(v=vs.85).aspx
     class LUID < FFIAdditions::Struct
