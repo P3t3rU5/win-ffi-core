@@ -35,6 +35,8 @@ module WinFFI
     typedef :pointer, :hpen
     typedef :pointer, :hwnd
     typedef :pointer, :humpd
+    typedef :pointer, :hkey
+    typedef :pointer, :hpalette
 
     typedef :pointer, :puint
     typedef :pointer, :plong

@@ -1,8 +1,10 @@
 require 'ffi'
+require 'win-ffi/logger'
 require 'win-ffi/core/version'
 
 module WinFFI
   LOGGER.info "WinFFI v#{WinFFI::VERSION}"
+  ARCHITECTURE = FFI::Platform::ARCH # "i386" | "x86_64"
 
   @encoding = (__ENCODING__.name =~ /ASCII/ ? 'A' : 'W')
 
@@ -70,8 +72,6 @@ module WinFFI
     # BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
     encoded_function 'GetVersionEx', [OSVERSIONINFOEX.ptr], :bool
   end
-
-  ARCHITECTURE = FFI::Platform::ARCH # "i386-mingw32" | "x64-mingw32"
 
   WINDOWS_VERSION = OSVERSIONINFOEX.new.get!
 

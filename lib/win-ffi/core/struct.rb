@@ -1,3 +1,4 @@
+require 'ffi-additions/struct'
 require 'win-ffi/core/string_utils'
 
 using WinFFI::StringUtils
