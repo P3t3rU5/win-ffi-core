@@ -7,7 +7,7 @@ module FFIAdditions
   class Struct
     def self.encoded_setter(name)
       define_method("#{name}=", ->(string) do
-        if WinFFI.encoding == 'A'
+        if WinFFI.ascii?
           (to_ptr + offset_of(name)).write_string(string)
         else
           (to_ptr + offset_of(name)).write_array_of_uint16(string.to_w.unpack('S*'))

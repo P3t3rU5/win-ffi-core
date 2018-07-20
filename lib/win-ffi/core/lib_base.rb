@@ -1,20 +1,17 @@
-require 'ffi'
-require 'win-ffi/logger'
-require 'win-ffi/core/version'
+require_relative 'encoding'
 
 module WinFFI
-  LOGGER.info "WinFFI v#{WinFFI::VERSION}"
   ARCHITECTURE = FFI::Platform::ARCH # "i386" | "x86_64"
 
-  @encoding = (__ENCODING__.name =~ /ASCII/ ? 'A' : 'W')
-
-  def self.encoding
-    @encoding
+  def self.x64?
+    ARCHITECTURE == 'x86_64'
   end
 
-  def self.encoding=(encoding)
-    @encoding = encoding
+  def self.x86?
+    ARCHITECTURE == 'i386'
   end
+
+  ENCODING_SUFFIX = ascii? ? 'A' : 'W'
 
   module LibBase
     extend FFI::Library
@@ -22,8 +19,8 @@ module WinFFI
   end
 end
 
-require 'win-ffi/core/struct'
-require 'win-ffi/core/typedef/core'
+require_relative 'struct'
+require_relative 'typedef/core'
 
 module WinFFI
   module LibBase
@@ -63,19 +60,20 @@ module WinFFI
     extend LibBase
 
     ffi_lib 'kernel32', 'KernelBase'
-  end
 
-  require 'win-ffi/kernel32/struct/system_info/os_version_info_ex'
+    require 'win-ffi/kernel32/struct/system_info/os_version_info_ex'
 
-  module Kernel32
+    def self.GetVersionEx(lpVersionInfo) end
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx
     # BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
     encoded_function 'GetVersionEx', [OSVERSIONINFOEX.ptr], :bool
   end
 
-  WINDOWS_VERSION = OSVERSIONINFOEX.new.get!
+  WINDOWS_VERSION = Kernel32::OSVERSIONINFOEX.new.get!
 
   WINDOWS_VERSION.major, WINDOWS_VERSION.minor, WINDOWS_VERSION.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
 
   LOGGER.info "#{WINDOWS_VERSION.to_s} #{ARCHITECTURE} #{__ENCODING__.to_s}"
+
+  CCHDEVICENAME = 32
 end

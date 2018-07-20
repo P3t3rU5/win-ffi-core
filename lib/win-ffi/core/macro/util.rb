@@ -1,14 +1,12 @@
-require 'win-ffi/core'
-
 module WinFFI
   HANDLE = WinFFI.find_type(:handle)
   class << self
     def MAKEWORD(a, b)
-      ((a & 0xff) | ((b & 0xff) << 8))
+      a & 0xff | ((b & 0xff) << 8)
     end
 
     def MAKELONG(a, b)
-      ((a & 0xffff) | ((b & 0xffff) << 16))
+      a & 0xffff | ((b & 0xffff) << 16)
     end
 
     def MAKELCID(lgid, srtid) # ulong

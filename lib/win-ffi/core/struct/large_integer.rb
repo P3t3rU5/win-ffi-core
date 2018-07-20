@@ -11,6 +11,9 @@ module WinFFI
   # end
 
   class LARGE_INTEGER < FFIAdditions::Struct
+    def QuadPart; end
+    def QuadPart=(v) end
+
     layout QuadPart: :long_long
   end
 end

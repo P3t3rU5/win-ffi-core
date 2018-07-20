@@ -1,6 +1,15 @@
 module WinFFI
   # https://msdn.microsoft.com/en-us/library/windows/desktop/aa373931(v=vs.85).aspx
   class GUID < FFIAdditions::Struct
+    def Data1; end
+    def Data1=(v) end
+    def Data2; end
+    def Data2=(v) end
+    def Data3; end
+    def Data3=(v) end
+    def Data4; end
+    def Data4=(v) end
+
     layout Data1: :dword,
            Data2: :word,
            Data3: :word,

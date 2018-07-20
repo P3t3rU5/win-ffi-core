@@ -1,6 +1,11 @@
 module WinFFI
-  # https://msdn.microsoft.com/en-us/library/windows/desktop/dd145106(v=vs.85).aspx
+  # https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.ole.interop.sizel?view=visualstudiosdk-2017
   class SIZEL < FFIAdditions::Struct
+    def cx; end
+    def cx=(v) end
+    def cy; end
+    def cy=(v) end
+
     layout cx: :long,
            cy: :long
 

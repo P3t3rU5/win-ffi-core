@@ -1,7 +1,7 @@
 module WinFFI
   module StringUtils
     refine ::String.singleton_class do
-      if WinFFI.encoding == 'A'
+      if WinFFI.ascii?
         def from_byte_array(array)
           array[0, array.index(0) || array.length].pack('C*').encode(Encoding::UTF_8)
         end
@@ -22,7 +22,7 @@ module WinFFI
     end
 
     refine ::String do
-      if WinFFI.encoding == 'W'
+      if WinFFI.wide?
         def to_byte_array
           FFI::MemoryPointer.new(WinFFI.find_type(:tchar), @size).write_string(string)
         end
