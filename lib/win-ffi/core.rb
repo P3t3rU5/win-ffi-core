@@ -3,7 +3,7 @@ require 'ffi-additions/struct'
 
 require_relative 'logger'
 require_relative 'core/version'
-
+require_relative 'core/encoding'
 require_relative 'core/boolean_utils'
 
 module WinFFI

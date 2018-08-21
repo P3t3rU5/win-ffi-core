@@ -1,5 +1,6 @@
 require 'win-ffi/core/string_utils'
 
+require_relative '../../constant_base'
 require_relative '../../enum/font/weight'
 require_relative '../../enum/font/charset'
 require_relative '../../enum/font/output_precision'

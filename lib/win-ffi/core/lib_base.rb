@@ -63,13 +63,13 @@ module WinFFI
 
     require 'win-ffi/kernel32/struct/system_info/os_version_info_ex'
 
-    def self.GetVersionEx(lpVersionInfo) end
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx
     # BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
-    encoded_function 'GetVersionEx', [OSVERSIONINFOEX.ptr], :bool
+    def self.GetVersionEx(lpVersionInfo) end
+    encoded_function 'GetVersionEx', [WinFFI::Kernel32::OSVERSIONINFOEX.ptr], :bool
   end
 
-  WINDOWS_VERSION = Kernel32::OSVERSIONINFOEX.new.get!
+  WINDOWS_VERSION = WinFFI::Kernel32::OSVERSIONINFOEX.new.get!
 
   WINDOWS_VERSION.major, WINDOWS_VERSION.minor, WINDOWS_VERSION.build = `ver`.match(/\d+\.\d+\.\d+/)[0].split('.').map(&:to_i)
 

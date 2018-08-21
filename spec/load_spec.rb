@@ -1,6 +1,5 @@
 require 'rspec'
 require_relative 'spec_helper'
-require_relative '../lib/win-ffi/gdi32/base'
 
 RSpec.describe 'Definitions' do
 
