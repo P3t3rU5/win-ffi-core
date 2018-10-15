@@ -1,5 +1,7 @@
 module WinFFI
   HANDLE = WinFFI.find_type(:handle)
+  LONG_PTR = WinFFI.find_type(:long_ptr)
+  ULONG_PTR = WinFFI.find_type(:ulong_ptr)
   class << self
     def MAKEWORD(a, b)
       a & 0xff | ((b & 0xff) << 8)
@@ -49,12 +51,16 @@ module WinFFI
 
     #define ULongToHandle( ul ) ((HANDLE)(ULONG_PTR) (ul) )
     def ULongToHandle(ul)
-      FFI::Pointer.new(HANDLE, ul)
+      p = FFI::Pointer.new(HANDLE, 1)
+      p.write(ULONG_PTR, h)
+      p
     end
 
     #define LongToHandle( h )   ((HANDLE)(LONG_PTR) (h) )
     def LongToHandle(h)
-      FFI::Pointer.new(HANDLE, h)
+      p = FFI::Pointer.new(HANDLE, 1)
+      p.write(LONG_PTR, h)
+      p
     end
 
     #define PtrToUlong( p ) ((ULONG)(ULONG_PTR) (p) )

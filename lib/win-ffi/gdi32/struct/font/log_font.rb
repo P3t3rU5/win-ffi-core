@@ -6,7 +6,8 @@ require_relative '../../enum/font/charset'
 require_relative '../../enum/font/output_precision'
 require_relative '../../enum/font/clip_precision'
 require_relative '../../enum/font/quality'
-require_relative '../../enum/font/family_pitch'
+require_relative '../../enum/font/pitch'
+require_relative '../../enum/font/family'
 
 using WinFFI::StringUtils
 
@@ -56,7 +57,7 @@ module WinFFI
              lfOutPrecision:   FontOutputPrecision,
              lfClipPrecision:  FontClipPrecision,
              lfQuality:        FontQuality,
-             lfPitchAndFamily: FontFamilyPitch,
+             lfPitchAndFamily: :byte,
              lfFaceName:       WideInlineString.new(LF_FACESIZE)
 
       alias_method :face_name, :lfFaceName

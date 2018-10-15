@@ -10,9 +10,10 @@ module WinFFI
         :ANTIALIASED,    4
     ]
 
-    buffer += [:CLEARTYPE, 5, :CLEARTYPE_NATURAL_QUALITY, 6] if WINDOWS_VERSION >= :xp
+    buffer += [:CLEARTYPE, 5, :CLEARTYPE_NATURAL, 6] if WINDOWS_VERSION >= :xp
 
     FontQuality = enum FFI::Type::UINT8, :font_quality, buffer
 
+    define_suffix(:QUALITY, FontQuality)
   end
 end
