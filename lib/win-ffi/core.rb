@@ -11,7 +11,7 @@ module WinFFI
 
   MAX_PATH = 260
 
-  def self.init(encoding: "A")
+  def self.init(encoding: 'A')
     WinFFI.encoding = encoding
     require_relative 'core/lib_base'
     require_relative 'core/string_utils'

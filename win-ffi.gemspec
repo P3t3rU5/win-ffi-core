@@ -11,10 +11,10 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/P3t3rU5/win-ffi-core'
   gem.require_paths = %w'lib'
   gem.files         = Dir['{lib/**/*.rb,*.md}']
-  gem.add_runtime_dependency 'ffi', '~> 1.9', '>= 1.9.10'
+  gem.add_runtime_dependency 'ffi', '~> 1'
   gem.add_dependency 'ffi-additions'
   gem.add_dependency 'facets', '~> 3'
-  gem.add_development_dependency 'rspec', '~> 3.4'
+  gem.add_development_dependency 'rspec', '~> 3'
   gem.post_install_message = <<-eos
 +----------------------------------------------------------------------------+
   Thanks for choosing WinFFI.

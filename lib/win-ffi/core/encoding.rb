@@ -10,7 +10,7 @@ module WinFFI
   end
 
   def self.encoding=(v)
-    raise ArgumentError, "Invalid Encoding #{v.inspect}" unless ['A', 'W'].include?(v)
+    raise ArgumentError, "Invalid Encoding #{v.inspect}" unless %w(A W).include?(v)
     @encoding = v.dup.freeze
   end
 

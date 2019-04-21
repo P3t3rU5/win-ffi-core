@@ -1,10 +1,10 @@
 module WinFFI
   module LibBase
     typedef (WinFFI.ascii? ? :char : :ushort), :tchar
-    typedef (WinFFI.x86? ? :int32 : :int64), :int_ptr
-    typedef (WinFFI.x86? ? :uint32 : :uint64), :uint_ptr
-    typedef (WinFFI.x86? ? :ulong : :uint64), :ulong_ptr
-    typedef (WinFFI.x86? ? :long : :int64), :long_ptr
+    typedef :intptr_t, :int_ptr
+    typedef :intptr_t, :long_ptr
+    typedef :uintptr_t, :uint_ptr
+    typedef :uintptr_t, :ulong_ptr
 
     typedef :ushort,     :wchar
     typedef :ushort,     :atom
