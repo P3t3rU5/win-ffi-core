@@ -1,5 +1,7 @@
 module WinFFI
+  # https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-points
   class POINTS < FFIAdditions::Struct
+    attr_accessor :x, :y
     layout x: :short,
            y: :short
 

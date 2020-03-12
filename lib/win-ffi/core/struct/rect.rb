@@ -1,14 +1,7 @@
 module WinFFI
-  # https://msdn.microsoft.com/en-us/library/windows/desktop/dd162897(v=vs.85).aspx
+  # https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-rect
   class RECT < FFIAdditions::Struct
-    def left; end
-    def left=(v) end
-    def top; end
-    def top=(v) end
-    def right; end
-    def right=(v) end
-    def bottom; end
-    def bottom=(v) end
+    attr_accessor :left, :top, :right, :bottom
 
     layout left:   :long,
            top:    :long,

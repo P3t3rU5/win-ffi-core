@@ -1,5 +1,5 @@
 module WinFFI
-  # https://msdn.microsoft.com/en-us/library/dd162807(v=vs.85).aspx
+  # https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-pointl
   class POINTL < FFIAdditions::Struct
     def x; end
     def x=(v) end

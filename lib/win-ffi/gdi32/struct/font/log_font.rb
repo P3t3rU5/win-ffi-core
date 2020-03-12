@@ -16,34 +16,20 @@ module WinFFI
     # https://docs.microsoft.com/en-us/windows/desktop/api/wingdi/ns-wingdi-taglogfonta
     # https://docs.microsoft.com/en-us/windows/desktop/api/wingdi/ns-wingdi-taglogfontw
     class LOGFONT < FFIAdditions::Struct
-      def lfHeight; end
-      def lfHeight=(v); end
-      def lfWidth; end
-      def lfWidth=(v); end
-      def lfEscapement; end
-      def lfEscapement=(v); end
-      def lfOrientation; end
-      def lfOrientation=(v); end
-      def lfWeight; end
-      def lfWeight=(v); end
-      def lfItalic; end
-      def lfItalic=(v); end
-      def lfUnderline; end
-      def lfUnderline=(v); end
-      def lfStrikeOut; end
-      def lfStrikeOut=(v); end
-      def lfCharSet; end
-      def lfCharSet=(v); end
-      def lfOutPrecision; end
-      def lfOutPrecision=(v); end
-      def lfClipPrecision; end
-      def lfClipPrecision=(v); end
-      def lfQuality; end
-      def lfQuality=(v); end
-      def lfPitchAndFamily; end
-      def lfPitchAndFamily=(v); end
-      def lfFaceName; end
-      def lfFaceName=(v); end
+      attr_accessor :lfHeight,
+                    :lfWidth,
+                    :lfEscapement,
+                    :lfOrientation,
+                    :lfWeight,
+                    :lfItalic,
+                    :lfUnderline,
+                    :lfStrikeOut,
+                    :lfCharSet,
+                    :lfOutPrecision,
+                    :lfClipPrecision,
+                    :lfQuality,
+                    :lfPitchAndFamily,
+                    :lfFaceName
 
       layout lfHeight:         :long,
              lfWidth:          :long,

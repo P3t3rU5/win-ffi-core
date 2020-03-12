@@ -1,7 +1,7 @@
 module WinFFI
   module Kernel32
     # _WIN32_WINNT system_info constants
-    WindowsVersions = enum :windows_versions, [
+    WindowsVersion = enum :windows_versions, [
         :NT4,          0x0400,
         :WIN2K,        0x0500,
         :WINXP,        0x0501,
@@ -17,6 +17,6 @@ module WinFFI
         :WIN10,        0x0A00  # ABRACADABRA_THRESHOLD
     ]
 
-    define_prefix(:WIN32_WINNT, WindowsVersions)
+    define_prefix(:WIN32_WINNT, WindowsVersion)
   end
 end

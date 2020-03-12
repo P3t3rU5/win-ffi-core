@@ -7,22 +7,14 @@ require_relative '../../../../lib/win-ffi/gdi32/base'
 module WinFFI
   module Gdi32
     class DEVMODE_UNION_STRUCT_1 < FFIAdditions::Struct
-      def dmOrientation; end
-      def dmOrientation=(v) end
-      def dmPaperSize; end
-      def dmPaperSize=(v) end
-      def dmPaperLength; end
-      def dmPaperLength=(v) end
-      def dmPaperWidth; end
-      def dmPaperWidth=(v) end
-      def dmScale; end
-      def dmScale=(v) end
-      def dmCopies; end
-      def dmCopies=(v) end
-      def dmDefaultSource; end
-      def dmDefaultSource=(v) end
-      def dmPrintQuality; end
-      def dmPrintQuality=(v) end
+      attr_accessor :dmOrientation,
+                    :dmPaperSize,
+                    :dmPaperLength,
+                    :dmPaperWidth,
+                    :dmScale,
+                    :dmCopies,
+                    :dmDefaultSource,
+                    :dmPrintQuality
 
       layout dmOrientation:   :short,
              dmPaperSize:     :short,
@@ -35,94 +27,53 @@ module WinFFI
     end
 
     class DEVMODE_UNION_STRUCT_2 < FFIAdditions::Struct
-      def dmPosition; end
-      def dmPosition=(v) end
-      def dmDisplayOrientation; end
-      def dmDisplayOrientation=(v) end
-      def dmDisplayFixedOutput; end
-      def dmDisplayFixedOutput=(v) end
-
+      attr_accessor :dmPosition, :dmDisplayOrientation, :dmDisplayFixedOutput
       layout dmPosition:           POINTL,
              dmDisplayOrientation: :dword,
              dmDisplayFixedOutput: :dword
     end
 
     class DEVMODE_UNION_1 < FFIAdditions::Union
-      def s1; end
-      def s1=(v) end
-      def s2; end
-      def s2=(v) end
-
+      attr_accessor :s1, :s2
       layout s1: DEVMODE_UNION_STRUCT_1,
              s2: DEVMODE_UNION_STRUCT_2
     end
 
     class DEVMODE_UNION_2 < FFIAdditions::Union
-      def dmDisplayFlags; end
-      def dmDisplayFlags=(v) end
-      def dmNup; end
-      def dmNup=(v) end
-
+      attr_accessor :dmDisplayFlags, :dmNup
       layout dmDisplayFlags: :dword,
              dmNup:          :dword
     end
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/dd183565(v=vs.85).aspx
     class DEVMODE < FFIAdditions::Struct
-      def dmDeviceName; end
-      def dmDeviceName=(v) end
-      def dmSpecVersion; end
-      def dmSpecVersion=(v) end
-      def dmDriverVersion; end
-      def dmDriverVersion=(v) end
-      def dmSize; end
-      def dmSize=(v) end
-      def dmDriverExtra; end
-      def dmDriverExtra=(v) end
-      def dmFields; end
-      def dmFields=(v) end
-      def union_1; end
-      def union_1=(v) end
-      def dmColor; end
-      def dmColor=(v) end
-      def dmDuplex; end
-      def dmDuplex=(v) end
-      def dmYResolution; end
-      def dmYResolution=(v) end
-      def dmTTOption; end
-      def dmTTOption=(v) end
-      def dmCollate; end
-      def dmCollate=(v) end
-      def dmFormName; end
-      def dmFormName=(v) end
-      def dmLogPixels; end
-      def dmLogPixels=(v) end
-      def dmBitsPerPel; end
-      def dmBitsPerPel=(v) end
-      def dmPelsWidth; end
-      def dmPelsWidth=(v) end
-      def dmPelsHeight; end
-      def dmPelsHeight=(v) end
-      def union_2; end
-      def union_2=(v) end
-      def dmDisplayFrequency; end
-      def dmDisplayFrequency=(v) end
-      def dmICMMethod; end
-      def dmICMMethod=(v) end
-      def dmICMIntent; end
-      def dmICMIntent=(v) end
-      def dmMediaType; end
-      def dmMediaType=(v) end
-      def dmDitherType; end
-      def dmDitherType=(v) end
-      def dmReserved1; end
-      def dmReserved1=(v) end
-      def dmReserved2; end
-      def dmReserved2=(v) end
-      def dmPanningWidth; end
-      def dmPanningWidth=(v) end
-      def dmPanningHeight; end
-      def dmPanningHeight=(v) end
+      attr_accessor :dmDeviceName,
+                    :dmSpecVersion,
+                    :dmDriverVersion,
+                    :dmSize,
+                    :dmDriverExtra,
+                    :dmFields,
+                    :union_1,
+                    :dmColor,
+                    :dmDuplex,
+                    :dmYResolution,
+                    :dmTTOption,
+                    :dmCollate,
+                    :dmFormName,
+                    :dmLogPixels,
+                    :dmBitsPerPel,
+                    :dmPelsWidth,
+                    :dmPelsHeight,
+                    :union_2,
+                    :dmDisplayFrequency,
+                    :dmICMMethod,
+                    :dmICMIntent,
+                    :dmMediaType,
+                    :dmDitherType,
+                    :dmReserved1,
+                    :dmReserved2,
+                    :dmPanningWidth,
+                    :dmPanningHeight
 
       layout dmDeviceName:       [:char, CCHDEVICENAME],
              dmSpecVersion:      :word,

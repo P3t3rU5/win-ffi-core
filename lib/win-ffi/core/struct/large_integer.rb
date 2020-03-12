@@ -1,19 +1,16 @@
 module WinFFI
-  # https://msdn.microsoft.com/en-us/library/windows/desktop/aa383713(v=vs.85).aspx
-  # class LARGE_INTEGER_STRUCT < FFIAdditions::Struct
-  #   layout LowPart:  :dword,
-  #          HighPart: :long
-  # end
-  #
-  # class LARGE_INTEGER < FFIAdditions::Union
-  #   layout s: LARGE_INTEGER_STRUCT,
-  #          u: LARGE_INTEGER_STRUCT
-  # end
+  class LARGE_INTEGER_STRUCT < FFIAdditions::Struct
+    attr_accessor :LowPart, :HighPart
+    layout LowPart:  :dword,
+           HighPart: :long
+  end
 
-  class LARGE_INTEGER < FFIAdditions::Struct
-    def QuadPart; end
-    def QuadPart=(v) end
+  # https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-large_integer~r1
+  class LARGE_INTEGER < FFIAdditions::Union
+    attr_accessor :s, :u, :QuadPart
 
-    layout QuadPart: :long_long
+    layout s: LARGE_INTEGER_STRUCT,
+           u: LARGE_INTEGER_STRUCT,
+           QuadPart: :long_long
   end
 end

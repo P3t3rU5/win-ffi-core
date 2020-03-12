@@ -1,10 +1,7 @@
 module WinFFI
   # https://docs.microsoft.com/en-us/dotnet/api/microsoft.visualstudio.ole.interop.sizel?view=visualstudiosdk-2017
   class SIZEL < FFIAdditions::Struct
-    def cx; end
-    def cx=(v) end
-    def cy; end
-    def cy=(v) end
+    attr_accessor :cx, :cy
 
     layout cx: :long,
            cy: :long

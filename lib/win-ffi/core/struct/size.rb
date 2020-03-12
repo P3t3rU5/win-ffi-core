@@ -1,10 +1,7 @@
 module WinFFI
-  # https://msdn.microsoft.com/en-us/library/windows/desktop/dd145106(v=vs.85).aspx
+  # https://docs.microsoft.com/en-us/windows/win32/api/windef/ns-windef-size
   class SIZE < FFIAdditions::Struct
-    def cx; end
-    def cx=(v) end
-    def cy; end
-    def cy=(v) end
+    attr_accessor :cx, :cy
 
     layout cx: :long,
            cy: :long

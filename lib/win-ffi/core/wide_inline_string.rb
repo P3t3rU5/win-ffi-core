@@ -11,7 +11,7 @@ module WinFFI
 
     def initialize(size)
       @size = size
-      @native_type = FFI::ArrayType.new(WinFFI.find_type(:tchar), size)
+      @native_type = FFI::ArrayType.new(WinFFI.find_type(:wchar), size)
     end
 
 

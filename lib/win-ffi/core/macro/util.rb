@@ -1,7 +1,8 @@
 module WinFFI
-  HANDLE = WinFFI.find_type(:handle)
-  LONG_PTR = WinFFI.find_type(:long_ptr)
+  HANDLE    = WinFFI.find_type(:handle)
+  LONG_PTR  = WinFFI.find_type(:long_ptr)
   ULONG_PTR = WinFFI.find_type(:ulong_ptr)
+  DWORD     = WinFFI.find_type(:dword)
   class << self
     def MAKEWORD(a, b) a & 0xff | ((b & 0xff) << 8) end
 

@@ -1,12 +1,9 @@
 module WinFFI
   if WINDOWS_VERSION >= :xp
     # Locally Unique Identifier
-    # https://docs.microsoft.com/en-us/windows/desktop/api/winnt/ns-winnt-_luid
+    # https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-luid
     class LUID < FFIAdditions::Struct
-      def LowPart; end
-      def LowPart=(v) end
-      def HighPart; end
-      def HighPart=(v) end
+      attr_accessor :LowPart, :HighPart
 
       layout LowPart:  :dword,
              HighPart: :long

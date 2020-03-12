@@ -3,13 +3,11 @@ require_relative 'encoding'
 module WinFFI
   ARCHITECTURE = FFI::Platform::ARCH # "i386" | "x86_64"
 
-  def self.x64?
-    ARCHITECTURE == 'x86_64'
-  end
+  X64 = ARCHITECTURE == 'x86_64'
 
-  def self.x86?
-    ARCHITECTURE == 'i386'
-  end
+  def self.x64?; X64 end
+
+  def self.x86?; !X64 end
 
   ENCODING_SUFFIX = ascii? ? 'A' : 'W'
 
@@ -64,7 +62,8 @@ module WinFFI
     require 'win-ffi/kernel32/struct/system_info/os_version_info_ex'
 
     # https://msdn.microsoft.com/en-us/library/windows/desktop/ms724451(v=vs.85).aspx
-    # BOOL WINAPI GetVersionEx( _Inout_  LPOSVERSIONINFO lpVersionInfo )
+    # @param [FFI::Pointer] lpVersionInfo
+    # @return [true, false]
     def self.GetVersionEx(lpVersionInfo) end
     encoded_function 'GetVersionEx', [WinFFI::Kernel32::OSVERSIONINFOEX.ptr], :bool
   end
